@@ -35,7 +35,7 @@ by adding section comments to all pages.
 6. **Add site credit** after `<!-- /SECTION: footer -->` on every page (outside section comments so AI editor cannot modify it):
    ```html
    <div class="site-credit">
-     <p>Website by <a href="https://therapywebgenie.co.uk" target="_blank" rel="noopener">Therapy Webgenie</a></p>
+     <p>Website by <a href="https://www.therapywebgenie.com" target="_blank" rel="noopener">Therapy Webgenie</a></p>
    </div>
    ```
    Add the `.site-credit` CSS to the site's stylesheet (see `master-site-template/css/components.css` for the styles).

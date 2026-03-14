@@ -130,7 +130,7 @@ Every page's footer must include both links in the `.footer__legal` section:
 Every page must include the site credit after `<!-- /SECTION: footer -->` (outside section comments so the AI editor cannot modify it):
 ```html
 <div class="site-credit">
-  <p>Website by <a href="https://therapywebgenie.co.uk" target="_blank" rel="noopener">Therapy Webgenie</a></p>
+  <p>Website by <a href="https://www.therapywebgenie.com" target="_blank" rel="noopener">Therapy Webgenie</a></p>
 </div>
 ```
 
