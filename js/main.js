@@ -198,6 +198,35 @@
   }
 
   /* -----------------------------------------
+     SCROLL REVEAL
+     Fade-up sections as they enter the viewport.
+     Add class="reveal" to any section element.
+     ----------------------------------------- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if (revealEls.length && 'IntersectionObserver' in window) {
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal--visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealEls.forEach(function (el) {
+      revealObserver.observe(el);
+    });
+  } else {
+    // Fallback: show everything immediately if no IntersectionObserver
+    revealEls.forEach(function (el) {
+      el.classList.add('reveal--visible');
+    });
+  }
+
+  /* -----------------------------------------
      COOKIE CONSENT BANNER
      Show banner if not previously accepted.
      Store preference in localStorage.

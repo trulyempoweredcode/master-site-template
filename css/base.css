@@ -57,6 +57,7 @@
   /* Transitions */
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
+  --transition-normal: 300ms ease;
   --transition-slow: 400ms ease;
 }
 
