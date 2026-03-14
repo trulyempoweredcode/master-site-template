@@ -1,0 +1,28 @@
+{
+  "id": "warm-mocha",
+  "name": "Warm Mocha",
+  "description": "Cosy premium — coffee shops, interiors, barbers, boutique coaches",
+  "colors": {
+    "primary": "#6B4C3B",
+    "primary-light": "#8A6A58",
+    "primary-dark": "#4A3228",
+    "secondary": "#C9A46B",
+    "secondary-light": "#D4B888",
+    "secondary-dark": "#A07F48",
+    "accent": "#2A7B6E",
+    "accent-light": "#3E9E8E",
+    "bg": "#FAF6F1",
+    "bg-alt": "#F0E8DF",
+    "bg-dark": "#2E221A",
+    "surface": "#FFFFFF",
+    "surface-alt": "#F7F2EC",
+    "text": "#3A3028",
+    "text-light": "#6E5F54",
+    "text-inverse": "#FAF6F1",
+    "text-heading": "#221A14",
+    "border": "#E0D4C8",
+    "border-light": "#ECE4DA",
+    "success": "#2A7B6E",
+    "error": "#B84A3A"
+  }
+}

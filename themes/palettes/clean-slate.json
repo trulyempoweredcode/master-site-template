@@ -1,0 +1,28 @@
+{
+  "id": "clean-slate",
+  "name": "Clean Slate",
+  "description": "Modern, sharp — tech, SaaS, digital agencies",
+  "colors": {
+    "primary": "#334155",
+    "primary-light": "#475569",
+    "primary-dark": "#1E293B",
+    "secondary": "#3B82F6",
+    "secondary-light": "#60A5FA",
+    "secondary-dark": "#2563EB",
+    "accent": "#8B5CF6",
+    "accent-light": "#A78BFA",
+    "bg": "#F8FAFC",
+    "bg-alt": "#F1F5F9",
+    "bg-dark": "#1E293B",
+    "surface": "#FFFFFF",
+    "surface-alt": "#F8FAFC",
+    "text": "#334155",
+    "text-light": "#64748B",
+    "text-inverse": "#F8FAFC",
+    "text-heading": "#0F172A",
+    "border": "#E2E8F0",
+    "border-light": "#F1F5F9",
+    "success": "#10B981",
+    "error": "#EF4444"
+  }
+}

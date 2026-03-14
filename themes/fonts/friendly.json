@@ -1,0 +1,17 @@
+{
+  "id": "friendly",
+  "name": "Friendly",
+  "description": "Approachable, warm — rounded sans heading with readable serif body",
+  "heading": {
+    "family": "Poppins",
+    "fallback": "'Segoe UI', Roboto, sans-serif",
+    "weights": [400, 600, 700],
+    "import": "Poppins:wght@400;600;700"
+  },
+  "body": {
+    "family": "Merriweather",
+    "fallback": "Georgia, 'Times New Roman', serif",
+    "weights": [300, 400, 700],
+    "import": "Merriweather:wght@300;400;700"
+  }
+}

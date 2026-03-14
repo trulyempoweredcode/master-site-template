@@ -1,0 +1,28 @@
+{
+  "id": "rich-forest",
+  "name": "Rich Forest",
+  "description": "Premium, refined — boutiques, luxury, premium services",
+  "colors": {
+    "primary": "#2D4A3E",
+    "primary-light": "#3D6655",
+    "primary-dark": "#1A3028",
+    "secondary": "#B8860B",
+    "secondary-light": "#D4A832",
+    "secondary-dark": "#8B6508",
+    "accent": "#6B3A5D",
+    "accent-light": "#8E5580",
+    "bg": "#FAFAF7",
+    "bg-alt": "#F0EFE8",
+    "bg-dark": "#1A3028",
+    "surface": "#FFFFFF",
+    "surface-alt": "#F7F6F0",
+    "text": "#2C2C2C",
+    "text-light": "#5C5C5C",
+    "text-inverse": "#FAFAF7",
+    "text-heading": "#1A1A1A",
+    "border": "#DDD8CC",
+    "border-light": "#EBE8E0",
+    "success": "#2D6A4F",
+    "error": "#B33A3A"
+  }
+}

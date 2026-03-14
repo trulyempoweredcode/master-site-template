@@ -1,0 +1,17 @@
+{
+  "id": "clean-bold",
+  "name": "Clean & Bold",
+  "description": "Strong, modern — geometric heading with readable body",
+  "heading": {
+    "family": "Montserrat",
+    "fallback": "'Segoe UI', Roboto, sans-serif",
+    "weights": [400, 600, 700],
+    "import": "Montserrat:wght@400;600;700"
+  },
+  "body": {
+    "family": "Source Sans 3",
+    "fallback": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    "weights": [400, 500, 600],
+    "import": "Source+Sans+3:wght@400;500;600"
+  }
+}

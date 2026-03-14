@@ -1,0 +1,28 @@
+{
+  "id": "bright-coral",
+  "name": "Bright Coral",
+  "description": "Energetic, bold — fitness, coaching, events",
+  "colors": {
+    "primary": "#E05A47",
+    "primary-light": "#E87A6A",
+    "primary-dark": "#C43D2B",
+    "secondary": "#F0A500",
+    "secondary-light": "#F5BC3D",
+    "secondary-dark": "#CC8C00",
+    "accent": "#2D9CDB",
+    "accent-light": "#56B4E9",
+    "bg": "#FFFAF8",
+    "bg-alt": "#FFF0EB",
+    "bg-dark": "#2D2026",
+    "surface": "#FFFFFF",
+    "surface-alt": "#FFF5F2",
+    "text": "#2D2026",
+    "text-light": "#6B5B54",
+    "text-inverse": "#FFFAF8",
+    "text-heading": "#1A1215",
+    "border": "#F0DDD6",
+    "border-light": "#F7EBE6",
+    "success": "#27AE60",
+    "error": "#E05A47"
+  }
+}

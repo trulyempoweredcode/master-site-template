@@ -1,0 +1,17 @@
+{
+  "id": "modern-pro",
+  "name": "Modern Pro",
+  "description": "Professional but warm — bold serif with versatile sans",
+  "heading": {
+    "family": "Playfair Display",
+    "fallback": "Georgia, 'Times New Roman', serif",
+    "weights": [400, 700],
+    "import": "Playfair+Display:wght@400;700"
+  },
+  "body": {
+    "family": "Inter",
+    "fallback": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    "weights": [400, 500, 600],
+    "import": "Inter:wght@400;500;600"
+  }
+}

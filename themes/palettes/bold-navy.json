@@ -1,0 +1,28 @@
+{
+  "id": "bold-navy",
+  "name": "Bold Navy",
+  "description": "Professional, trustworthy — consultants, law, finance",
+  "colors": {
+    "primary": "#1B3A5C",
+    "primary-light": "#2E5A8A",
+    "primary-dark": "#0F2440",
+    "secondary": "#C9A84C",
+    "secondary-light": "#D4BA6E",
+    "secondary-dark": "#9E8338",
+    "accent": "#4A90A4",
+    "accent-light": "#6BB0C4",
+    "bg": "#FAFBFC",
+    "bg-alt": "#F0F2F5",
+    "bg-dark": "#1B3A5C",
+    "surface": "#FFFFFF",
+    "surface-alt": "#F5F7FA",
+    "text": "#2D3748",
+    "text-light": "#718096",
+    "text-inverse": "#FAFBFC",
+    "text-heading": "#1A202C",
+    "border": "#E2E8F0",
+    "border-light": "#EDF2F7",
+    "success": "#38A169",
+    "error": "#E53E3E"
+  }
+}

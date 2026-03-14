@@ -1,0 +1,28 @@
+{
+  "id": "warm-terracotta",
+  "name": "Warm Terracotta",
+  "description": "Creative, welcoming — restaurants, hospitality, crafts",
+  "colors": {
+    "primary": "#B85C38",
+    "primary-light": "#D4785A",
+    "primary-dark": "#8E3F22",
+    "secondary": "#D4A373",
+    "secondary-light": "#E0BB94",
+    "secondary-dark": "#B08050",
+    "accent": "#5D8A66",
+    "accent-light": "#7BAB84",
+    "bg": "#FDF8F4",
+    "bg-alt": "#F5EDE5",
+    "bg-dark": "#3D2B1F",
+    "surface": "#FFFFFF",
+    "surface-alt": "#FAF4EE",
+    "text": "#3E2C23",
+    "text-light": "#7A6558",
+    "text-inverse": "#FDF8F4",
+    "text-heading": "#2D1E14",
+    "border": "#E8D8CC",
+    "border-light": "#F0E6DC",
+    "success": "#5D8A66",
+    "error": "#C94040"
+  }
+}

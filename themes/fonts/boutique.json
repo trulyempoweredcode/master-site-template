@@ -1,0 +1,18 @@
+{
+  "id": "boutique",
+  "name": "Boutique",
+  "description": "Warm, artisan — handcrafted serif heading with clean sans body",
+  "heading": {
+    "family": "Fraunces",
+    "fallback": "Georgia, 'Times New Roman', serif",
+    "weights": [400, 700],
+    "italic": true,
+    "import": "Fraunces:ital,wght@0,400;0,700;1,400"
+  },
+  "body": {
+    "family": "DM Sans",
+    "fallback": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    "weights": [400, 500, 600, 700],
+    "import": "DM+Sans:wght@400;500;600;700"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "soft-blush",
+  "name": "Soft Blush",
+  "description": "Gentle, feminine — beauty, weddings, florists, women's coaching",
+  "colors": {
+    "primary": "#B07D8E",
+    "primary-light": "#C9A0AE",
+    "primary-dark": "#8E5F6F",
+    "secondary": "#A89ACD",
+    "secondary-light": "#C4B9DE",
+    "secondary-dark": "#7E6FA8",
+    "accent": "#C9A84C",
+    "accent-light": "#D4BA6E",
+    "bg": "#FDF9F8",
+    "bg-alt": "#F5EEEC",
+    "bg-dark": "#3D2E35",
+    "surface": "#FFFFFF",
+    "surface-alt": "#FAF5F3",
+    "text": "#3E3438",
+    "text-light": "#7A6B72",
+    "text-inverse": "#FDF9F8",
+    "text-heading": "#2D2228",
+    "border": "#E8DDD9",
+    "border-light": "#F2ECEA",
+    "success": "#7BAB84",
+    "error": "#C45B5B"
+  }
+}
