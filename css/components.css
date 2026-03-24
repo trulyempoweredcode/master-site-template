@@ -1409,6 +1409,10 @@
   justify-items: start;
 }
 
+.hero--image-left .hero__content {
+  max-width: 600px;
+}
+
 .hero--image-left .hero__text {
   margin-left: 0;
   margin-right: 0;
@@ -1429,6 +1433,10 @@
 
 .hero--image-right .hero__inner {
   justify-items: end;
+}
+
+.hero--image-right .hero__content {
+  max-width: 600px;
 }
 
 .hero--image-right .hero__text {
