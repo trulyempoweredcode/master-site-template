@@ -1400,6 +1400,50 @@
   border-color: var(--color-text-inverse);
 }
 
+/* --- Image Left: text left-aligned --- */
+.hero--image-left {
+  text-align: left;
+}
+
+.hero--image-left .hero__inner {
+  justify-items: start;
+}
+
+.hero--image-left .hero__text {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.hero--image-left .hero__actions {
+  justify-content: flex-start;
+}
+
+.hero--image-left .hero__ticks {
+  justify-content: flex-start;
+}
+
+/* --- Image Right: text right-aligned --- */
+.hero--image-right {
+  text-align: right;
+}
+
+.hero--image-right .hero__inner {
+  justify-items: end;
+}
+
+.hero--image-right .hero__text {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.hero--image-right .hero__actions {
+  justify-content: flex-end;
+}
+
+.hero--image-right .hero__ticks {
+  justify-content: flex-end;
+}
+
 /* Extra top padding when transparent nav overlays the hero */
 body:has(.nav--transparent) .hero--image {
   padding-top: calc(var(--space-3xl) + 140px);

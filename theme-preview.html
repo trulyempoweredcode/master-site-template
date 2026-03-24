@@ -181,7 +181,9 @@
         <option value="hero--half">Split 50%</option>
         <option value="hero--fullwidth">Fullwidth Dark</option>
         <option value="hero--minimal">Fullwidth Light</option>
-        <option value="hero--image">Image Background</option>
+        <option value="hero--image">Image Full Center</option>
+        <option value="hero--image hero--image-left">Image Full Left</option>
+        <option value="hero--image hero--image-right">Image Full Right</option>
         <option value="hero--showcase hero--showcase-dark">Showcase Dark (Left)</option>
         <option value="hero--showcase hero--showcase-dark hero--showcase-center">Showcase Dark (Center)</option>
         <option value="hero--showcase hero--showcase-dark hero--showcase-right">Showcase Dark (Right)</option>
@@ -2012,7 +2014,7 @@
       const isReverse = document.getElementById('heroReverse').checked;
       hero.className = 'hero' + (variant ? ' ' + variant : '') + (isReverse ? ' hero--reverse' : '');
       // Add placeholder background image for image/showcase heroes
-      if (variant === 'hero--image' || variant.includes('hero--showcase')) {
+      if (variant.includes('hero--image') || variant.includes('hero--showcase')) {
         hero.style.backgroundImage = 'url("https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1600&q=80")';
       } else {
         hero.style.backgroundImage = '';
