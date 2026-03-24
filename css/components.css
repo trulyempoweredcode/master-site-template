@@ -1553,6 +1553,13 @@ body:has(.nav--transparent) .hero--image {
   border-color: rgba(255, 255, 255, 0.2);
 }
 
+/* Left/right cards: strip pill bg/border to keep card compact */
+.hero--showcase-dark:not(.hero--showcase-center) .hero__ticks li {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
 .hero--showcase-dark .hero__ticks svg {
   color: var(--color-secondary-light);
 }
@@ -1600,6 +1607,13 @@ body:has(.nav--transparent) .hero--image {
   color: var(--color-text);
   background-color: rgba(0, 0, 0, 0.06);
   border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Left/right cards: strip pill bg/border to keep card compact */
+.hero--showcase-light:not(.hero--showcase-center) .hero__ticks li {
+  background: none;
+  border: none;
+  padding: 0;
 }
 
 .hero--showcase-light .hero__ticks svg {
