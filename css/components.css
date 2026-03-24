@@ -1513,11 +1513,20 @@ body:has(.nav--transparent) .hero--image {
 
 .hero--showcase .hero__content {
   order: 1;
-  max-width: 480px;
+  max-width: 540px;
   padding: 40px;
   border-radius: 20px;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+}
+
+/* Buttons and ticks must stay in 1 row — card should stay compact */
+.hero--showcase .hero__actions {
+  flex-wrap: nowrap;
+}
+
+.hero--showcase .hero__ticks {
+  flex-wrap: nowrap;
 }
 
 /* --- Dark card (default) --- */
@@ -1630,6 +1639,7 @@ body:has(.nav--transparent) .hero--image {
 
 .hero--showcase-center .hero__content {
   text-align: center;
+  max-width: 720px;
 }
 
 .hero--showcase-center .hero__actions {
