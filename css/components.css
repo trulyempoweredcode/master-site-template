@@ -1516,8 +1516,8 @@ body:has(.nav--transparent) .hero--image {
   max-width: 540px;
   padding: 40px;
   border-radius: 20px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 /* Buttons and ticks must stay in 1 row — card should stay compact */
