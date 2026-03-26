@@ -5039,11 +5039,15 @@ a.card--service:hover .card__link {
   width: 24px;
   height: 24px;
   color: var(--color-primary);
-  transition: transform var(--transition-base);
 }
 
-.accordion__item--open .accordion__icon {
-  transform: rotate(45deg);
+.accordion__icon-vertical {
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+.accordion__item--open .accordion__icon-vertical {
+  transform: scaleY(0);
+  opacity: 0;
 }
 
 .accordion__content {
