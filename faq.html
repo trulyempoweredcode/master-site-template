@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Frequently asked questions about {{BUSINESS_NAME}}. Find answers about sessions, pricing, cancellations, confidentiality, and more.">
+  <title>FAQ — {{BUSINESS_NAME}}</title>
+
+  <link rel="canonical" href="{{SITE_URL}}/faq.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{SITE_URL}}/faq.html">
+  <meta property="og:title" content="FAQ — {{BUSINESS_NAME}}">
+  <meta property="og:description" content="Find answers to common questions about our services, pricing, and what to expect.">
+  <meta property="og:image" content="{{SITE_URL}}/images/hero.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="FAQ — {{BUSINESS_NAME}}">
+  <meta name="twitter:description" content="Find answers to common questions about our services, pricing, and what to expect.">
+  <meta name="twitter:image" content="{{SITE_URL}}/images/hero.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <!-- PROFILE:schema -->
+  <!-- /PROFILE:schema -->
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- SECTION: nav -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="container nav__inner">
+      <a href="index.html" class="nav__brand">
+        <!-- PROFILE:logo --><!-- /PROFILE:logo -->
+        <span class="nav__name"><!-- PROFILE:site_title -->{{BUSINESS_NAME}}<!-- /PROFILE:site_title --></span>
+        <span class="nav__title"><!-- PROFILE:site_slogan -->{{TAGLINE}}<!-- /PROFILE:site_slogan --></span>
+      </a>
+      <div class="nav__links">
+        <a href="index.html" class="nav__link">Home</a>
+        <a href="about.html" class="nav__link">About</a>
+        <a href="services.html" class="nav__link">Services</a>
+        <a href="pricing.html" class="nav__link">Pricing</a>
+        <a href="faq.html" class="nav__link nav__link--active">FAQ</a>
+        <a href="contact.html" class="nav__link">Contact</a>
+        <a href="contact.html" class="btn btn--primary nav__cta">{{CTA_TEXT}}</a>
+      </div>
+      <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+    </div>
+    <div class="nav__mobile" id="mobile-menu" role="menu">
+      <a href="index.html" class="nav__link" role="menuitem">Home</a>
+      <a href="about.html" class="nav__link" role="menuitem">About</a>
+      <a href="services.html" class="nav__link" role="menuitem">Services</a>
+      <a href="pricing.html" class="nav__link" role="menuitem">Pricing</a>
+      <a href="faq.html" class="nav__link nav__link--active" role="menuitem">FAQ</a>
+      <a href="contact.html" class="nav__link" role="menuitem">Contact</a>
+      <a href="contact.html" class="btn btn--primary" role="menuitem">{{CTA_TEXT}}</a>
+    </div>
+  </nav>
+  <!-- /SECTION: nav -->
+
+  <!-- Compact scroll header -->
+  <div class="nav-scroll" aria-hidden="true">
+    <div class="container nav-scroll__inner">
+      <div class="nav-scroll__brand">
+        <span class="nav-scroll__name"><!-- PROFILE:site_title -->{{BUSINESS_NAME}}<!-- /PROFILE:site_title --></span>
+        <span class="nav-scroll__title"><!-- PROFILE:site_slogan -->{{TAGLINE}}<!-- /PROFILE:site_slogan --></span>
+      </div>
+      <div class="nav-scroll__right">
+        <a href="tel:{{PHONE}}" class="nav-scroll__phone">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          {{PHONE}}
+        </a>
+        <a href="tel:{{PHONE}}" class="nav-scroll__phone-icon" aria-label="Call us">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        </a>
+        <button class="nav-scroll__toggle" aria-label="Toggle menu">
+          <span class="nav-scroll__toggle-bar"></span>
+          <span class="nav-scroll__toggle-bar"></span>
+          <span class="nav-scroll__toggle-bar"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- SECTION: page-header -->
+    <section class="page-header">
+      <div class="container">
+        <span class="section-label">Common Questions</span>
+        <h1>Frequently Asked Questions</h1>
+        <p>If your question isn't answered here, please don't hesitate to get in touch. There's no such thing as a silly question.</p>
+      </div>
+    </section>
+    <!-- /SECTION: page-header -->
+
+    <!-- SECTION: faq -->
+    <section class="section reveal">
+      <div class="container">
+        <div class="accordion">
+
+          <div class="accordion__item accordion__item--open">
+            <button class="accordion__trigger" aria-expanded="true">
+              How many sessions will I need?
+              <svg class="accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="accordion__content">
+              <p>This varies from person to person. Some clients find that 6&ndash;8 focused sessions are enough to address their concerns, while others benefit from longer-term work over several months. We'll discuss expectations during your initial consultation and regularly review your progress together.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">
+              What happens in the first session?
+              <svg class="accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="accordion__content">
+              <p>The first session is about getting to know each other. I'll ask about your situation, your goals, and what's brought you here. There's no pressure to share more than you're comfortable with. Together we'll agree a plan that feels right for you and discuss the best approach going forward.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">
+              Is everything I share confidential?
+              <svg class="accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="accordion__content">
+              <p>Yes, with very few exceptions. Confidentiality is a cornerstone of my practice. The only circumstances where I might need to share information are if there is a serious risk of harm to you or someone else, or if required by law. I'll explain this fully before we begin working together.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">
+              Do you offer evening or weekend appointments?
+              <svg class="accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="accordion__content">
+              <p>Yes. I understand that fitting appointments around work and family commitments can be challenging. I offer select evening appointments and Saturday morning sessions. These slots are popular, so I recommend booking early to secure your preferred time.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">
+              What is your cancellation policy?
+              <svg class="accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="accordion__content">
+              <p>I ask for at least 48 hours' notice for cancellations. Sessions cancelled with less than 48 hours' notice or missed without contact will be charged at the full session rate. I understand that genuine emergencies arise, and I'll always try to be flexible where possible.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">
+              Can I use my health insurance?
+              <svg class="accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="accordion__content">
+              <p>Some private health insurance providers do cover sessions. I'm registered with several major insurers. Please check with your provider and mention my name and registration details when enquiring about coverage. I can provide receipts and any documentation needed for your claim.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">
+              Do you offer online sessions?
+              <svg class="accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="accordion__content">
+              <p>Yes. I offer secure, confidential video sessions for clients who prefer the flexibility of remote appointments or who live outside the local area. Online sessions are just as effective as in-person for most people and most conditions. All you need is a private space and a stable internet connection.</p>
+            </div>
+          </div>
+
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">
+              How do I book an appointment?
+              <svg class="accordion__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="accordion__content">
+              <p>The easiest way is to use the contact form on this website, or you can call or email me directly. I offer a free 15-minute phone consultation for new clients, so you can ask any questions and see if we're a good fit before committing to an appointment.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <!-- /SECTION: faq -->
+
+    <!-- SECTION: cta -->
+    <section class="section cta-banner reveal">
+      <div class="container text-center">
+        <h2>Still Have Questions?</h2>
+        <p>I'm always happy to have a chat. Get in touch for a free, no-obligation conversation and I'll do my best to help.</p>
+        <div class="cta-banner__buttons">
+          <a href="contact.html" class="btn btn--accent">{{CTA_TEXT}}</a>
+        </div>
+      </div>
+    </section>
+    <!-- /SECTION: cta -->
+
+  </main>
+
+  <!-- SECTION: footer -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <p class="footer__brand-name">{{BUSINESS_NAME}}</p>
+        <p class="footer__brand-text">Qualified practitioner offering professional health and wellness services in the local area. Registered and fully insured.</p>
+      </div>
+      <div class="footer__col">
+        <p class="footer__heading">Quick Links</p>
+        <div class="footer__links">
+          <a href="index.html" class="footer__link">Home</a>
+          <a href="about.html" class="footer__link">About</a>
+          <a href="services.html" class="footer__link">Services</a>
+          <a href="pricing.html" class="footer__link">Pricing</a>
+          <a href="faq.html" class="footer__link">FAQ</a>
+          <a href="contact.html" class="footer__link">Contact</a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <p class="footer__heading">Services</p>
+        <div class="footer__links">
+          <a href="services.html" class="footer__link">Service One</a>
+          <a href="services.html" class="footer__link">Service Two</a>
+          <a href="services.html" class="footer__link">Service Three</a>
+          <a href="services.html" class="footer__link">Service Four</a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <p class="footer__heading">Contact</p>
+        <div class="footer__contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <!-- PROFILE:phone_landline --><span>{{PHONE}}</span><!-- /PROFILE:phone_landline -->
+        </div>
+        <div class="footer__contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <!-- PROFILE:email --><a href="mailto:{{EMAIL}}">{{EMAIL}}</a><!-- /PROFILE:email -->
+        </div>
+        <div class="footer__contact-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <!-- PROFILE:address --><span>{{ADDRESS}}</span><!-- /PROFILE:address -->
+        </div>
+      </div>
+    </div>
+    <div class="container footer__bottom">
+      <p class="footer__copyright">&copy; {{YEAR}} {{BUSINESS_NAME}}. All rights reserved.</p>
+      <div class="footer__legal">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="cookies-policy.html">Cookie Policy</a>
+      </div>
+    </div>
+  </footer>
+  <!-- /SECTION: footer -->
+
+  <div class="site-credit">
+    <p>Made with <span class="site-credit__heart" aria-label="love">&#10084;</span> by <a href="https://www.therapywebgenie.com" target="_blank" rel="noopener">Therapy Webgenie</a></p>
+  </div>
+
+  <!-- Cookie Consent -->
+  <div class="cookie-banner" role="dialog" aria-label="Cookie consent">
+    <div class="cookie-banner__inner">
+      <p class="cookie-banner__text">We use cookies to improve your experience. See our <a href="cookies-policy.html">cookie policy</a> for details.</p>
+      <button class="cookie-banner__accept">Accept</button>
+    </div>
+  </div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

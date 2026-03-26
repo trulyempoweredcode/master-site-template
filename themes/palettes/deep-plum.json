@@ -1,0 +1,28 @@
+{
+  "id": "deep-plum",
+  "name": "Deep Plum",
+  "description": "Rich, spiritual — holistic therapy, Reiki, meditation, luxury wellness",
+  "colors": {
+    "primary": "#6B4C7D",
+    "primary-light": "#8B6E9E",
+    "primary-dark": "#4D3460",
+    "secondary": "#C49B6A",
+    "secondary-light": "#D4B48A",
+    "secondary-dark": "#956E3E",
+    "accent": "#7B8E6B",
+    "accent-light": "#9BB38A",
+    "bg": "#FAF8FB",
+    "bg-alt": "#F0ECF2",
+    "bg-dark": "#2E1F3A",
+    "surface": "#FFFFFF",
+    "surface-alt": "#F6F2F8",
+    "text": "#3A3040",
+    "text-light": "#6E6078",
+    "text-inverse": "#FAF8FB",
+    "text-heading": "#2E1F3A",
+    "border": "#DDD6E2",
+    "border-light": "#EBE6EE",
+    "success": "#6B8B6F",
+    "error": "#C45B5B"
+  }
+}

@@ -13,5 +13,10 @@
     "fallback": "Georgia, 'Times New Roman', serif",
     "weights": [300, 400, 700],
     "import": "Merriweather:wght@300;400;700"
+  },
+  "sizes": {
+    "text-h1-desktop": "2.5rem",
+    "text-h2-desktop": "2rem",
+    "text-h3-desktop": "1.3rem"
   }
 }

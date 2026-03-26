@@ -1,0 +1,28 @@
+{
+  "id": "fresh-teal",
+  "name": "Fresh Teal",
+  "description": "Clean, revitalising — health clinics, physio, modern wellness",
+  "colors": {
+    "primary": "#2A8F8F",
+    "primary-light": "#4DB8B8",
+    "primary-dark": "#1D6B6B",
+    "secondary": "#C48B5B",
+    "secondary-light": "#D4A87A",
+    "secondary-dark": "#956438",
+    "accent": "#7B6E99",
+    "accent-light": "#9B8FB3",
+    "bg": "#F7FAFA",
+    "bg-alt": "#E8F2F2",
+    "bg-dark": "#1A3D3D",
+    "surface": "#FFFFFF",
+    "surface-alt": "#F0F7F7",
+    "text": "#2D3A3A",
+    "text-light": "#5E7070",
+    "text-inverse": "#F7FAFA",
+    "text-heading": "#1A3D3D",
+    "border": "#D0DEDE",
+    "border-light": "#E4EDED",
+    "success": "#2A8F6F",
+    "error": "#C45B5B"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "trusty-blue",
+  "name": "Trusty Blue",
+  "description": "Professional, trustworthy — healthcare, consulting, corporate therapy",
+  "colors": {
+    "primary": "#3B6FA0",
+    "primary-light": "#5A8FBF",
+    "primary-dark": "#2A5178",
+    "secondary": "#D4956A",
+    "secondary-light": "#E2B08A",
+    "secondary-dark": "#A06B3E",
+    "accent": "#6B8E7B",
+    "accent-light": "#8FB3A0",
+    "bg": "#F8FAFB",
+    "bg-alt": "#ECF1F4",
+    "bg-dark": "#1E3A52",
+    "surface": "#FFFFFF",
+    "surface-alt": "#F2F6F8",
+    "text": "#2D3748",
+    "text-light": "#64748B",
+    "text-inverse": "#F8FAFB",
+    "text-heading": "#1E3A52",
+    "border": "#D4DCE4",
+    "border-light": "#E8EDF2",
+    "success": "#3B8F6F",
+    "error": "#C45B5B"
+  }
+}

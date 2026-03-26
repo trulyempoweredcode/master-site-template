@@ -1,0 +1,28 @@
+{
+  "id": "playful-sky",
+  "name": "Playful Sky",
+  "description": "Bright, cheerful — children's services, play therapy, family-focused",
+  "colors": {
+    "primary": "#4A9BD9",
+    "primary-light": "#6DB5E8",
+    "primary-dark": "#2E7AB8",
+    "secondary": "#F5C542",
+    "secondary-light": "#F8D76B",
+    "secondary-dark": "#D4A520",
+    "accent": "#E8734A",
+    "accent-light": "#F09070",
+    "bg": "#FAFCFF",
+    "bg-alt": "#EEF5FC",
+    "bg-dark": "#1E3A5F",
+    "surface": "#FFFFFF",
+    "surface-alt": "#F4F9FE",
+    "text": "#2C3E50",
+    "text-light": "#5D7085",
+    "text-inverse": "#FAFCFF",
+    "text-heading": "#1A2A3A",
+    "border": "#D4E4F0",
+    "border-light": "#E8F0F8",
+    "success": "#4CAF7D",
+    "error": "#E05A47"
+  }
+}

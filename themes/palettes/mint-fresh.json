@@ -1,0 +1,28 @@
+{
+  "id": "mint-fresh",
+  "name": "Mint Fresh",
+  "description": "Light, airy — nutrition, fitness, modern holistic, fresh start",
+  "colors": {
+    "primary": "#4A9E8E",
+    "primary-light": "#6BBFAE",
+    "primary-dark": "#347B6E",
+    "secondary": "#D49B6A",
+    "secondary-light": "#E2B58A",
+    "secondary-dark": "#A07040",
+    "accent": "#8B7E5B",
+    "accent-light": "#ADA07A",
+    "bg": "#F7FBF9",
+    "bg-alt": "#E8F3EF",
+    "bg-dark": "#1E3A34",
+    "surface": "#FFFFFF",
+    "surface-alt": "#F0F8F5",
+    "text": "#2D3A36",
+    "text-light": "#5E706A",
+    "text-inverse": "#F7FBF9",
+    "text-heading": "#1E3A34",
+    "border": "#D0DED9",
+    "border-light": "#E4EDEA",
+    "success": "#4A9E6E",
+    "error": "#C45B5B"
+  }
+}

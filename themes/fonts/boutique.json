@@ -14,5 +14,10 @@
     "fallback": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
     "weights": [400, 500, 600, 700],
     "import": "DM+Sans:wght@400;500;600;700"
+  },
+  "sizes": {
+    "text-h1-desktop": "2.75rem",
+    "text-h2-desktop": "2.2rem",
+    "text-h3-desktop": "1.65rem"
   }
 }

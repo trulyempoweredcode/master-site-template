@@ -1,0 +1,28 @@
+{
+  "id": "warm-grey",
+  "name": "Warm Grey",
+  "description": "Sophisticated, understated — executive coaching, mediation, luxury",
+  "colors": {
+    "primary": "#6B6660",
+    "primary-light": "#8A847D",
+    "primary-dark": "#4A4540",
+    "secondary": "#B08968",
+    "secondary-light": "#C9A688",
+    "secondary-dark": "#8A6844",
+    "accent": "#7D7088",
+    "accent-light": "#9D90A8",
+    "bg": "#FAF9F7",
+    "bg-alt": "#F0EEEB",
+    "bg-dark": "#3A3633",
+    "surface": "#FFFFFF",
+    "surface-alt": "#F5F4F1",
+    "text": "#3A3633",
+    "text-light": "#787270",
+    "text-inverse": "#FAF9F7",
+    "text-heading": "#2E2B28",
+    "border": "#DDD9D5",
+    "border-light": "#EAE8E5",
+    "success": "#6B8B6F",
+    "error": "#B85B5B"
+  }
+}

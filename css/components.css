@@ -162,7 +162,7 @@
   top: 72px;
   background-color: var(--color-surface);
   z-index: 99;
-  padding: var(--space-3xl) var(--space-lg);
+  padding: var(--space-xl) var(--space-lg);
   flex-direction: column;
   gap: var(--space-lg);
   overflow-y: auto;
@@ -172,6 +172,12 @@
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
               opacity 0.35s ease,
               visibility 0.35s;
+}
+
+/* When opened from the compact scroll header, start below it */
+.nav__mobile--from-scroll {
+  top: 56px;
+  z-index: 201;
 }
 
 .nav__mobile--open {
@@ -464,7 +470,7 @@
 }
 
 .nav--two-tier .nav__link {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
 }
 
 /* Mobile: hamburger in top bar, not bottom */
@@ -1708,6 +1714,11 @@ body:has(.nav--transparent) .hero--image {
   max-width: 720px;
 }
 
+.hero--showcase-center .hero__text {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .hero--showcase-center .hero__actions {
   justify-content: center;
 }
@@ -2055,13 +2066,18 @@ body:has(.nav--transparent) .hero--showcase {
   color: var(--color-primary);
 }
 
+/* On alt-background sections, icon needs contrast against card bg */
+.section--alt .card__icon {
+  background-color: var(--color-surface-alt);
+}
+
 .card__icon svg {
   width: 24px;
   height: 24px;
 }
 
 .card__title {
-  font-size: var(--text-h3-desktop);
+  font-size: calc(var(--text-h3-desktop) * 0.8);
   margin-bottom: var(--space-sm);
 }
 
@@ -2104,6 +2120,21 @@ body:has(.nav--transparent) .hero--showcase {
   width: 56px;
   height: 56px;
   border-radius: 50%;
+}
+
+.card--service .card__link {
+  justify-content: center;
+}
+
+/* Clickable service cards (when wrapped in <a>) */
+a.card--service {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+a.card--service:hover .card__link {
+  gap: var(--space-sm);
 }
 
 /* Feature Card Variant */
@@ -2250,7 +2281,7 @@ body:has(.nav--transparent) .hero--showcase {
 .form__select {
   width: 100%;
   padding: var(--space-md);
-  border: 1px solid var(--color-border);
+  border: 2px solid #ced1d5;
   border-radius: var(--radius-md);
   background-color: var(--color-surface);
   font-size: var(--text-base);
@@ -2440,9 +2471,10 @@ body:has(.nav--transparent) .hero--showcase {
 
 .about-hero__image {
   width: 100%;
+  max-height: 100vh;
   aspect-ratio: auto;
   object-fit: cover;
-  border-radius: var(--radius-lg);
+  border-radius: 0;
 }
 
 .about-hero__image-placeholder {
@@ -2488,7 +2520,7 @@ body:has(.nav--transparent) .hero--showcase {
   }
 
   .about-hero__inner > div:last-child {
-    padding: var(--space-2xl) var(--space-4xl) var(--space-2xl) var(--space-4xl);
+    padding: var(--space-4xl);
   }
 }
 
@@ -2520,16 +2552,16 @@ body:has(.nav--transparent) .hero--showcase {
   width: 32px;
   height: 32px;
   border-radius: var(--radius-full);
-  background-color: var(--color-primary);
-  color: var(--color-text-inverse);
+  background-color: transparent;
+  color: var(--color-primary);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .quals-list__icon svg {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
 }
 
 .quals-list__text {
@@ -2581,7 +2613,7 @@ body:has(.nav--transparent) .hero--showcase {
 }
 
 .approach-item h3 {
-  font-size: var(--text-lg);
+  font-size: calc(var(--text-h3-desktop) * 0.8);
   margin-bottom: var(--space-sm);
 }
 
@@ -2602,8 +2634,8 @@ body:has(.nav--transparent) .hero--showcase {
    ============================================= */
 /* Service section wrapper — use around each service block */
 .service-section {
-  padding: var(--space-xl) 0;
-  border-bottom: 1px solid var(--color-border-light);
+  padding: 96px 0;
+  border-bottom: 2px solid var(--color-border);
 }
 
 .service-section:last-of-type {
@@ -2741,8 +2773,8 @@ body:has(.nav--transparent) .hero--showcase {
     position: sticky;
     top: 100px;
     align-self: start;
-    margin-top: var(--space-2xl);
-    padding: var(--space-xl);
+    margin-top: 96px;
+    padding: var(--space-md);
     background: var(--color-surface);
     border-radius: var(--radius-lg);
     border: 1px solid var(--color-border-light);
@@ -2763,6 +2795,7 @@ body:has(.nav--transparent) .hero--showcase {
 .services-sidebar__nav {
   display: flex;
   flex-direction: column;
+  gap: var(--space-lg);
   margin-bottom: var(--space-xl);
 }
 
@@ -2836,7 +2869,7 @@ body:has(.nav--transparent) .hero--showcase {
 }
 
 .pricing-card h3 {
-  font-size: var(--text-h3-desktop);
+  font-size: calc(var(--text-h3-desktop) * 0.8);
   margin-bottom: var(--space-sm);
 }
 
@@ -2887,14 +2920,14 @@ body:has(.nav--transparent) .hero--showcase {
 
 .faq-item__question {
   font-family: var(--font-heading);
-  font-size: var(--text-lg);
+  font-size: calc(var(--text-h3-desktop) * 0.8);
   font-weight: var(--font-weight-semibold);
   color: var(--color-text-heading);
   margin-bottom: var(--space-sm);
 }
 
 .faq-item__answer {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--color-text-light);
   line-height: var(--line-height-relaxed);
 }
@@ -2964,7 +2997,7 @@ body:has(.nav--transparent) .hero--showcase {
    PAGE HEADER (inner pages)
    ============================================= */
 .page-header {
-  padding: var(--space-2xl) 0;
+  padding: 96px 0;
   background-color: var(--color-bg-alt);
   text-align: center;
 }
@@ -2998,6 +3031,10 @@ body:has(.nav--transparent) .hero--showcase {
 
 .page-header--dark p {
   color: rgba(255, 255, 255, 0.85);
+}
+
+.page-header--dark .section-label {
+  color: var(--color-secondary-light);
 }
 
 .page-header--dark .breadcrumb__link {
@@ -3347,6 +3384,53 @@ body:has(.nav--transparent) .hero--showcase {
 
 .text-block .btn {
   margin-top: var(--space-lg);
+}
+
+/* =============================================
+   CONTENT: STORY SPLIT
+   Centered heading above, then h3 lead on the left
+   with body paragraphs on the right.
+   ============================================= */
+.story-split {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+}
+
+.story-split .text-center {
+  margin-bottom: var(--space-2xl);
+}
+
+.story-split__body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.story-split__lead {
+  line-height: var(--line-height-tight);
+  color: var(--color-text-heading);
+}
+
+.story-split__lead h3 {
+  font-weight: 400;
+  line-height: 1.3em;
+}
+
+.story-split__content p {
+  color: var(--color-text-light);
+  line-height: var(--line-height-relaxed);
+}
+
+.story-split__content p + p {
+  margin-top: var(--space-md);
+}
+
+@media (min-width: 768px) {
+  .story-split__body {
+    grid-template-columns: 1fr 1.5fr;
+    gap: var(--space-2xl);
+  }
 }
 
 /* =============================================
@@ -3783,8 +3867,8 @@ body:has(.nav--transparent) .hero--showcase {
   border-radius: var(--radius-full);
   background-color: var(--color-primary);
   color: var(--color-text-inverse);
-  font-family: var(--font-heading);
-  font-weight: var(--font-weight-bold);
+  font-family: var(--font-body);
+  font-weight: 600;
   font-size: var(--text-xl);
   margin: 0 auto var(--space-lg);
 }
@@ -3800,7 +3884,7 @@ body:has(.nav--transparent) .hero--showcase {
 }
 
 .step__title {
-  font-size: var(--text-h3-desktop);
+  font-size: calc(var(--text-h3-desktop) * 0.8);
   margin-bottom: var(--space-sm);
 }
 
@@ -3898,7 +3982,7 @@ body:has(.nav--transparent) .hero--showcase {
 }
 
 .image-card__title {
-  font-size: var(--text-h3-desktop);
+  font-size: calc(var(--text-h3-desktop) * 0.8);
   margin-bottom: var(--space-sm);
 }
 
@@ -3976,7 +4060,7 @@ body:has(.nav--transparent) .hero--showcase {
 }
 
 .overlay-card__title {
-  font-size: var(--text-h3-desktop);
+  font-size: calc(var(--text-h3-desktop) * 0.8);
   color: var(--color-text-inverse);
   font-weight: var(--font-weight-bold);
 }
@@ -4937,7 +5021,7 @@ body:has(.nav--transparent) .hero--showcase {
   padding: var(--space-lg) 0;
   text-align: left;
   font-family: var(--font-heading);
-  font-size: var(--text-md);
+  font-size: calc(var(--text-h3-desktop) * 0.8);
   font-weight: var(--font-weight-semibold);
   color: var(--color-text-heading);
   cursor: pointer;
@@ -4972,7 +5056,7 @@ body:has(.nav--transparent) .hero--showcase {
 }
 
 .accordion__content p {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--color-text-light);
   line-height: var(--line-height-relaxed);
 }
@@ -6150,7 +6234,7 @@ body:has(.nav--transparent) .hero--showcase {
 
 .blog-card__title {
   font-family: var(--font-heading);
-  font-size: var(--text-h3-desktop);
+  font-size: calc(var(--text-h3-desktop) * 0.8);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-heading);
   line-height: var(--line-height-tight);
