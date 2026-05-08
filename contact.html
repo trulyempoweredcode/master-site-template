@@ -158,20 +158,28 @@
             <h2>Send Us a Message</h2>
             <p>Fill in the form below and we'll get back to you within 24 hours. All enquiries are treated in the strictest confidence.</p>
             <form class="form" action="https://editmy.site/api/form/{{SITE_ID}}" method="POST">
+              <div style="display:none"><input type="text" name="_hp" tabindex="-1" autocomplete="off"></div>
+              <input type="hidden" name="_t" value="">
+              <input type="hidden" name="_page" value="">
               <div class="form__row">
                 <div class="form__group">
-                  <label for="name" class="form__label form__label--required">Full Name</label>
-                  <input type="text" id="name" name="name" class="form__input" placeholder="Your full name" required autocomplete="name">
+                  <label for="name" class="form__label form__label--required">First Name</label>
+                  <input type="text" id="name" name="name" class="form__input" placeholder="First name" required autocomplete="given-name">
                 </div>
+                <div class="form__group">
+                  <label for="surname" class="form__label">Surname</label>
+                  <input type="text" id="surname" name="surname" class="form__input" placeholder="Surname" autocomplete="family-name">
+                </div>
+              </div>
+              <div class="form__row">
                 <div class="form__group">
                   <label for="email" class="form__label form__label--required">Email Address</label>
                   <input type="email" id="email" name="email" class="form__input" placeholder="you@example.com" required autocomplete="email">
                 </div>
-              </div>
-              <div class="form__group">
-                <label for="phone" class="form__label">Phone Number</label>
-                <input type="tel" id="phone" name="phone" class="form__input" placeholder="07xxx xxxxxx" autocomplete="tel">
-                <span class="form__hint">Optional — useful if you'd like a call back</span>
+                <div class="form__group">
+                  <label for="phone" class="form__label">Phone Number</label>
+                  <input type="tel" id="phone" name="phone" class="form__input" placeholder="07xxx xxxxxx" autocomplete="tel">
+                </div>
               </div>
               <div class="form__group">
                 <label for="message" class="form__label form__label--required">Your Message</label>
@@ -179,7 +187,7 @@
               </div>
               <div class="form__group form__group--checkbox">
                 <input type="checkbox" id="consent" name="consent" required>
-                <label for="consent">I agree to the <a href="privacy.html">privacy policy</a> and consent to my data being stored to process this enquiry.</label>
+                <label for="consent">I agree to the <a href="privacy.html">privacy policy</a>. My information will not be shared with third parties.</label>
               </div>
               <div>
                 <button type="submit" class="btn btn--primary btn--block">Send Message</button>
@@ -268,7 +276,7 @@
   <div class="cookie-banner" role="dialog" aria-label="Cookie consent">
     <div class="cookie-banner__inner">
       <p class="cookie-banner__text">We use cookies to improve your experience. See our <a href="cookies-policy.html">cookie policy</a> for details.</p>
-      <button class="cookie-banner__accept">Accept</button>
+      <div class="cookie-banner__buttons"><button class="cookie-banner__accept">Accept</button><button class="cookie-banner__decline">Decline</button></div>
     </div>
   </div>
 

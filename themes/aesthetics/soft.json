@@ -1,0 +1,10 @@
+{
+  "id": "soft",
+  "name": "Soft (default)",
+  "description": "Modern, friendly. 14px corners, layered soft shadow, 1px borders. The default look — every existing client site is on this.",
+  "tokens": {
+    "aesthetic-radius": "14px",
+    "aesthetic-shadow-card": "0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.06)",
+    "aesthetic-border-width": "1px"
+  }
+}

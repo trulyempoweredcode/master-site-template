@@ -221,11 +221,22 @@ Client sites are hosted on GitHub Pages (static — no PHP). Forms POST to the A
 
 1. Set the form `action` to `https://editmy.site/api/form/{site_id}` — the `{site_id}` is the numeric ID from the `sites` table (assigned when the admin creates the site in the portal)
 2. The form must use `method="POST"` and class `form` (main.js handles AJAX submission via `fetch`)
+3. **MANDATORY hidden fields** — the server silently drops submissions without these. They must appear inside every `<form>` that posts to editmy.site:
 
-Example form opening:
 ```html
 <form class="form" action="https://editmy.site/api/form/{site_id}" method="POST">
+  <!-- ... your visible fields ... -->
+
+  <!-- Anti-spam — DO NOT REMOVE. Server rejects submissions silently if these are missing. -->
+  <div style="display:none"><input type="text" name="_hp" tabindex="-1" autocomplete="off"></div>
+  <input type="hidden" name="_t" value="">
+  <input type="hidden" name="_page" value="">
+
+  <button type="submit" class="btn btn--primary form__submit">Send</button>
+</form>
 ```
+
+`_hp` is a honeypot (hidden bots fill it). `_t` is a JS-set timestamp (main.js populates it on page load). `_page` is the current pathname (main.js populates it) so server error alerts can identify which page hosted the broken form. **Even if you forget these, GithubController will auto-inject them on commit** — but build them in correctly so the source matches the live site. See `master-site-template/contact.html` for the canonical form.
 
 **Important:** The site must be registered in the admin portal first to get its `site_id`. After building the site, tell the user to create the site entry in the admin portal and update the form action with the assigned ID. Form submissions are stored in the database and forwarded via per-site SMTP (configured during admin onboarding).
 
@@ -429,6 +440,10 @@ Use these CSS classes from components.css. Do NOT write custom CSS. Everything n
 These rules apply to every page on every build. They prevent common visual issues.
 
 1. **Never use the same background for consecutive sections.** Alternate between `.section` and `.section--alt` (or `.section--dark`) so each section boundary is clearly visible. Two same-background sections create a dead zone where the gap between them looks like wasted space.
+   - **This counts the hero too.** `.hero` (transparent, inherits body `--color-bg`) followed by a plain `.section` = same bg = violation. The first section after a light hero MUST be `.section--alt`.
+   - **This counts the page-header too.** `.page-header` (default `--color-bg-alt`) followed by `.section--alt` = violation. The first section after a default page-header MUST be plain `.section`, not `--alt`.
+   - **Verify at build time** with: `Array.from(document.querySelectorAll('main > *')).map(s => ({ cls: s.className, bg: getComputedStyle(s).backgroundColor }))`. Any two adjacent rows with the same `bg` = bug.
+   - **Safety net:** components.css contains a CSS rule that force-alternates consecutive plain sections and consecutive --alt sections. Do NOT remove this rule.
 
 2. **Icon containers must always be circular.** Use `border-radius: 50%` on all icon containers (`.card__icon`, `.icon-box__icon`, `.contact-info__icon`, `.service-detail__icon`). Never use `border-radius: var(--radius-md)` or `var(--radius-lg)` for icons.
 

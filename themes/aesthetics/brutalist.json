@@ -1,0 +1,10 @@
+{
+  "id": "brutalist",
+  "name": "Brutalist",
+  "description": "Zero-radius, no shadows, heavy 3px borders. High-contrast editorial / indie / contemporary look. Pills still pill-shaped (deliberate exception so pills don't read as buttons).",
+  "tokens": {
+    "aesthetic-radius": "0",
+    "aesthetic-shadow-card": "none",
+    "aesthetic-border-width": "3px"
+  }
+}

@@ -134,6 +134,126 @@
       margin-bottom: 8px;
     }
 
+    /* ===== Merged showcase styles (sticky-tab catalogue) ===== */
+    html { scroll-padding-top: 88px; }
+    body { overflow-x: clip; }
+    @media (prefers-reduced-motion: no-preference) {
+      :where(html:focus-within) { scroll-behavior: smooth; }
+    }
+    .sc-intro {
+      padding: var(--space-2xl) 0 var(--space-xl);
+      text-align: center;
+      background: linear-gradient(135deg, #fff 0%, #f0f4f8 100%);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .sc-intro h1 {
+      font-family: var(--font-body);
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin: 0 0 var(--space-xs);
+      color: var(--color-text-heading);
+    }
+    .sc-intro p { color: var(--color-text-light); font-size: 0.9375rem; margin: 0; }
+
+    .sc-tabs {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: #fff;
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+    }
+    .sc-tabs__inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: thin;
+    }
+    .sc-tabs__inner::-webkit-scrollbar { height: 6px; }
+    .sc-tabs__inner::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 3px; }
+    .sc-tabs a {
+      display: inline-block;
+      padding: 14px 14px;
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .sc-tabs a:hover { color: var(--color-primary); }
+    .sc-tabs a.is-active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+
+    .sc-cat {
+      padding: var(--space-3xl) 0;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding-left: var(--space-lg);
+      padding-right: var(--space-lg);
+    }
+    .sc-cat__head { margin-bottom: var(--space-2xl); }
+    .sc-cat__title {
+      font-family: var(--font-body);
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--color-text-heading);
+      margin: 0 0 var(--space-xs);
+    }
+    .sc-cat__intro { color: var(--color-text-light); font-size: 0.9375rem; margin: 0; max-width: 720px; }
+
+    .sc-tile {
+      background: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: var(--space-lg);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .sc-tile__label {
+      padding: 10px var(--space-md);
+      background: #fafbfc;
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-family: var(--font-body);
+    }
+    .sc-tile__label code {
+      display: inline-block;
+      background: var(--color-primary);
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    }
+    .sc-tile__label .sc-note { color: var(--color-text-light); font-size: 0.8125rem; }
+    .sc-tile__label .sc-tag {
+      display: inline-block;
+      font-size: 0.625rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 3px;
+      background: var(--color-accent);
+      color: #fff;
+    }
+    .sc-tile__demo { position: relative; }
+    .sc-grid-2 { display: grid; gap: var(--space-md); }
+    .sc-grid-row { display: flex; gap: var(--space-md); flex-wrap: wrap; align-items: center; padding: var(--space-md); }
+    @media (min-width: 900px) {
+      .sc-grid-2 { grid-template-columns: 1fr 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -171,6 +291,18 @@
         <option value="minimal">Minimal</option>
         <option value="boutique">Boutique</option>
         <option value="corporate">Corporate</option>
+        <option value="playful">Playful</option>
+      </select>
+    </div>
+    <div class="preview-bar__divider"></div>
+    <div class="preview-bar__group">
+      <span class="preview-bar__label">Aesthetic:</span>
+      <select id="aestheticSelect">
+        <option value="soft">Soft (default)</option>
+        <option value="sharp">Sharp</option>
+        <option value="brutalist">Brutalist</option>
+        <option value="luxe">Luxe</option>
+        <option value="editorial">Editorial</option>
       </select>
     </div>
     <div class="preview-bar__divider"></div>
@@ -186,16 +318,16 @@
         <option value="hero--slope-light">Slope Light</option>
         <option value="hero--banner">Image Short</option>
         <option disabled>───────────────</option>
-        <option value="hero--image hero--image-left">Image Overlay Left</option>
-        <option value="hero--image">Image Overlay Center</option>
-        <option value="hero--image hero--image-right">Image Overlay Right</option>
+        <option value="hero--image hero--parallax hero--image-left">Image Overlay Left</option>
+        <option value="hero--image hero--parallax">Image Overlay Center</option>
+        <option value="hero--image hero--parallax hero--image-right">Image Overlay Right</option>
         <option disabled>───────────────</option>
-        <option value="hero--showcase hero--showcase-dark">Image Frost Dark Left</option>
-        <option value="hero--showcase hero--showcase-dark hero--showcase-center">Image Frost Dark Center</option>
-        <option value="hero--showcase hero--showcase-dark hero--showcase-right">Image Frost Dark Right</option>
-        <option value="hero--showcase hero--showcase-light">Image Frost Light Left</option>
-        <option value="hero--showcase hero--showcase-light hero--showcase-center">Image Frost Light Center</option>
-        <option value="hero--showcase hero--showcase-light hero--showcase-right">Image Frost Light Right</option>
+        <option value="hero--showcase hero--showcase-dark hero--parallax">Image Frost Dark Left</option>
+        <option value="hero--showcase hero--showcase-dark hero--showcase-center hero--parallax">Image Frost Dark Center</option>
+        <option value="hero--showcase hero--showcase-dark hero--showcase-right hero--parallax">Image Frost Dark Right</option>
+        <option value="hero--showcase hero--showcase-light hero--parallax">Image Frost Light Left</option>
+        <option value="hero--showcase hero--showcase-light hero--showcase-center hero--parallax">Image Frost Light Center</option>
+        <option value="hero--showcase hero--showcase-light hero--showcase-right hero--parallax">Image Frost Light Right</option>
       </select>
       <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; color: #94a3b8; margin-left: 0.5rem; cursor: pointer;">
         <input type="checkbox" id="heroReverse" style="cursor: pointer;"> Reverse
@@ -205,10 +337,16 @@
     <div class="preview-bar__group" style="gap: 0.75rem;">
       <div style="display: flex; align-items: center; gap: 0.4rem;">
         <span style="font-size: 0.65rem; color: #94a3b8; white-space: nowrap;">NAV:</span>
+        <select id="navTypeSelect" style="background: #1e293b; color: #e2e8f0; border: 1px solid #475569; border-radius: 4px; padding: 2px 4px; font-size: 0.7rem; cursor: pointer;">
+          <option value="standard">Standard</option>
+          <option value="two-tier">Two-Tier</option>
+        </select>
         <select id="navTransparentMode" style="background: #1e293b; color: #e2e8f0; border: 1px solid #475569; border-radius: 4px; padding: 2px 4px; font-size: 0.7rem; cursor: pointer;">
           <option value="solid">Solid</option>
+          <option value="branded">Solid Branded</option>
           <option value="dark">Transparent Dark</option>
           <option value="light">Transparent Light</option>
+          <option value="clear">Transparent Clear</option>
         </select>
         <input type="color" id="navTransparentColor" value="#2a2a2a" style="width: 24px; height: 20px; border: 1px solid #475569; border-radius: 3px; cursor: pointer; padding: 0; display: none;" title="Custom nav background colour">
       </div>
@@ -267,6 +405,303 @@
   </div>
   </div><!-- /.preview-header -->
 
+  <!-- NAV + HERO WRAPPER (position:relative so transparent nav overlays hero) -->
+  <div style="position: relative;">
+
+  <!-- NAV PREVIEW -->
+  <nav class="nav" id="previewNav" role="navigation" aria-label="Main navigation">
+    <div class="container nav__inner">
+      <a href="#" class="nav__brand nav__brand--inline">
+        <div class="nav__brand-text">
+          <span class="nav__name">Your Business Name</span>
+          <span class="nav__title">Your tagline here</span>
+        </div>
+      </a>
+      <div class="nav__links">
+        <a href="#" class="nav__link nav__link--active">Home</a>
+        <a href="#" class="nav__link">About</a>
+        <a href="#" class="nav__link">Services</a>
+        <a href="#" class="nav__link">Contact</a>
+        <a href="#" class="btn btn--primary nav__cta">Book Now</a>
+      </div>
+      <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+    </div>
+    <div class="nav__mobile">
+      <a href="#" class="nav__link nav__link--active">Home</a>
+      <a href="#" class="nav__link">About</a>
+      <a href="#" class="nav__link">Services</a>
+      <a href="#" class="nav__link">Contact</a>
+      <a href="#" class="btn btn--primary">Book Now</a>
+    </div>
+  </nav>
+
+  <!-- TWO-TIER NAV PREVIEW (hidden by default) -->
+  <nav class="nav nav--two-tier" id="previewNavTwoTier" role="navigation" aria-label="Main navigation" style="display: none;">
+    <div class="container">
+      <div class="nav__top">
+        <a href="#" class="nav__brand nav__brand--inline">
+          <div class="nav__brand-text">
+            <span class="nav__name">Your Business Name</span>
+            <span class="nav__title">Your tagline here</span>
+          </div>
+        </a>
+        <div class="nav__contact">
+          <div class="nav__contact-item">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <a href="tel:02012345678">020 1234 5678</a>
+          </div>
+          <div class="nav__contact-item">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <a href="mailto:hello@yourdomain.com">hello@yourdomain.com</a>
+          </div>
+        </div>
+      </div>
+      <div class="nav__bottom">
+        <div class="nav__links">
+          <a href="#" class="nav__link nav__link--active">Home</a>
+          <a href="#" class="nav__link">About</a>
+          <a href="#" class="nav__link">Services</a>
+          <a href="#" class="nav__link">Contact</a>
+          <a href="#" class="btn btn--primary nav__cta">Book Now</a>
+        </div>
+        <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
+          <span class="nav__toggle-bar"></span>
+          <span class="nav__toggle-bar"></span>
+          <span class="nav__toggle-bar"></span>
+        </button>
+      </div>
+    </div>
+    <div class="nav__mobile">
+      <a href="#" class="nav__link nav__link--active">Home</a>
+      <a href="#" class="nav__link">About</a>
+      <a href="#" class="nav__link">Services</a>
+      <a href="#" class="nav__link">Contact</a>
+      <a href="#" class="btn btn--primary">Book Now</a>
+    </div>
+  </nav>
+
+  <!-- (legacy "Site capabilities" text checklist removed — replaced by sticky-tab catalogue further down the page) -->
+  <section style="display: none;" aria-hidden="true">
+      <style>
+        .cap-card { background: var(--color-bg-alt); border: 1px solid var(--color-border-light); border-radius: 10px; padding: var(--space-lg); }
+        .cap-card h3 { font-family: var(--font-body); font-size: 0.825rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-secondary-dark); margin: 0 0 var(--space-sm); }
+        .cap-card ul { list-style: none; margin: 0; padding: 0; font-size: 0.875rem; line-height: 1.65; color: var(--color-text); }
+        .cap-card li { padding: 4px 0; border-bottom: 1px dashed rgba(0,0,0,0.06); }
+        .cap-card li:last-child { border-bottom: none; }
+        .cap-tag { display: inline-block; font-size: 0.625rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 1px 6px; border-radius: 3px; vertical-align: middle; margin-left: 4px; }
+        .cap-tag--new { background: var(--color-accent); color: #fff; }
+        .cap-tag--js { background: rgba(46,127,216,0.12); color: var(--color-primary); }
+        .cap-tag--anim { background: rgba(232,100,42,0.12); color: var(--color-accent); }
+        @media (min-width: 768px) {
+          .cap-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (min-width: 1024px) {
+          .cap-grid { grid-template-columns: repeat(3, 1fr) !important; }
+        }
+      </style>
+
+      <div class="cap-grid" style="display: grid; grid-template-columns: 1fr; gap: var(--space-md);">
+
+        <div class="cap-card">
+          <h3>Heroes (pick one)</h3>
+          <ul>
+            <li><strong>.hero--fullwidth</strong> — full-bleed bg image</li>
+            <li><strong>.hero--half</strong> — 50/50 image+text split</li>
+            <li><strong>.hero--half--text-wide</strong> / <strong>--image-wide</strong> — 1.45fr column ratios <span class="cap-tag cap-tag--new">v1.4</span></li>
+            <li><strong>.hero--half--image-right</strong> — flip image to right <span class="cap-tag cap-tag--new">v1.4</span></li>
+            <li><strong>.hero--image</strong> — bg image + centred text</li>
+            <li><strong>.hero--showcase</strong> — frost (glass) card variants</li>
+            <li><strong>.hero--banner</strong> — short banner-height</li>
+            <li><strong>.hero--minimal</strong> — text-only</li>
+            <li><strong>.hero--slope-light</strong> — angled cut</li>
+          </ul>
+        </div>
+
+        <div class="cap-card">
+          <h3>Header / nav</h3>
+          <ul>
+            <li><strong>.nav</strong> default + mobile drawer</li>
+            <li><strong>.nav--two-tier</strong> — brand bar + nav bar with contact</li>
+            <li><strong>.nav--transparent</strong> / <strong>--transparent-dark</strong> / <strong>--transparent-light</strong></li>
+            <li><strong>.nav-scroll</strong> — sticky compact bar slides in past hero <span class="cap-tag cap-tag--js">js</span></li>
+            <li><strong>.announcement-bar</strong> + variants (--secondary, --accent, --subtle) for promo strip above nav</li>
+            <li><strong>Skip-link</strong> + accessibility built in</li>
+          </ul>
+        </div>
+
+        <div class="cap-card">
+          <h3>Trust assets</h3>
+          <ul>
+            <li><strong>.logo-ticker</strong> — infinite-scroll marquee, pauses on hover</li>
+            <li><strong>.logo-ticker--no-fade</strong> / <strong>--no-pause</strong> modifiers <span class="cap-tag cap-tag--new">v1.4</span></li>
+            <li><strong>.rated-pill</strong> — "Rated #1 by …" badge with star + accent variants</li>
+            <li><strong>.stats</strong> + <strong>.stat--card</strong> — big-number row, 4 col desktop / 2 col mobile</li>
+            <li><strong>data-target</strong> stat counter — count up from 0 on scroll <span class="cap-tag cap-tag--new">v1.4</span> <span class="cap-tag cap-tag--anim">anim</span></li>
+            <li><strong>.testimonials</strong> + <strong>.testimonial--avatar</strong> + <strong>.testimonial-grid</strong></li>
+            <li><strong>.google-reviews</strong> embed slot</li>
+            <li><strong>.trust-bar</strong> — static logo strip</li>
+          </ul>
+        </div>
+
+        <div class="cap-card">
+          <h3>Hero overlays</h3>
+          <ul>
+            <li><strong>.hero__floats</strong> + 6 placement modifiers (--tl/--tr/--bl/--br/--ml/--mr) — glass stat cards over hero image</li>
+            <li><strong>.hero__float--primary</strong> — solid primary tint variant</li>
+            <li><strong>Cantilever pattern</strong> — wrap image in <strong>.hero__image-clip</strong> + add <strong>.hero--floats-cantilever</strong>; floats can hang past image edges via <strong>--out-r/--out-l/--out-t/--out-b</strong> <span class="cap-tag cap-tag--new">v1.4</span></li>
+            <li><strong>.hero__heading--animate</strong> — word-by-word blur-fade entrance <span class="cap-tag cap-tag--new">v1.4</span> <span class="cap-tag cap-tag--anim">anim</span></li>
+            <li><strong>.hero__stats</strong> — inline stat row in hero text</li>
+          </ul>
+        </div>
+
+        <div class="cap-card">
+          <h3>CTAs</h3>
+          <ul>
+            <li><strong>.cta-banner</strong> — full-width gradient CTA</li>
+            <li><strong>.cta-banner--split</strong> — text-left + image-right with gradient fade</li>
+            <li><strong>.cta-inline</strong> + <strong>--dark</strong> — inside-content CTA, plum gradient variant</li>
+            <li><strong>.cta-image</strong> — image-backed CTA</li>
+            <li><strong>.cta-mid-banner</strong> — mid-page strip</li>
+            <li><strong>Buttons</strong>: --primary, --secondary, --accent, --whatsapp</li>
+          </ul>
+        </div>
+
+        <div class="cap-card">
+          <h3>Cards / services</h3>
+          <ul>
+            <li><strong>.card</strong> + <strong>--service</strong> / <strong>--feature</strong> / <strong>--highlight</strong></li>
+            <li><strong>.card--image-top</strong> — photo + body card</li>
+            <li><strong>.card--image-top.card--portrait</strong> — 1:1 team headshots</li>
+            <li><strong>.card__badge</strong> + <strong>--accent</strong> — corner pill</li>
+            <li><strong>.icon-box</strong> + <strong>--card</strong> / <strong>--left</strong></li>
+            <li><strong>.image-card</strong> — image-led card</li>
+            <li><strong>.overlay-card</strong> — text overlay on photo</li>
+            <li><strong>.bento</strong> — varied-size grid layout</li>
+          </ul>
+        </div>
+
+        <div class="cap-card">
+          <h3>Process / steps</h3>
+          <ul>
+            <li><strong>.approach-grid</strong> — text-only numbered steps</li>
+            <li><strong>.process-grid</strong> + <strong>.process-step</strong> — 3 or 4 (--4) step with image per step</li>
+            <li><strong>.process-step--num-centered</strong> — number above title in body, transparent bg, currentColor border <span class="cap-tag cap-tag--new">v1.4</span></li>
+            <li><strong>.steps</strong> / <strong>.step</strong> — generic step widget</li>
+          </ul>
+        </div>
+
+        <div class="cap-card">
+          <h3>Pricing / FAQ</h3>
+          <ul>
+            <li><strong>.pricing-card</strong> + <strong>.pricing-grid</strong> (--2 / --3 / --4 / --featured)</li>
+            <li><strong>.pricing-single</strong> — single-tier block</li>
+            <li><strong>.fee-table</strong> / <strong>.fee-item</strong> — alt to pricing-card</li>
+            <li><strong>.comparison-table</strong> — side-by-side</li>
+            <li><strong>.faq-item</strong> + <strong>.accordion</strong> — expandable Q&amp;A <span class="cap-tag cap-tag--js">js</span></li>
+          </ul>
+        </div>
+
+        <div class="cap-card">
+          <h3>Gallery / media</h3>
+          <ul>
+            <li><strong>.gallery</strong> + aspect modifiers (--landscape / --portrait / --wide)</li>
+            <li><strong>.gallery__caption</strong> hover overlay</li>
+            <li><strong>.gallery--collapsible</strong> — mobile show-more pattern</li>
+            <li><strong>.lightbox</strong> — full-screen image viewer <span class="cap-tag cap-tag--js">js</span></li>
+            <li><strong>.lightbox__prev</strong> / <strong>__next</strong> + arrow-key nav <span class="cap-tag cap-tag--new">v1.4</span> <span class="cap-tag cap-tag--anim">anim</span></li>
+            <li><strong>Lightbox entrance animation</strong> — opacity + scale on open <span class="cap-tag cap-tag--new">v1.4</span></li>
+            <li><strong>.video-embed</strong> — responsive 16:9 iframe</li>
+            <li><strong>.video-split</strong> — video + text split</li>
+          </ul>
+        </div>
+
+        <div class="cap-card">
+          <h3>Layout / story</h3>
+          <ul>
+            <li><strong>.intro</strong> — homepage welcome split (image+text), <strong>__inner--reversed</strong> for swap</li>
+            <li><strong>.split</strong> + <strong>--bleed</strong> — 2-col split, optionally edge-bleed</li>
+            <li><strong>.story-split</strong> — narrative 2-col with lead text</li>
+            <li><strong>.story-text</strong> — centred header + pull-quote left / body right</li>
+            <li><strong>.about-hero</strong> — about-page hero pattern</li>
+            <li><strong>.about-split-third</strong> — 1fr image / 2fr text full-bleed split</li>
+            <li><strong>.info-band</strong> + <strong>--light</strong> / <strong>--primary</strong> — horizontal feature strip with icons</li>
+          </ul>
+        </div>
+
+        <div class="cap-card">
+          <h3>Content blocks</h3>
+          <ul>
+            <li><strong>.highlight-box</strong> + <strong>--secondary</strong> / <strong>--accent</strong> / <strong>--soft</strong> — emphasis block (must use __heading + __content)</li>
+            <li><strong>.blockquote</strong> + <strong>--pull</strong> — pull-quote</li>
+            <li><strong>.checklist</strong> + <strong>.checklist-grid</strong> — bulleted check lists, inline SVG ticks</li>
+            <li><strong>.quals-list</strong> — qualifications with icons</li>
+            <li><strong>.alert</strong> + 5 variants (info / success / warning / error / themed)</li>
+            <li><strong>.badge</strong> + 7 variants</li>
+            <li><strong>.section-label</strong> — text label above heading</li>
+            <li><strong>.section-label--pill</strong> + <strong>--pill-primary</strong> / <strong>--pill-accent</strong> — pill variant <span class="cap-tag cap-tag--new">v1.4</span></li>
+            <li><strong>.pill--glow</strong> + accent / primary variants — animated glow ring on any pill <span class="cap-tag cap-tag--new">v1.4</span> <span class="cap-tag cap-tag--anim">anim</span></li>
+          </ul>
+        </div>
+
+        <div class="cap-card">
+          <h3>Forms (with anti-spam)</h3>
+          <ul>
+            <li><strong>.form</strong> + <strong>--full-width</strong> wrapper</li>
+            <li><strong>.contact-form-card</strong> — boxed form pattern</li>
+            <li><strong>.contact-grid</strong> — form + contact info side-by-side</li>
+            <li>Anti-spam: honeypot (<strong>_hp</strong>), timestamp (<strong>_t</strong>), 6-layer protection built in</li>
+            <li>SMTP via 20i (per-site config)</li>
+            <li><strong>.contact-info</strong> + <strong>.map-placeholder</strong> slots</li>
+          </ul>
+        </div>
+
+        <div class="cap-card">
+          <h3>Animations / interactions</h3>
+          <ul>
+            <li><strong>.reveal</strong> — fade-up section on scroll <span class="cap-tag cap-tag--js">js</span></li>
+            <li><strong>Hero word-by-word fade</strong> via .hero__heading--animate <span class="cap-tag cap-tag--new">v1.4</span></li>
+            <li><strong>Stat counters</strong> via data-target on .stat__number <span class="cap-tag cap-tag--new">v1.4</span></li>
+            <li><strong>Lightbox prev/next + entrance</strong> <span class="cap-tag cap-tag--new">v1.4</span></li>
+            <li><strong>.pill--glow</strong> animated ring <span class="cap-tag cap-tag--new">v1.4</span></li>
+            <li><strong>.logo-ticker</strong> infinite scroll marquee</li>
+            <li>All animations honour <code style="font-size:0.8em;background:rgba(0,0,0,0.05);padding:1px 4px;border-radius:3px;">prefers-reduced-motion</code></li>
+          </ul>
+        </div>
+
+        <div class="cap-card">
+          <h3>Site chrome / utilities</h3>
+          <ul>
+            <li><strong>.footer</strong> + <strong>--simple</strong> variants</li>
+            <li><strong>.breadcrumbs</strong></li>
+            <li><strong>.page-header</strong> + <strong>--dark</strong> / <strong>--image</strong></li>
+            <li><strong>.back-to-top</strong> floating button</li>
+            <li><strong>.cookie-banner</strong> GDPR consent</li>
+            <li><strong>.site-credit</strong> — "built by" row</li>
+            <li><strong>.error-page</strong> — 404 styling</li>
+          </ul>
+        </div>
+
+        <div class="cap-card">
+          <h3>Blog</h3>
+          <ul>
+            <li><strong>.blog-grid</strong> + <strong>.blog-card</strong> — listing with image / date / excerpt</li>
+            <li><strong>.blog-post</strong> — single post page with hero, meta, author, share</li>
+            <li>Categories (per-site, client-managed)</li>
+            <li>Drafts + scheduled publishing</li>
+            <li>WYSIWYG editor (TinyMCE) on creation</li>
+            <li>Auto-sitemap.xml regen</li>
+          </ul>
+        </div>
+
+      </div><!-- /cap-grid -->
+      </div>
+    </div>
+  </section>
+
   <!-- HERO PREVIEW -->
   <section class="hero" id="heroSection">
     <div class="container hero__inner">
@@ -310,11 +745,485 @@
     </div>
   </section>
 
+  </div><!-- /.nav-hero-wrapper -->
+
   <!-- COLOUR SWATCHES -->
   <div class="swatches">
     <h2>Colour Palette</h2>
     <div class="swatch-grid" id="swatchGrid"></div>
   </div>
+
+  <!-- ================================================================
+       v1.4 — STICKY-TAB CATALOGUE
+       Lifted from showcase.html. Live-themed by the palette generator
+       above. Use the tabs to jump to any category during a client brief.
+       ================================================================ -->
+  <div class="sc-intro">
+    <div class="container">
+      <h1>Catalogue — every component, organised by category</h1>
+      <p>Use the tabs to jump to any category. Each block is a live, themed component (driven by the palette/font controls above). <strong style="color: var(--color-accent);">v1.4</strong> tags mark recent additions.</p>
+    </div>
+  </div>
+
+  <nav class="sc-tabs" id="scTabs">
+    <div class="sc-tabs__inner">
+      <a href="#cat-heroes">Heroes</a>
+      <a href="#cat-nav">Nav &amp; bars</a>
+      <a href="#cat-trust">Trust</a>
+      <a href="#cat-ctas">CTAs</a>
+      <a href="#cat-cards">Cards</a>
+      <a href="#cat-process">Process</a>
+      <a href="#cat-layout">Layout</a>
+      <a href="#cat-gallery">Gallery</a>
+      <a href="#cat-content">Content blocks</a>
+      <a href="#cat-forms">Forms</a>
+      <a href="#cat-blog">Blog</a>
+      <a href="#cat-pricing">Pricing</a>
+      <a href="#cat-chrome">Site chrome</a>
+      <a href="#cat-anim">Animations</a>
+    </div>
+  </nav>
+
+  <!-- ===== HEROES ===== -->
+  <section id="cat-heroes" class="sc-cat">
+    <div class="sc-cat__head">
+      <h2 class="sc-cat__title">Heroes</h2>
+      <p class="sc-cat__intro">Pick exactly one per page. Each variant has a different vibe.</p>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.hero--half</code> <span class="sc-note">50/50 image + text. Most common.</span></div>
+      <div class="sc-tile__demo">
+        <section class="hero hero--half" style="background: var(--color-bg-alt);">
+          <div class="container hero__inner">
+            <div class="hero__content">
+              <span class="hero__label">Tagline</span>
+              <h1 class="hero__heading" style="font-size: clamp(1.5rem, 3.4vw, 2.4rem);">A compelling headline that captures attention</h1>
+              <p class="hero__text">Hero description. Concise — what you do, who it's for.</p>
+              <div class="hero__actions">
+                <a href="#" class="btn btn--accent">Primary CTA</a>
+                <a href="#" class="btn btn--secondary">Secondary</a>
+              </div>
+            </div>
+            <div class="hero__image-wrap"><img src="https://picsum.photos/seed/hh/600/450" alt="" class="hero__image" style="border-radius: var(--radius-lg);"></div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.hero--image</code> <span class="sc-note">Full-bleed bg image, centred white text.</span></div>
+      <div class="sc-tile__demo">
+        <section class="hero hero--image" style="background-image: url('https://picsum.photos/seed/hi/1600/900'); background-size: cover; background-position: center; min-height: 380px;">
+          <div class="container hero__inner">
+            <div class="hero__content" style="text-align: center;">
+              <h1 class="hero__heading" style="color: #fff; font-size: clamp(1.75rem, 4vw, 2.8rem);">Centred over a hero image</h1>
+              <p class="hero__text" style="color: rgba(255,255,255,0.9);">Big visual + minimal text.</p>
+              <a href="#" class="btn btn--accent">Primary CTA</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.hero--showcase</code> <span class="sc-note">Frost glass card over an image. Premium feel.</span></div>
+      <div class="sc-tile__demo">
+        <section class="hero hero--showcase" style="background-image: url('https://picsum.photos/seed/hs/1600/900'); background-size: cover; background-position: center; min-height: 420px; display: flex; align-items: center;">
+          <div class="container">
+            <div style="background: rgba(255,255,255,0.85); backdrop-filter: blur(10px); border-radius: var(--radius-lg); padding: var(--space-2xl); max-width: 540px;">
+              <span class="hero__label">Frost</span>
+              <h1 style="font-size: clamp(1.5rem, 3vw, 2.2rem); margin: var(--space-sm) 0;">Glass card over image</h1>
+              <p style="margin: 0 0 var(--space-md); color: var(--color-text);">Translucent panel sits on the photo — readable text, image visible.</p>
+              <a href="#" class="btn btn--accent">Primary CTA</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.hero__floats</code> + cantilever <span class="sc-tag">v1.4</span> <span class="sc-note">Glass stat cards over image, optionally hanging past edges.</span></div>
+      <div class="sc-tile__demo">
+        <section class="hero hero--half" style="background: var(--color-bg-alt);">
+          <div class="container hero__inner">
+            <div class="hero__content">
+              <span class="hero__label">With floats</span>
+              <h1 class="hero__heading" style="font-size: clamp(1.5rem, 3.4vw, 2.4rem);">Credibility numbers that hang off the image</h1>
+            </div>
+            <div class="hero__image-wrap hero--floats-cantilever" style="overflow: visible;">
+              <div class="hero__image-clip"><img src="https://picsum.photos/seed/hf/600/600" alt="" class="hero__image" style="border-radius: var(--radius-lg); object-fit: cover; height: 100%;"></div>
+              <div class="hero__floats">
+                <div class="hero__float hero__float--tr"><div class="hero__float-num hero__float-num--accent">49</div><div class="hero__float-label">Long-term clients</div><div class="hero__float-sub">running 4+ years</div></div>
+                <div class="hero__float hero__float--mr hero__float--out-r hero__float--primary"><div class="hero__float-num">15+</div><div class="hero__float-label">Years</div></div>
+                <div class="hero__float hero__float--bl hero__float--out-l"><div class="hero__float-num hero__float-num--accent">£4.17</div><div class="hero__float-label">ROI per £1</div></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label">Other variants <span class="sc-note">Try the Hero dropdown at the top — switches the live preview hero (above swatches) to <code>.hero--banner</code>, <code>.hero--minimal</code>, <code>.hero--slope-light/--slope-dark</code>, plus parallax + overlay positions.</span></div>
+      <div class="sc-tile__demo" style="padding: var(--space-md); color: var(--color-text-light); font-size: 0.875rem;">↑ Use the dropdown in the dark control bar at the top of the page.</div>
+    </div>
+  </section>
+
+  <!-- ===== NAV & BARS ===== -->
+  <section id="cat-nav" class="sc-cat">
+    <div class="sc-cat__head"><h2 class="sc-cat__title">Nav &amp; bars</h2><p class="sc-cat__intro">Header configurations + announcement strips. The live nav preview above the swatches reflects the NAV dropdown.</p></div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.announcement-bar</code> <span class="sc-note">Slim promo strip above nav.</span></div>
+      <div class="sc-tile__demo"><div class="announcement-bar announcement-bar--secondary"><div class="announcement-bar__inner container"><span class="announcement-bar__msg"><span class="announcement-bar__pill">Now booking</span> Limited spaces this month</span><a href="#" class="announcement-bar__link">Get in touch →</a></div></div></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.announcement-bar__pill.pill--glow</code> <span class="sc-tag">v1.4</span> <span class="sc-note">Animated glow ring for time-bound campaigns.</span></div>
+      <div class="sc-tile__demo"><div class="announcement-bar announcement-bar--secondary"><div class="announcement-bar__inner container"><span class="announcement-bar__msg"><span class="announcement-bar__pill pill--glow">MHAW · 11–17 May</span> Limited spaces — book this week</span><a href="#" class="announcement-bar__link">Check availability →</a></div></div></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label">Nav variants <span class="sc-note">The NAV dropdown in the dark control bar above lets you switch between Standard / Two-Tier and four transparent modes (Solid / Branded / Dark / Light / Clear). Plus <code>.nav-scroll</code> for the sticky compact bar on scroll past hero.</span></div>
+      <div class="sc-tile__demo" style="padding: var(--space-md); color: var(--color-text-light); font-size: 0.875rem;">↑ Use the NAV dropdown at the top of the page to flip the live nav preview.</div>
+    </div>
+  </section>
+
+  <!-- ===== TRUST ===== -->
+  <section id="cat-trust" class="sc-cat">
+    <div class="sc-cat__head"><h2 class="sc-cat__title">Trust</h2><p class="sc-cat__intro">Stat counters, logo tickers, ratings, testimonials.</p></div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.logo-ticker</code> <span class="sc-note">Infinite-scroll marquee. Pauses on hover. <code>--no-fade</code> drops the edge mask, <code>--no-pause</code> keeps it scrolling.</span></div>
+      <div class="sc-tile__demo">
+        <div class="logo-ticker"><span class="logo-ticker__label">Trusted by teams at</span><div class="logo-ticker__viewport"><div class="logo-ticker__track">
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Acme Co</span></span><span class="logo-ticker__item"><span class="logo-ticker__pill">Northwind</span></span><span class="logo-ticker__item"><span class="logo-ticker__pill">Globex</span></span><span class="logo-ticker__item"><span class="logo-ticker__pill">Initech</span></span><span class="logo-ticker__item"><span class="logo-ticker__pill">Stark</span></span><span class="logo-ticker__item"><span class="logo-ticker__pill">Wayne</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Acme Co</span></span><span class="logo-ticker__item"><span class="logo-ticker__pill">Northwind</span></span><span class="logo-ticker__item"><span class="logo-ticker__pill">Globex</span></span><span class="logo-ticker__item"><span class="logo-ticker__pill">Initech</span></span><span class="logo-ticker__item"><span class="logo-ticker__pill">Stark</span></span><span class="logo-ticker__item"><span class="logo-ticker__pill">Wayne</span></span>
+        </div></div></div>
+      </div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.rated-pill</code> <span class="sc-note">Award/rating badge.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl); display: flex; gap: var(--space-md); flex-wrap: wrap; justify-content: center;">
+        <span class="rated-pill"><svg class="rated-pill__icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Rated <span class="rated-pill__highlight">#1 in London</span> by Go Sweat</span>
+        <span class="rated-pill rated-pill--accent"><svg class="rated-pill__icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Verified <span class="rated-pill__highlight">5-star</span> rated</span>
+      </div></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.stats</code> with <code>data-target</code> counter <span class="sc-tag">v1.4</span> <span class="sc-note">Numbers count up from 0 on scroll-into-view.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl);"><div class="stats">
+        <div class="stat stat--card"><div class="stat__number stat__number--accent" data-target="49">0</div><div class="stat__label">Long-term clients</div><div class="stat__sub">for 4+ years</div></div>
+        <div class="stat stat--card"><div class="stat__number stat__number--accent" data-target="15" data-suffix="+">0</div><div class="stat__label">Years in business</div><div class="stat__sub">corporate sector</div></div>
+        <div class="stat stat--card"><div class="stat__number stat__number--accent" data-target="98" data-suffix="%">0</div><div class="stat__label">Retention rate</div><div class="stat__sub">year on year</div></div>
+      </div></div></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.testimonial--card</code> <span class="sc-note">5-star testimonial cards. Use 3-up grid.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl);"><div class="grid grid--3">
+        <div class="testimonial testimonial--card"><div class="testimonial__stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="testimonial__quote">A short, real testimonial about why this provider was different.</p><p class="testimonial__author">Jane Smith <span class="testimonial__detail">— Acme Ltd</span></p></div>
+        <div class="testimonial testimonial--card"><div class="testimonial__stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="testimonial__quote">Genuine quote — names + companies make these convert.</p><p class="testimonial__author">Tom Brown <span class="testimonial__detail">— Globex</span></p></div>
+        <div class="testimonial testimonial--card"><div class="testimonial__stars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><p class="testimonial__quote">Three is the sweet spot — more than three feels padded.</p><p class="testimonial__author">Liz Patel <span class="testimonial__detail">— Initech</span></p></div>
+      </div></div></div>
+    </div>
+  </section>
+
+  <!-- ===== CTAs ===== -->
+  <section id="cat-ctas" class="sc-cat">
+    <div class="sc-cat__head"><h2 class="sc-cat__title">CTAs</h2><p class="sc-cat__intro">Conversion blocks. Once mid-page and once at the end is plenty.</p></div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.cta-banner</code> <span class="sc-note">Full-width gradient CTA.</span></div>
+      <div class="sc-tile__demo"><section class="section cta-banner" style="background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%); padding: var(--space-2xl) 0;"><div class="container text-center"><h2 style="color: #fff; margin: 0 0 var(--space-sm);">Ready to get started?</h2><p style="color: rgba(255,255,255,0.85); margin: 0 0 var(--space-lg);">Book a free 20-minute call.</p><div class="cta-banner__buttons"><a href="#" class="btn btn--accent">Book a call →</a></div></div></section></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.cta-banner--split</code> <span class="sc-note">Text-left + image-right with gradient fade. Best for time-bound offers.</span></div>
+      <div class="sc-tile__demo"><section class="cta-banner cta-banner--split" style="background: var(--color-secondary);"><div class="cta-banner__content" style="padding: var(--space-2xl) var(--space-xl);"><span class="hero__label">Limited time</span><h2 style="color: #fff; margin: var(--space-sm) 0;">Mental Health Awareness Week — book by Friday</h2><p style="color: rgba(255,255,255,0.82); margin: 0 0 var(--space-md);">Limited spaces this week.</p><div class="cta-banner__buttons"><a href="#" class="btn btn--accent">Check availability →</a></div></div><div class="cta-banner__image-wrap"><img src="https://picsum.photos/seed/cta/600/400" alt="" class="cta-banner__image"><div class="cta-banner__image-fade"></div></div></section></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label">Buttons <span class="sc-note">Primary, secondary, accent.</span></div>
+      <div class="sc-tile__demo"><div class="sc-grid-row"><a href="#" class="btn btn--primary">Primary</a><a href="#" class="btn btn--secondary">Secondary</a><a href="#" class="btn btn--accent">Accent (CTA)</a></div></div>
+    </div>
+  </section>
+
+  <!-- ===== CARDS ===== -->
+  <section id="cat-cards" class="sc-cat">
+    <div class="sc-cat__head"><h2 class="sc-cat__title">Cards</h2><p class="sc-cat__intro">Services, features, team — any "list of things" pattern.</p></div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.card.card--service</code> <span class="sc-note">Icon-led card. 3-up grid for services.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl);"><div class="grid grid--3">
+        <div class="card card--service"><div class="card__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></div><h3 class="card__title">Service One</h3><p class="card__text">Short description.</p></div>
+        <div class="card card--service"><div class="card__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div><h3 class="card__title">Service Two</h3><p class="card__text">Icon + title + description.</p></div>
+        <div class="card card--service"><div class="card__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div><h3 class="card__title">Service Three</h3><p class="card__text">3-up desktop, 1-up mobile.</p></div>
+      </div></div></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.card--image-top</code> + <code>.card__badge</code> <span class="sc-note">Photo at top + body. Optional corner badge.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl);"><div class="grid grid--2">
+        <article class="card card--image-top"><div class="card__image-wrap" style="aspect-ratio: 16/10;"><span class="card__badge">Most popular</span><img src="https://picsum.photos/seed/cit1/600/400" alt="" class="card__image"></div><div class="card__body"><h3 class="card__title">Card with photo + badge</h3><p class="card__text">For services where the visual matters.</p><a href="#" class="btn btn--accent" style="align-self: flex-start;">Learn more →</a></div></article>
+        <article class="card card--image-top"><div class="card__image-wrap" style="aspect-ratio: 16/10;"><img src="https://picsum.photos/seed/cit2/600/400" alt="" class="card__image"></div><div class="card__body"><h3 class="card__title">Without a badge</h3><p class="card__text">Same component, omit the badge.</p><a href="#" class="btn btn--accent" style="align-self: flex-start;">Learn more →</a></div></article>
+      </div></div></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.card--image-top.card--portrait</code> <span class="sc-note">1:1 square — for team headshots.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl);"><div class="grid grid--3">
+        <article class="card card--image-top card--portrait"><div class="card__image-wrap"><img src="https://picsum.photos/seed/p1/400/400" alt="" class="card__image" style="object-position: center top;"></div><div class="card__body"><h3 class="card__title">Founder name</h3><p style="font-size: 1rem; font-weight: 600; color: var(--color-primary); margin: 4px 0 var(--space-sm);">Founder</p><p class="card__text">Short bio.</p></div></article>
+        <article class="card card--image-top card--portrait"><div class="card__image-wrap"><img src="https://picsum.photos/seed/p2/400/400" alt="" class="card__image" style="object-position: center top;"></div><div class="card__body"><h3 class="card__title">Senior team</h3><p style="font-size: 1rem; font-weight: 600; color: var(--color-primary); margin: 4px 0 var(--space-sm);">Senior Practitioner</p><p class="card__text">Different role.</p></div></article>
+        <article class="card card--image-top card--portrait"><div class="card__image-wrap"><img src="https://picsum.photos/seed/p3/400/400" alt="" class="card__image" style="object-position: center top;"></div><div class="card__body"><h3 class="card__title">Senior team</h3><p style="font-size: 1rem; font-weight: 600; color: var(--color-primary); margin: 4px 0 var(--space-sm);">Senior Practitioner</p><p class="card__text">Different role.</p></div></article>
+      </div></div></div>
+    </div>
+  </section>
+
+  <!-- ===== PROCESS ===== -->
+  <section id="cat-process" class="sc-cat">
+    <div class="sc-cat__head"><h2 class="sc-cat__title">Process</h2><p class="sc-cat__intro">"How it works" patterns.</p></div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.process-grid.process-step--num-centered</code> <span class="sc-tag">v1.4</span> <span class="sc-note">3 dark cards with image + centered number above title.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl); background: var(--color-bg-alt);"><div class="process-grid">
+        <article class="process-step process-step--num-centered" style="background: var(--color-secondary); color: #fff;"><div class="process-step__image-wrap"><img src="https://picsum.photos/seed/s1/400/250" class="process-step__image" alt=""></div><div class="process-step__body"><div class="process-step__num">1</div><h3 class="process-step__title" style="color: #fff;">Discovery call</h3><p class="process-step__text" style="color: rgba(255,255,255,0.82);">Tell us about your situation.</p></div></article>
+        <article class="process-step process-step--num-centered" style="background: var(--color-secondary); color: #fff;"><div class="process-step__image-wrap"><img src="https://picsum.photos/seed/s2/400/250" class="process-step__image" alt=""></div><div class="process-step__body"><div class="process-step__num">2</div><h3 class="process-step__title" style="color: #fff;">Tailored plan</h3><p class="process-step__text" style="color: rgba(255,255,255,0.82);">Within 24 hours.</p></div></article>
+        <article class="process-step process-step--num-centered" style="background: var(--color-secondary); color: #fff;"><div class="process-step__image-wrap"><img src="https://picsum.photos/seed/s3/400/250" class="process-step__image" alt=""></div><div class="process-step__body"><div class="process-step__num">3</div><h3 class="process-step__title" style="color: #fff;">First session</h3><p class="process-step__text" style="color: rgba(255,255,255,0.82);">Up and running within a week.</p></div></article>
+      </div></div></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.faq-item.accordion</code> <span class="sc-note">Expandable Q&amp;A.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl); max-width: 720px;"><div class="accordion">
+        <div class="faq-item"><button class="faq-item__question">How long does a typical engagement last?<span class="faq-item__icon">+</span></button><div class="faq-item__answer"><p>Most clients work with us 6 weeks to 6 months.</p></div></div>
+        <div class="faq-item"><button class="faq-item__question">Do you offer online sessions?<span class="faq-item__icon">+</span></button><div class="faq-item__answer"><p>Yes — fully remote, hybrid, or in-person.</p></div></div>
+        <div class="faq-item"><button class="faq-item__question">What's the pricing structure?<span class="faq-item__icon">+</span></button><div class="faq-item__answer"><p>See the pricing section. Block bookings save 15%.</p></div></div>
+      </div></div></div>
+    </div>
+  </section>
+
+  <!-- ===== LAYOUT ===== -->
+  <section id="cat-layout" class="sc-cat">
+    <div class="sc-cat__head"><h2 class="sc-cat__title">Layout</h2><p class="sc-cat__intro">Story / split / intro patterns.</p></div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.intro</code> <span class="sc-note">Welcome split — image + intro text.</span></div>
+      <div class="sc-tile__demo"><section class="section"><div class="container intro__inner--reversed"><div class="intro__text"><span class="section-label section-label--pill">Welcome</span><h2>A clear-headed intro to who you are and what you do</h2><p>Two-column intro: text on one side, portrait on the other.</p><a href="#" class="btn btn--secondary">Learn more</a></div><div class="intro__image-wrap"><img src="https://picsum.photos/seed/intro/600/800" alt="" class="intro__image"></div></div></section></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.info-band--primary</code> <span class="sc-note">Horizontal feature strip.</span></div>
+      <div class="sc-tile__demo"><div class="info-band info-band--primary" style="padding: var(--space-xl) 0;"><div class="container"><div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); text-align: center; color: #fff;"><div><div style="font-size: 2rem; font-weight: 800;">15+</div><div style="opacity: 0.85;">Years experience</div></div><div><div style="font-size: 2rem; font-weight: 800;">200+</div><div style="opacity: 0.85;">Happy clients</div></div><div><div style="font-size: 2rem; font-weight: 800;">4.9★</div><div style="opacity: 0.85;">Average rating</div></div></div></div></div></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label">More layout patterns <span class="sc-note">Also available: <code>.split</code> + <code>.split--bleed</code>, <code>.story-split</code>, <code>.story-text</code> (centred header + pull-quote left / body right), <code>.about-hero</code>, <code>.about-split-third</code>, <code>.info-band--light</code>. See raw demos further down the page or <code>COMPONENTS.md</code>.</span></div>
+      <div class="sc-tile__demo" style="padding: var(--space-md); color: var(--color-text-light); font-size: 0.875rem;">→ Raw demos for these are below the catalogue.</div>
+    </div>
+  </section>
+
+  <!-- ===== GALLERY ===== -->
+  <section id="cat-gallery" class="sc-cat">
+    <div class="sc-cat__head"><h2 class="sc-cat__title">Gallery &amp; media</h2><p class="sc-cat__intro">Photo grids with click-to-zoom lightbox.</p></div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.gallery</code> + <code>.lightbox</code> with prev/next <span class="sc-tag">v1.4</span> <span class="sc-note">Click any tile to open. ‹ › buttons or arrow keys to navigate.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl);"><div class="gallery">
+        <div class="gallery__item gallery__item--landscape"><img src="https://picsum.photos/seed/g1/600/400" alt="Photo 1"></div>
+        <div class="gallery__item gallery__item--landscape"><img src="https://picsum.photos/seed/g2/600/400" alt="Photo 2"></div>
+        <div class="gallery__item gallery__item--landscape"><img src="https://picsum.photos/seed/g3/600/400" alt="Photo 3"></div>
+        <div class="gallery__item gallery__item--landscape"><img src="https://picsum.photos/seed/g4/600/400" alt="Photo 4"></div>
+      </div></div></div>
+    </div>
+  </section>
+
+  <!-- ===== CONTENT BLOCKS ===== -->
+  <section id="cat-content" class="sc-cat">
+    <div class="sc-cat__head"><h2 class="sc-cat__title">Content blocks</h2><p class="sc-cat__intro">Pull-quotes, highlight boxes, alerts, badges, labels.</p></div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.section-label--pill</code> + variants <span class="sc-tag">v1.4</span> <span class="sc-note">Small uppercase label as a pill. Three colour options.</span></div>
+      <div class="sc-tile__demo"><div class="sc-grid-row"><span class="section-label">Default text label</span><span class="section-label section-label--pill">Pill (dark navy)</span><span class="section-label section-label--pill section-label--pill-primary">Pill (primary)</span><span class="section-label section-label--pill section-label--pill-accent">Pill (accent)</span></div></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.pill--glow</code> utility <span class="sc-tag">v1.4</span> <span class="sc-note">Animated glow ring on any pill.</span></div>
+      <div class="sc-tile__demo"><div class="sc-grid-row"><span class="section-label section-label--pill pill--glow">Default glow</span><span class="section-label section-label--pill section-label--pill-accent pill--glow pill--glow-accent">Accent glow</span><span class="section-label section-label--pill section-label--pill-primary pill--glow pill--glow-primary">Primary glow</span></div></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.highlight-box</code> + variants <span class="sc-note">Standout callout (must use __heading + __content).</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl); max-width: 720px;"><div class="highlight-box"><div class="highlight-box__heading"><h3>Worth highlighting</h3></div><div class="highlight-box__content"><p>One or two per page is enough.</p></div></div></div></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.blockquote--pull</code> <span class="sc-note">Pull-quote.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl); max-width: 720px;"><blockquote class="blockquote blockquote--pull">"A short, evocative quote that captures the essence of what you do."</blockquote></div></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.alert</code> + variants <span class="sc-note">Info / success / warning / error.</span></div>
+      <div class="sc-tile__demo"><div class="sc-grid-2" style="padding: var(--space-md);"><div class="alert alert--info">Info: Useful note.</div><div class="alert alert--success">Success: Operation completed.</div><div class="alert alert--warning">Warning: Heads-up.</div><div class="alert alert--error">Error: Something went wrong.</div></div></div>
+    </div>
+  </section>
+
+  <!-- ===== FORMS ===== -->
+  <section id="cat-forms" class="sc-cat">
+    <div class="sc-cat__head"><h2 class="sc-cat__title">Forms</h2><p class="sc-cat__intro">Contact + enquiry patterns with anti-spam built in.</p></div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.form</code> + <code>.contact-form-card</code> <span class="sc-note">Standard enquiry form. Honeypot + timestamp + rate-limit on live sites.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl); max-width: 600px;"><form class="form">
+        <input type="text" name="_hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;" aria-hidden="true">
+        <input type="hidden" name="_t" value="">
+        <div class="form__row"><div class="form__group"><label class="form__label form__label--required" for="sc-name">Your name</label><input class="form__input" id="sc-name" type="text" placeholder="Jane Smith"></div><div class="form__group"><label class="form__label form__label--required" for="sc-email">Email</label><input class="form__input" id="sc-email" type="email" placeholder="jane@example.com"></div></div>
+        <div class="form__group"><label class="form__label" for="sc-msg">Message</label><textarea class="form__textarea" id="sc-msg" rows="3" placeholder="What can we help with?"></textarea></div>
+        <div style="display: flex; justify-content: flex-end;"><button type="button" class="btn btn--accent">Send message →</button></div>
+      </form></div></div>
+    </div>
+  </section>
+
+  <!-- ===== BLOG ===== -->
+  <section id="cat-blog" class="sc-cat">
+    <div class="sc-cat__head"><h2 class="sc-cat__title">Blog</h2><p class="sc-cat__intro">Listing grid + single post template. CMS-managed via the editmy.site portal.</p></div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.blog-grid</code> + <code>.blog-card</code> <span class="sc-note">Listing of posts: image + date + title + excerpt + read-more link.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl);"><div class="blog-grid">
+        <article class="blog-card"><div class="blog-card__image"><img src="https://picsum.photos/seed/b1/600/400" alt=""></div><div class="blog-card__body"><div class="blog-card__date">15 May 2026</div><h3 class="blog-card__title">A useful blog post title that hooks the reader</h3><p class="blog-card__excerpt">First two sentences of the post. Keep it tight — readers scan, they don't read.</p><a href="#" class="blog-card__link">Read more →</a></div></article>
+        <article class="blog-card"><div class="blog-card__image"><img src="https://picsum.photos/seed/b2/600/400" alt=""></div><div class="blog-card__body"><div class="blog-card__date">8 May 2026</div><h3 class="blog-card__title">Another post — different angle</h3><p class="blog-card__excerpt">Pull from your audience's actual problems for the headline.</p><a href="#" class="blog-card__link">Read more →</a></div></article>
+        <article class="blog-card"><div class="blog-card__image"><img src="https://picsum.photos/seed/b3/600/400" alt=""></div><div class="blog-card__body"><div class="blog-card__date">1 May 2026</div><h3 class="blog-card__title">Third example showing the layout</h3><p class="blog-card__excerpt">3-up grid on desktop, 1-up on mobile. Featured image + meta + body.</p><a href="#" class="blog-card__link">Read more →</a></div></article>
+      </div></div></div>
+    </div>
+  </section>
+
+  <!-- ===== PRICING ===== -->
+  <section id="cat-pricing" class="sc-cat">
+    <div class="sc-cat__head"><h2 class="sc-cat__title">Pricing</h2><p class="sc-cat__intro">Tier cards or stacked menu rows. Pick the one that fits the content.</p></div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.pricing-grid--3</code> <span class="sc-note">Three tiers, middle one featured. Best when each tier has roughly the same amount of copy.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl);"><div class="pricing-grid pricing-grid--3">
+        <div class="pricing-card"><h3 class="pricing-card__title">Starter</h3><div class="pricing-card__price"><span class="pricing-card__price-amount">£65</span><span class="pricing-card__price-period">/session</span></div><ul class="pricing-card__features"><li>Single session</li><li>Pay-as-you-go</li><li>No commitment</li></ul><a href="#" class="btn btn--secondary pricing-card__cta">Get started</a></div>
+        <div class="pricing-card pricing-card--featured"><h3 class="pricing-card__title">Standard</h3><div class="pricing-card__price"><span class="pricing-card__price-amount">£280</span><span class="pricing-card__price-period">/5 sessions</span></div><ul class="pricing-card__features"><li>Block of 5 sessions</li><li>Save 14%</li><li>Most popular</li></ul><a href="#" class="btn btn--accent pricing-card__cta">Choose plan</a></div>
+        <div class="pricing-card"><h3 class="pricing-card__title">Premium</h3><div class="pricing-card__price"><span class="pricing-card__price-amount">£520</span><span class="pricing-card__price-period">/10 sessions</span></div><ul class="pricing-card__features"><li>Block of 10 sessions</li><li>Save 20%</li><li>Best value</li></ul><a href="#" class="btn btn--secondary pricing-card__cta">Choose plan</a></div>
+      </div></div></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.treatment-list</code> <span class="sc-note">Stacked menu rows with title-and-price header (dotted leader) + native &lt;details&gt; "Read more" expand. Three image variants: none, square thumbnail, circular thumbnail.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl);"><div class="treatment-list">
+        <div class="treatment-list__item">
+          <div class="treatment-list__head">
+            <h3 class="treatment-list__title">Full Reset Ritual</h3>
+            <div class="treatment-list__price">£95<span class="treatment-list__duration">· 75 min</span></div>
+          </div>
+          <p class="treatment-list__summary">Slow massage, nurturing facial and gentle energy work in one unhurried session — a true switch-off for body and mind.</p>
+          <details class="treatment-list__details">
+            <summary>Read more</summary>
+            <div class="treatment-list__body">
+              <p>The Full Reset blends three modalities into one session, paced so that every transition feels unhurried.</p>
+              <a href="#" class="btn btn--primary">Book this ritual</a>
+            </div>
+          </details>
+        </div>
+        <div class="treatment-list__item treatment-list__item--image-square">
+          <div class="treatment-list__image"><img src="images/hero.jpg" alt="Calm treatment room"></div>
+          <div class="treatment-list__content">
+            <div class="treatment-list__head">
+              <h3 class="treatment-list__title">Deep Reset Ritual</h3>
+              <div class="treatment-list__price">£110<span class="treatment-list__duration">· 90 min</span></div>
+            </div>
+            <p class="treatment-list__summary">A longer, deeper version of the Full Reset — extra time for slower bodywork when you really need to let go. <code>.treatment-list__item--image-square</code></p>
+            <details class="treatment-list__details">
+              <summary>Read more</summary>
+              <div class="treatment-list__body">
+                <p>Best for clients carrying weeks of held tension. Extra time spent on back, neck and shoulders.</p>
+                <a href="#" class="btn btn--primary">Book this ritual</a>
+              </div>
+            </details>
+          </div>
+        </div>
+        <div class="treatment-list__item treatment-list__item--image-circle">
+          <div class="treatment-list__image"><img src="images/hero.jpg" alt="Therapist portrait"></div>
+          <div class="treatment-list__content">
+            <div class="treatment-list__head">
+              <h3 class="treatment-list__title">Signature Ritual</h3>
+              <div class="treatment-list__price">£130<span class="treatment-list__duration">· 105 min</span></div>
+            </div>
+            <p class="treatment-list__summary">The head-to-toe ultimate experience — every element woven into one extended session. <code>.treatment-list__item--image-circle</code></p>
+            <details class="treatment-list__details">
+              <summary>Read more</summary>
+              <div class="treatment-list__body">
+                <p>Includes scalp, face, neck, shoulders, back, hands and feet — paced over a longer arc.</p>
+                <a href="#" class="btn btn--primary">Book this ritual</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div></div></div>
+    </div>
+  </section>
+
+  <!-- ===== SITE CHROME ===== -->
+  <section id="cat-chrome" class="sc-cat">
+    <div class="sc-cat__head"><h2 class="sc-cat__title">Site chrome</h2><p class="sc-cat__intro">Footers, cookie banner, back-to-top, breadcrumbs — the bits every page needs.</p></div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.footer</code> default 4-column <span class="sc-note">Brand + quick links + services + contact.</span></div>
+      <div class="sc-tile__demo"><footer class="footer">
+        <div class="container footer__inner">
+          <div class="footer__brand"><p class="footer__brand-name">Your Business</p><p class="footer__brand-text">A short brand line — what you do, who for.</p></div>
+          <div class="footer__col"><p class="footer__heading">Quick Links</p><div class="footer__links"><a href="#" class="footer__link">Home</a><a href="#" class="footer__link">About</a><a href="#" class="footer__link">Services</a><a href="#" class="footer__link">Contact</a></div></div>
+          <div class="footer__col"><p class="footer__heading">Services</p><div class="footer__links"><a href="#" class="footer__link">Service One</a><a href="#" class="footer__link">Service Two</a><a href="#" class="footer__link">Service Three</a></div></div>
+          <div class="footer__col"><p class="footer__heading">Contact</p><div class="footer__contact-item"><span>+44 1234 567890</span></div><div class="footer__contact-item"><a href="#">hello@example.com</a></div></div>
+        </div>
+        <div class="container footer__bottom"><p class="footer__copyright">&copy; 2026 Your Business</p><div class="footer__legal"><a href="#">Privacy</a><a href="#">Cookies</a></div></div>
+      </footer></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.footer--simple</code> <span class="sc-note">Single-line footer for minimal sites.</span></div>
+      <div class="sc-tile__demo"><footer class="footer footer--simple"><div class="container"><div class="footer__brand-name">Your Business</div><p class="footer__brand-text">A clean one-line footer.</p><div class="footer__links"><a href="#" class="footer__link">Home</a><a href="#" class="footer__link">About</a><a href="#" class="footer__link">Contact</a></div><p class="footer__copyright">&copy; 2026 Your Business</p></div></footer></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.cookie-banner</code> <span class="sc-note">GDPR consent strip — auto-shown by main.js.</span></div>
+      <div class="sc-tile__demo" style="padding: var(--space-md);"><div class="cookie-banner cookie-banner--visible" style="position: relative;"><div class="cookie-banner__inner"><p class="cookie-banner__text">We use cookies. See our <a href="#">cookie policy</a>.</p><div class="cookie-banner__buttons"><button class="cookie-banner__accept">Accept</button><button class="cookie-banner__decline">Decline</button></div></div></div></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label">Other chrome <span class="sc-note">Also available: <code>.back-to-top</code> (floating button, auto-wired by main.js), <code>.site-credit</code> ("Built by" row), <code>.skip-link</code> (accessibility), <code>.breadcrumbs</code>, <code>.page-header</code> + <code>--dark</code> + <code>--image</code> for inner page titles.</span></div>
+      <div class="sc-tile__demo" style="padding: var(--space-md); color: var(--color-text-light); font-size: 0.875rem;">→ See <code>COMPONENTS.md</code> for markup or scroll down to the raw demos.</div>
+    </div>
+  </section>
+
+  <!-- ===== ANIMATIONS ===== -->
+  <section id="cat-anim" class="sc-cat">
+    <div class="sc-cat__head"><h2 class="sc-cat__title">Animations</h2><p class="sc-cat__intro">Subtle motion. All honour <code>prefers-reduced-motion</code>.</p></div>
+    <div class="sc-tile">
+      <div class="sc-tile__label">All available animations <span class="sc-note">Each opt-in via class or data-* attribute.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl);"><ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-md);">
+        <li style="padding: var(--space-md); border: 1px solid var(--color-border); border-radius: 8px;"><strong style="color: var(--color-primary);"><a href="#cat-heroes" style="color: inherit;">Hero word-by-word fade</a></strong> <span class="sc-tag" style="margin-left: 6px;">v1.4</span><p style="margin: 4px 0 0; color: var(--color-text-light); font-size: 0.875rem;">Add <code>.hero__heading--animate</code> to your H1.</p></li>
+        <li style="padding: var(--space-md); border: 1px solid var(--color-border); border-radius: 8px;"><strong style="color: var(--color-primary);"><a href="#cat-trust" style="color: inherit;">Stat counter count-up</a></strong> <span class="sc-tag" style="margin-left: 6px;">v1.4</span><p style="margin: 4px 0 0; color: var(--color-text-light); font-size: 0.875rem;">Add <code>data-target="49"</code> + optional <code>data-suffix="+"</code>.</p></li>
+        <li style="padding: var(--space-md); border: 1px solid var(--color-border); border-radius: 8px;"><strong style="color: var(--color-primary);"><a href="#cat-gallery" style="color: inherit;">Lightbox prev/next + entrance</a></strong> <span class="sc-tag" style="margin-left: 6px;">v1.4</span><p style="margin: 4px 0 0; color: var(--color-text-light); font-size: 0.875rem;">‹ › buttons + arrow keys, scale-in on open.</p></li>
+        <li style="padding: var(--space-md); border: 1px solid var(--color-border); border-radius: 8px;"><strong style="color: var(--color-primary);"><a href="#cat-content" style="color: inherit;">Pill glow ring</a></strong> <span class="sc-tag" style="margin-left: 6px;">v1.4</span><p style="margin: 4px 0 0; color: var(--color-text-light); font-size: 0.875rem;">Animated box-shadow ring around any pill.</p></li>
+        <li style="padding: var(--space-md); border: 1px solid var(--color-border); border-radius: 8px;"><strong style="color: var(--color-primary);">Scroll-reveal sections</strong><p style="margin: 4px 0 0; color: var(--color-text-light); font-size: 0.875rem;">Add <code>.reveal</code> to any section.</p></li>
+        <li style="padding: var(--space-md); border: 1px solid var(--color-border); border-radius: 8px;"><strong style="color: var(--color-primary);"><a href="#cat-trust" style="color: inherit;">Logo ticker marquee</a></strong><p style="margin: 4px 0 0; color: var(--color-text-light); font-size: 0.875rem;">Pauses on hover; <code>--no-pause</code> disables.</p></li>
+        <li style="padding: var(--space-md); border: 1px solid var(--color-border); border-radius: 8px;"><strong style="color: var(--color-primary);">Sticky scroll-down nav</strong><p style="margin: 4px 0 0; color: var(--color-text-light); font-size: 0.875rem;"><code>.nav-scroll</code> compact bar slides down past hero.</p></li>
+      </ul></div></div>
+    </div>
+  </section>
+
+  <!-- Lightbox markup (used by Gallery section) -->
+  <div class="lightbox" aria-hidden="true">
+    <button class="lightbox__prev" aria-label="Previous image">‹</button>
+    <img class="lightbox__img" src="" alt="">
+    <button class="lightbox__next" aria-label="Next image">›</button>
+    <button class="lightbox__close" aria-label="Close">&times;</button>
+  </div>
+
+  <!-- Active-tab highlight on scroll. Strip-only scroll, not the page. -->
+  <script>
+    (function () {
+      var tabs = Array.from(document.querySelectorAll('.sc-tabs a'));
+      var tabStrip = document.querySelector('.sc-tabs__inner');
+      var sections = tabs.map(t => document.querySelector(t.getAttribute('href'))).filter(Boolean);
+      function setActive(id) {
+        var newActive = null;
+        tabs.forEach(function (t) {
+          var match = t.getAttribute('href') === '#' + id;
+          t.classList.toggle('is-active', match);
+          if (match) newActive = t;
+        });
+        if (newActive && tabStrip) {
+          var stripRect = tabStrip.getBoundingClientRect();
+          var tabRect = newActive.getBoundingClientRect();
+          var targetLeft = tabStrip.scrollLeft + (tabRect.left - stripRect.left) - (stripRect.width - tabRect.width) / 2;
+          tabStrip.scrollTo({ left: targetLeft, behavior: 'smooth' });
+        }
+      }
+      if ('IntersectionObserver' in window && sections.length) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) { if (e.isIntersecting) setActive(e.target.id); });
+        }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+        sections.forEach(function (s) { io.observe(s); });
+      }
+    })();
+  </script>
+
+  <!-- ============================================================
+       Below this line: legacy raw demos from theme-preview history.
+       Kept for now as a "deep-dive" reference. The catalogue above
+       is the primary entry point — most users won't need to scroll
+       past here.
+       ============================================================ -->
 
   <!-- BUTTONS -->
   <section class="section">
@@ -324,6 +1233,302 @@
         <a href="#" class="btn btn--primary">Primary Button</a>
         <a href="#" class="btn btn--secondary">Secondary Button</a>
         <a href="#" class="btn btn--accent">Accent Button</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGO TICKER -->
+  <section class="section section--alt" style="padding-top: var(--space-2xl); padding-bottom: var(--space-2xl);">
+    <div class="container">
+      <h2 style="margin-bottom: 32px; text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light);">Logo Ticker</h2>
+    </div>
+    <div class="logo-ticker">
+      <span class="logo-ticker__label">Trusted by teams at</span>
+      <div class="logo-ticker__viewport">
+        <div class="logo-ticker__track">
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Acme Co</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Northwind</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Globex</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Initech</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Soylent</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Umbrella</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Stark Industries</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Wayne Enterprises</span></span>
+          <!-- duplicate set for seamless loop -->
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Acme Co</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Northwind</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Globex</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Initech</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Soylent</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Umbrella</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Stark Industries</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Wayne Enterprises</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANNOUNCEMENT BAR (canonical) — supports rich pill + msg + link layout -->
+  <section class="section" style="padding-top: var(--space-2xl); padding-bottom: var(--space-md);">
+    <div class="container">
+      <h2 style="margin-bottom: 24px; text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light);">Announcement Bar</h2>
+    </div>
+    <div class="announcement-bar">
+      <div class="announcement-bar__inner container">
+        <span class="announcement-bar__msg">
+          <span class="announcement-bar__pill">Now booking</span>
+          New client appointments available this month — limited spaces.
+        </span>
+        <a href="#" class="announcement-bar__link">Get in touch →</a>
+      </div>
+    </div>
+    <div style="height: var(--space-md);"></div>
+    <div class="announcement-bar announcement-bar--secondary">
+      <div class="announcement-bar__inner container">
+        <span class="announcement-bar__msg">
+          <span class="announcement-bar__pill">Mental Health Awareness Week</span>
+          Limited spaces — book by Friday.
+        </span>
+        <a href="#" class="announcement-bar__link">Check availability →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS (canonical .stats / .stat) with __sub + --accent extensions -->
+  <section class="section section--alt">
+    <div class="container">
+      <h2 style="margin-bottom: 32px; text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light);">Stats (with sub-line + accent extensions)</h2>
+      <div class="stats">
+        <div class="stat stat--card">
+          <div class="stat__number">49</div>
+          <div class="stat__label">Long-term clients</div>
+          <div class="stat__sub">running 4+ years each</div>
+        </div>
+        <div class="stat stat--card">
+          <div class="stat__number stat__number--accent">15+</div>
+          <div class="stat__label">Years in practice</div>
+          <div class="stat__sub">across the region</div>
+        </div>
+        <div class="stat stat--card">
+          <div class="stat__number">98%</div>
+          <div class="stat__label">Client retention</div>
+          <div class="stat__sub">return year on year</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARD: IMAGE-TOP + BADGE -->
+  <section class="section">
+    <div class="container">
+      <h2 style="margin-bottom: 32px; text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light);">Image-Top Cards (services + team + featured)</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-xl); margin-bottom: var(--space-xl);">
+        <article class="card card--image-top">
+          <span class="card__badge">Most popular</span>
+          <div class="card__image-wrap">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,var(--color-bg-alt),var(--color-surface-alt));display:flex;align-items:center;justify-content:center;color:var(--color-text-light);font-size:var(--text-xs);">Service photo</div>
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Weekly Yoga Sessions</h3>
+            <p class="card__text">A 45–60 minute class at your office. Same teacher, same time, every week.</p>
+            <a href="#" class="card__link">Learn more <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          </div>
+        </article>
+        <article class="card card--image-top">
+          <span class="card__badge card__badge--accent">New</span>
+          <div class="card__image-wrap">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,var(--color-bg-alt),var(--color-surface-alt));display:flex;align-items:center;justify-content:center;color:var(--color-text-light);font-size:var(--text-xs);">Service photo</div>
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Onsite Chair Massage</h3>
+            <p class="card__text">15–20 minutes per person, no oils, no disruption. Perfect for busy weeks.</p>
+            <a href="#" class="card__link">Learn more <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          </div>
+        </article>
+        <article class="card card--image-top">
+          <div class="card__image-wrap">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,var(--color-bg-alt),var(--color-surface-alt));display:flex;align-items:center;justify-content:center;color:var(--color-text-light);font-size:var(--text-xs);">Service photo</div>
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Mindfulness Workshops</h3>
+            <p class="card__text">Half-day workshops led by qualified facilitators, tailored to your team's needs.</p>
+            <a href="#" class="card__link">Learn more <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          </div>
+        </article>
+      </div>
+      <h3 style="margin-bottom: 24px; text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light);">— with portrait variant for team —</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-xl);">
+        <article class="card card--image-top card--portrait">
+          <div class="card__image-wrap">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,var(--color-bg-alt),var(--color-surface-alt));display:flex;align-items:center;justify-content:center;color:var(--color-text-light);font-size:var(--text-xs);">Portrait</div>
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Sarah Williams</h3>
+            <p class="card__text" style="color: var(--color-text-light); font-size: var(--text-sm);">Founder & Lead Practitioner</p>
+          </div>
+        </article>
+        <article class="card card--image-top card--portrait">
+          <div class="card__image-wrap">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,var(--color-bg-alt),var(--color-surface-alt));display:flex;align-items:center;justify-content:center;color:var(--color-text-light);font-size:var(--text-xs);">Portrait</div>
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">James O'Connor</h3>
+            <p class="card__text" style="color: var(--color-text-light); font-size: var(--text-sm);">Senior Yoga Teacher</p>
+          </div>
+        </article>
+        <article class="card card--image-top card--portrait">
+          <div class="card__image-wrap">
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,var(--color-bg-alt),var(--color-surface-alt));display:flex;align-items:center;justify-content:center;color:var(--color-text-light);font-size:var(--text-xs);">Portrait</div>
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Anya Patel</h3>
+            <p class="card__text" style="color: var(--color-text-light); font-size: var(--text-sm);">Massage Therapist</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY (landscape variant + captions + lightbox) -->
+  <section class="section section--alt">
+    <div class="container">
+      <h2 style="margin-bottom: 16px; text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light);">Gallery — landscape + caption + click for lightbox</h2>
+      <p style="text-align:center; margin-bottom:32px; font-size:var(--text-sm); color:var(--color-text-light);">Hover for zoom and caption. Click to open lightbox (Esc or click backdrop to close). Default <code>.gallery__item</code> is 1:1 — add <code>.gallery__item--landscape</code> / <code>--portrait</code> / <code>--wide</code> to change aspect.</p>
+      <div class="gallery">
+        <figure class="gallery__item gallery__item--landscape">
+          <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20600%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%2394a89c%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%235b7b6f%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22800%22%20height%3D%22600%22%20fill%3D%22url(%23g)%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20text-anchor%3D%22middle%22%20fill%3D%22%23fff%22%20font-family%3D%22sans-serif%22%20font-size%3D%2236%22%3EPhoto%201%3C%2Ftext%3E%3C%2Fsvg%3E" alt="Studio space">
+          <figcaption class="gallery__caption">Studio space</figcaption>
+        </figure>
+        <figure class="gallery__item gallery__item--landscape">
+          <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20600%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a89c94%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%237b6f5b%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22800%22%20height%3D%22600%22%20fill%3D%22url(%23g)%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20text-anchor%3D%22middle%22%20fill%3D%22%23fff%22%20font-family%3D%22sans-serif%22%20font-size%3D%2236%22%3EPhoto%202%3C%2Ftext%3E%3C%2Fsvg%3E" alt="Group session">
+          <figcaption class="gallery__caption">Group session</figcaption>
+        </figure>
+        <figure class="gallery__item gallery__item--landscape">
+          <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20600%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%239c94a8%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%236f5b7b%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22800%22%20height%3D%22600%22%20fill%3D%22url(%23g)%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20text-anchor%3D%22middle%22%20fill%3D%22%23fff%22%20font-family%3D%22sans-serif%22%20font-size%3D%2236%22%3EPhoto%203%3C%2Ftext%3E%3C%2Fsvg%3E" alt="Practitioner at work">
+          <figcaption class="gallery__caption">Practitioner at work</figcaption>
+        </figure>
+        <figure class="gallery__item gallery__item--landscape">
+          <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20600%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%2394a8a0%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%235b7b73%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22800%22%20height%3D%22600%22%20fill%3D%22url(%23g)%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20text-anchor%3D%22middle%22%20fill%3D%22%23fff%22%20font-family%3D%22sans-serif%22%20font-size%3D%2236%22%3EPhoto%204%3C%2Ftext%3E%3C%2Fsvg%3E" alt="After-class space">
+          <figcaption class="gallery__caption">After-class space</figcaption>
+        </figure>
+        <figure class="gallery__item gallery__item--landscape">
+          <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20600%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23a89c94%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%238b7163%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22800%22%20height%3D%22600%22%20fill%3D%22url(%23g)%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20text-anchor%3D%22middle%22%20fill%3D%22%23fff%22%20font-family%3D%22sans-serif%22%20font-size%3D%2236%22%3EPhoto%205%3C%2Ftext%3E%3C%2Fsvg%3E" alt="Reception area">
+          <figcaption class="gallery__caption">Reception area</figcaption>
+        </figure>
+        <figure class="gallery__item gallery__item--landscape">
+          <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20600%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%2394a89c%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%235b7b6f%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22800%22%20height%3D%22600%22%20fill%3D%22url(%23g)%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20text-anchor%3D%22middle%22%20fill%3D%22%23fff%22%20font-family%3D%22sans-serif%22%20font-size%3D%2236%22%3EPhoto%206%3C%2Ftext%3E%3C%2Fsvg%3E" alt="Welcome corner">
+          <figcaption class="gallery__caption">Welcome corner</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX (required markup for gallery click-to-zoom — main.js wires it up) -->
+  <div class="lightbox" role="dialog" aria-label="Image lightbox">
+    <button class="lightbox__close" aria-label="Close lightbox">×</button>
+    <img class="lightbox__img" src="" alt="">
+  </div>
+
+  <!-- PROCESS GRID — 3-step with image per step -->
+  <section class="section">
+    <div class="container">
+      <h2 style="margin-bottom: 32px; text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light);">Process Grid (image-per-step)</h2>
+      <div class="process-grid">
+        <div class="process-step">
+          <div class="process-step__image-wrap">
+            <span class="process-step__num">1</span>
+            <div class="process-step__image" style="background:linear-gradient(135deg,#94a89c,#5b7b6f);width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:var(--text-xs);">Step 1 photo</div>
+          </div>
+          <div class="process-step__body">
+            <h3 class="process-step__title">Free discovery call</h3>
+            <p class="process-step__text">A quick 20-minute chat to understand what your team needs. No pressure, no commitment.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-step__image-wrap">
+            <span class="process-step__num">2</span>
+            <div class="process-step__image" style="background:linear-gradient(135deg,#a89c94,#7b6f5b);width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:var(--text-xs);">Step 2 photo</div>
+          </div>
+          <div class="process-step__body">
+            <h3 class="process-step__title">We match a teacher</h3>
+            <p class="process-step__text">Based on your team's vibe and schedule. The same teacher comes back every week.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-step__image-wrap">
+            <span class="process-step__num">3</span>
+            <div class="process-step__image" style="background:linear-gradient(135deg,#9c94a8,#6f5b7b);width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:var(--text-xs);">Step 3 photo</div>
+          </div>
+          <div class="process-step__body">
+            <h3 class="process-step__title">First session within a week</h3>
+            <p class="process-step__text">We bring the equipment. Your team rolls out the mats. That's it — you're running.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HERO FLOATING STAT CARDS (faked over a placeholder hero) -->
+  <section class="section section--alt">
+    <div class="container">
+      <h2 style="margin-bottom: 32px; text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light);">Hero Floating Stat Cards</h2>
+      <p style="text-align:center; margin-bottom:24px; font-size:var(--text-sm); color:var(--color-text-light);">Add <code>.hero__floats</code> wrapper inside <code>.hero__image-wrap</code>, then <code>.hero__float</code> children with <code>--tl</code> / <code>--tr</code> / <code>--bl</code> / <code>--br</code> / <code>--ml</code> / <code>--mr</code> placement.</p>
+    </div>
+    <div style="position:relative; aspect-ratio:16/9; max-width:1100px; margin:0 auto; background:linear-gradient(135deg,#94a89c,#5b7b6f); border-radius:var(--radius-lg); overflow:hidden;">
+      <div class="hero__floats">
+        <div class="hero__float hero__float--tr">
+          <div class="hero__float-num hero__float-num--accent">49</div>
+          <div class="hero__float-label">Long-term clients</div>
+          <div class="hero__float-sub">running 4+ years each</div>
+        </div>
+        <div class="hero__float hero__float--mr hero__float--primary">
+          <div class="hero__float-num">15+</div>
+          <div class="hero__float-label">Years in practice</div>
+          <div class="hero__float-sub">across the region</div>
+        </div>
+        <div class="hero__float hero__float--bl">
+          <div class="hero__float-num hero__float-num--accent">98%</div>
+          <div class="hero__float-label">Client retention</div>
+          <div class="hero__float-sub">return year on year</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER — SPLIT IMAGE VARIANT -->
+  <section class="section">
+    <div class="container">
+      <h2 style="margin-bottom: 32px; text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light);">CTA Banner — Split Image Variant</h2>
+    </div>
+    <section class="cta-banner cta-banner--split" style="background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);">
+      <div class="cta-banner__content">
+        <h2>Limited spaces this season</h2>
+        <p>If you're thinking about booking something for your team — a class, a workshop, or a one-off session — this is the week to get in touch. We'll do everything we can to fit you in.</p>
+        <div class="cta-banner__buttons">
+          <a href="#" class="btn btn--accent">Check availability →</a>
+          <a href="#" class="btn btn--secondary">Learn more</a>
+        </div>
+      </div>
+      <div class="cta-banner__image-wrap">
+        <div class="cta-banner__image" style="background:linear-gradient(135deg,#94a89c,#5b7b6f);width:100%;height:100%;"></div>
+        <div class="cta-banner__image-fade"></div>
+      </div>
+    </section>
+  </section>
+
+  <!-- RATED PILL -->
+  <section class="section section--alt">
+    <div class="container" style="text-align:center;">
+      <h2 style="margin-bottom: 32px; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light);">Rated Pill</h2>
+      <div style="display:flex; gap:var(--space-md); justify-content:center; flex-wrap:wrap;">
+        <span class="rated-pill">
+          <svg class="rated-pill__icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Rated <span class="rated-pill__highlight">#1 in the region</span> by Local Business Awards
+        </span>
+        <span class="rated-pill rated-pill--accent">
+          <svg class="rated-pill__icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span class="rated-pill__highlight">5.0</span> on Google · 200+ reviews
+        </span>
       </div>
     </div>
   </section>
@@ -393,6 +1598,42 @@
             <p>I lean in to openness and complexity rather than rushing to fix things. I work relationally rather than directive, unless we agree otherwise.</p>
             <p>I hold the wider context of a person's life and relationships in mind. I'm clear about what I can and can't offer within this work.</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- STORY TEXT -->
+  <section class="section">
+    <div class="container">
+      <h2 style="margin-bottom: 32px; text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light);">Story Text</h2>
+      <div class="story-text">
+        <div class="story-text__header">
+          <span class="section-label">My Journey</span>
+          <h2>How I Got Here</h2>
+        </div>
+        <div class="story-text__body">
+          <div class="story-text__quote">
+            A personal experience first sparked my interest in this field — and that same sense of purpose drives my work to this day.
+          </div>
+          <div class="story-text__content">
+            <p>My journey into this profession began with a personal challenge that changed the way I understood health and wellbeing. The support I received from a skilled practitioner opened my eyes to how transformative the right care can be, and I knew immediately that I wanted to offer that same experience to others.</p>
+            <p>After completing my professional training and gaining experience across a range of settings, I established my own practice in the local area. Every day I draw on that early experience to connect with my clients — because I know first-hand what it feels like to need help, and how much it matters when you find someone who truly listens.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ABOUT SPLIT THIRD -->
+  <section class="about-split-third">
+    <div class="container">
+      <div class="about-split-third__inner">
+        <div class="about-split-third__image-wrap" style="background-image: url('images/hero.jpg'); min-height: 400px;" role="img" aria-label="Practitioner portrait">
+        </div>
+        <div class="about-split-third__text">
+          <span class="section-label">About Split Third</span>
+          <h2>A narrower image with more room for text</h2>
+          <p>This component uses a 1fr/2fr grid — the image takes up roughly one-third of the width, giving the text content more breathing room. Ideal for about page sections where the story matters more than the portrait.</p>
+          <p>The image uses background-image with cover positioning, so it always fills the full height of the section regardless of aspect ratio. No gaps, no distortion.</p>
         </div>
       </div>
     </div>
@@ -590,43 +1831,35 @@
   <!-- ICON GRID 4-col left-aligned -->
   <section class="section">
     <div class="container">
-      <h2 style="margin-bottom: 32px; text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light);">Icon Grid (4-column, left-aligned)</h2>
+      <h2 style="margin-bottom: 32px; text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light);">Icon Grid (4-column, centered)</h2>
       <div class="grid--4">
-        <div class="icon-box icon-box--left">
+        <div class="icon-box">
           <div class="icon-box__icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
           </div>
-          <div>
-            <h3 class="icon-box__title">Small Team</h3>
-            <p class="icon-box__text">You speak to a real person who knows your case.</p>
-          </div>
+          <h3 class="icon-box__title">Small Team</h3>
+          <p class="icon-box__text">You speak to a real person who knows your case.</p>
         </div>
-        <div class="icon-box icon-box--left">
+        <div class="icon-box">
           <div class="icon-box__icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
-          <div>
-            <h3 class="icon-box__title">Security First</h3>
-            <p class="icon-box__text">Your data is encrypted and stored securely.</p>
-          </div>
+          <h3 class="icon-box__title">Security First</h3>
+          <p class="icon-box__text">Your data is encrypted and stored securely.</p>
         </div>
-        <div class="icon-box icon-box--left">
+        <div class="icon-box">
           <div class="icon-box__icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           </div>
-          <div>
-            <h3 class="icon-box__title">Done-for-You</h3>
-            <p class="icon-box__text">We handle the setup so you can focus on clients.</p>
-          </div>
+          <h3 class="icon-box__title">Done-for-You</h3>
+          <p class="icon-box__text">We handle the setup so you can focus on clients.</p>
         </div>
-        <div class="icon-box icon-box--left">
+        <div class="icon-box">
           <div class="icon-box__icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           </div>
-          <div>
-            <h3 class="icon-box__title">Built for One Thing</h3>
-            <p class="icon-box__text">We do one job well instead of trying to do everything.</p>
-          </div>
+          <h3 class="icon-box__title">Built for One Thing</h3>
+          <p class="icon-box__text">We do one job well instead of trying to do everything.</p>
         </div>
       </div>
     </div>
@@ -744,7 +1977,7 @@
       <h2 style="margin-bottom: 32px; text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light);">Checklist &amp; Checklist Grid</h2>
 
       <div style="max-width: 500px; margin: 0 auto 48px;">
-        <h3 style="margin-bottom: 16px;">Single Checklist</h3>
+        <h3 style="margin-bottom: 16px; text-align: center;">Single Checklist</h3>
         <ul class="checklist">
           <li class="checklist__item">Anxiety and stress management</li>
           <li class="checklist__item">Depression and low mood</li>
@@ -864,8 +2097,7 @@
           <blockquote class="testimonial__quote">
             "Working with this team has been an absolute pleasure. They understood exactly what we needed and delivered beyond our expectations."
           </blockquote>
-          <cite class="testimonial__author">Jane Smith</cite>
-          <p class="testimonial__detail">Business Owner</p>
+          <cite class="testimonial__author">Jane Smith — Business Owner</cite>
         </div>
       </div>
     </div>
@@ -879,14 +2111,12 @@
         <div class="testimonial">
           <div class="testimonial__stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
           <blockquote class="testimonial__quote">"Therapy with Sarah gave me the tools to manage my anxiety. I feel so much more in control of my life now."</blockquote>
-          <cite class="testimonial__author">Client A</cite>
-          <p class="testimonial__detail">London</p>
+          <cite class="testimonial__author">Client A — London</cite>
         </div>
         <div class="testimonial">
           <div class="testimonial__stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
           <blockquote class="testimonial__quote">"I was hesitant about starting therapy but from our very first session I felt completely at ease. It's been genuinely life-changing."</blockquote>
-          <cite class="testimonial__author">Client B</cite>
-          <p class="testimonial__detail">Online</p>
+          <cite class="testimonial__author">Client B — Online</cite>
         </div>
       </div>
     </div>
@@ -901,20 +2131,17 @@
         <div class="testimonial testimonial--active">
           <div class="testimonial__stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
           <blockquote class="testimonial__quote">"I'd been putting off therapy for years. From our very first session I felt completely safe and understood. It's genuinely changed how I approach life."</blockquote>
-          <cite class="testimonial__author">Sarah M.</cite>
-          <p class="testimonial__detail">London</p>
+          <cite class="testimonial__author">Sarah M. — London</cite>
         </div>
         <div class="testimonial">
           <div class="testimonial__stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
           <blockquote class="testimonial__quote">"Working together gave me the tools to manage my anxiety. I finally feel in control of my thoughts instead of the other way around."</blockquote>
-          <cite class="testimonial__author">James R.</cite>
-          <p class="testimonial__detail">Online</p>
+          <cite class="testimonial__author">James R. — Online</cite>
         </div>
         <div class="testimonial">
           <div class="testimonial__stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
           <blockquote class="testimonial__quote">"I was sceptical about therapy but after six sessions I can honestly say it was the best decision I've made. Compassionate, insightful, and completely non-judgemental."</blockquote>
-          <cite class="testimonial__author">David K.</cite>
-          <p class="testimonial__detail">Bristol</p>
+          <cite class="testimonial__author">David K. — Bristol</cite>
         </div>
         <div class="testimonial-carousel__nav">
           <button class="testimonial-carousel__dot testimonial-carousel__dot--active" aria-label="Testimonial 1"></button>
@@ -1181,6 +2408,31 @@
       </div>
     </div>
   </section>
+  <!-- VIDEO SPLIT -->
+  <section class="section section--alt">
+    <div class="container">
+      <h2 style="margin-bottom: 32px; text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light);">Video Split</h2>
+      <div class="video-split">
+        <div class="video-split__header">
+          <span class="section-label">Watch &amp; Learn</span>
+          <h2>See How We Work</h2>
+        </div>
+        <div class="video-split__content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+          <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
+          <a href="#" class="btn btn--primary" style="margin-top: var(--space-md);">Get Started</a>
+        </div>
+        <div class="video-split__media">
+          <div class="video-embed video-embed--placeholder" style="padding-bottom: 56.25%;">
+            <div class="video-embed__play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- BLOG CARDS / LISTING GRID -->
   <section class="section">
     <div class="container">
@@ -1753,6 +3005,131 @@
       </div>
     </div>
   </section>
+  <!-- ================================================================
+       v1.4 — NEW COMPONENTS / MODIFIERS
+       Lightbox prev/next, lightbox entrance animation, hero word-fade,
+       stat counters, section-label pill, hero floats cantilever,
+       process-step centered num, logo-ticker variants, hero ratio
+       modifiers, pill-glow utility. All auto-wired via main.js where JS
+       is required.
+       ================================================================ -->
+  <section class="section">
+    <h2 style="padding: var(--space-md) var(--space-lg); text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light); background: var(--color-surface);">v1.4 — Section Label Pill</h2>
+    <div class="container" style="display: flex; gap: var(--space-md); flex-wrap: wrap; align-items: center;">
+      <span class="section-label">Default (text)</span>
+      <span class="section-label section-label--pill">Pill (dark navy)</span>
+      <span class="section-label section-label--pill section-label--pill-primary">Pill (primary)</span>
+      <span class="section-label section-label--pill section-label--pill-accent">Pill (accent)</span>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <h2 style="padding: var(--space-md) var(--space-lg); text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light); background: var(--color-surface);">v1.4 — Pill Glow Utility</h2>
+    <div class="container" style="display: flex; gap: var(--space-md); flex-wrap: wrap; align-items: center;">
+      <span class="section-label section-label--pill pill--glow">Default glow (blue)</span>
+      <span class="section-label section-label--pill section-label--pill-accent pill--glow pill--glow-accent">Accent glow</span>
+      <span class="section-label section-label--pill section-label--pill-primary pill--glow pill--glow-primary">Primary glow</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 style="padding: var(--space-md) var(--space-lg); text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light); background: var(--color-surface);">v1.4 — Stat Counters (count-up on scroll)</h2>
+    <div class="container">
+      <div class="stats">
+        <div class="stat stat--card">
+          <div class="stat__number" data-target="49" data-suffix="">0</div>
+          <div class="stat__label">Long-term clients</div>
+          <div class="stat__sub">running 4+ years each</div>
+        </div>
+        <div class="stat stat--card">
+          <div class="stat__number" data-target="15" data-suffix="+">0</div>
+          <div class="stat__label">Years in business</div>
+          <div class="stat__sub">corporate sector</div>
+        </div>
+        <div class="stat stat--card">
+          <div class="stat__number" data-target="98" data-suffix="%">0</div>
+          <div class="stat__label">Client retention</div>
+          <div class="stat__sub">year on year</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <h2 style="padding: var(--space-md) var(--space-lg); text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light); background: var(--color-surface);">v1.4 — Process Step (centered number variant)</h2>
+    <div class="container">
+      <div class="process-grid">
+        <article class="process-step process-step--num-centered" style="background-color: var(--color-secondary); color: var(--color-text-inverse);">
+          <div class="process-step__image-wrap" style="background: var(--color-bg-alt);"></div>
+          <div class="process-step__body">
+            <div class="process-step__num">1</div>
+            <h3 class="process-step__title" style="color: var(--color-text-inverse);">Tell us about you</h3>
+            <p class="process-step__text" style="color: rgba(255,255,255,0.82);">A 20-minute discovery call to understand your needs.</p>
+          </div>
+        </article>
+        <article class="process-step process-step--num-centered" style="background-color: var(--color-secondary); color: var(--color-text-inverse);">
+          <div class="process-step__image-wrap" style="background: var(--color-bg-alt);"></div>
+          <div class="process-step__body">
+            <div class="process-step__num">2</div>
+            <h3 class="process-step__title" style="color: var(--color-text-inverse);">Get your plan</h3>
+            <p class="process-step__text" style="color: rgba(255,255,255,0.82);">A clear recommendation within 24 hours.</p>
+          </div>
+        </article>
+        <article class="process-step process-step--num-centered" style="background-color: var(--color-secondary); color: var(--color-text-inverse);">
+          <div class="process-step__image-wrap" style="background: var(--color-bg-alt);"></div>
+          <div class="process-step__body">
+            <div class="process-step__num">3</div>
+            <h3 class="process-step__title" style="color: var(--color-text-inverse);">First session</h3>
+            <p class="process-step__text" style="color: rgba(255,255,255,0.82);">Up and running within a week.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 style="padding: var(--space-md) var(--space-lg); text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light); background: var(--color-surface);">v1.4 — Logo Ticker (--no-fade modifier)</h2>
+    <div class="logo-ticker logo-ticker--no-fade">
+      <span class="logo-ticker__label">Trusted by teams at</span>
+      <div class="logo-ticker__viewport">
+        <div class="logo-ticker__track">
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Acme Co</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Northwind</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Globex</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Initech</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Stark Industries</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Wayne Enterprises</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Acme Co</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Northwind</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Globex</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Initech</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Stark Industries</span></span>
+          <span class="logo-ticker__item"><span class="logo-ticker__pill">Wayne Enterprises</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <h2 style="padding: var(--space-md) var(--space-lg); text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light); background: var(--color-surface);">v1.4 — Lightbox prev/next + entrance animation</h2>
+    <div class="container">
+      <p style="color: var(--color-text-light); margin-bottom: var(--space-lg);">Click any tile to open the lightbox. Use the ‹ › buttons or arrow keys to navigate; Esc to close.</p>
+      <div class="gallery">
+        <div class="gallery__item gallery__item--landscape"><img src="https://picsum.photos/seed/cw1/600/400" alt="Demo image 1"></div>
+        <div class="gallery__item gallery__item--landscape"><img src="https://picsum.photos/seed/cw2/600/400" alt="Demo image 2"></div>
+        <div class="gallery__item gallery__item--landscape"><img src="https://picsum.photos/seed/cw3/600/400" alt="Demo image 3"></div>
+        <div class="gallery__item gallery__item--landscape"><img src="https://picsum.photos/seed/cw4/600/400" alt="Demo image 4"></div>
+      </div>
+    </div>
+    <!-- Lightbox markup with prev/next -->
+    <div class="lightbox" aria-hidden="true">
+      <button class="lightbox__prev" aria-label="Previous image">‹</button>
+      <img class="lightbox__img" src="" alt="">
+      <button class="lightbox__next" aria-label="Next image">›</button>
+      <button class="lightbox__close" aria-label="Close">&times;</button>
+    </div>
+  </section>
+
   <!-- SIMPLE CENTRED FOOTER -->
   <div style="margin-bottom: 0;">
     <h2 style="padding: var(--space-md) var(--space-lg); text-align: center; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light); background: var(--color-surface);">Simple Centred Footer</h2>
@@ -1768,7 +3145,7 @@
           <a href="#" class="footer__link">Contact</a>
         </div>
         <div class="footer__bottom">
-          <p class="footer__copyright">&copy; 2026 Your Business Name. All rights reserved.</p>
+          <p class="footer__copyright">&copy; <script>document.write(new Date().getFullYear())</script> Your Business Name. All rights reserved.</p>
           <div class="footer__legal">
             <a href="#">Privacy Policy</a>
             <a href="#">Terms of Service</a>
@@ -1816,7 +3193,7 @@
           </div>
         </div>
         <div class="footer__bottom">
-          <p class="footer__copyright">&copy; 2026 Your Business Name. All rights reserved.</p>
+          <p class="footer__copyright">&copy; <script>document.write(new Date().getFullYear())</script> Your Business Name. All rights reserved.</p>
           <div class="footer__legal">
             <a href="#">Privacy Policy</a>
             <a href="#">Terms of Service</a>
@@ -1859,7 +3236,7 @@
         </div>
       </div>
       <div class="footer__bottom">
-        <p class="footer__copyright">&copy; 2026 Your Business Name. All rights reserved.</p>
+        <p class="footer__copyright">&copy; <script>document.write(new Date().getFullYear())</script> Your Business Name. All rights reserved.</p>
         <div class="footer__legal">
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Service</a>
@@ -2012,15 +3389,52 @@
       updateInfo();
     }
 
+    // Parallax cleanup reference
+    let parallaxScrollHandler = null;
+
     function applyHeroVariant(variant) {
       const hero = document.getElementById('heroSection');
       const isReverse = document.getElementById('heroReverse').checked;
       hero.className = 'hero' + (variant ? ' ' + variant : '') + (isReverse ? ' hero--reverse' : '');
+
+      // Reset parallax state
+      if (parallaxScrollHandler) {
+        window.removeEventListener('scroll', parallaxScrollHandler);
+        parallaxScrollHandler = null;
+      }
+      const heroContent = hero.querySelector('.hero__content');
+      if (heroContent) {
+        heroContent.style.transform = '';
+        heroContent.style.opacity = '';
+      }
+      hero.style.backgroundPositionY = '';
+
       // Add placeholder background image for image/showcase heroes
       if (variant.includes('hero--image') || variant.includes('hero--showcase')) {
         hero.style.backgroundImage = 'url("https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1600&q=80")';
       } else {
         hero.style.backgroundImage = '';
+      }
+
+      // Initialise parallax if selected
+      if (variant.includes('hero--parallax') && heroContent) {
+        let ticking = false;
+        parallaxScrollHandler = function() {
+          if (!ticking) {
+            requestAnimationFrame(function() {
+              const scrollY = window.scrollY || window.pageYOffset;
+              const heroHeight = hero.offsetHeight;
+              if (scrollY <= heroHeight) {
+                hero.style.backgroundPositionY = 'calc(50% + ' + (scrollY * 0.4) + 'px)';
+                heroContent.style.transform = 'translateY(-' + (scrollY * 0.25) + 'px)';
+                heroContent.style.opacity = Math.max(1 - scrollY / (heroHeight * 0.7), 0);
+              }
+              ticking = false;
+            });
+            ticking = true;
+          }
+        };
+        window.addEventListener('scroll', parallaxScrollHandler, { passive: true });
       }
     }
 
@@ -2058,6 +3472,23 @@
       loadFont(e.target.value);
     });
 
+    // v1.5 — Aesthetic dial loader
+    const aestheticCache = {};
+    async function loadAesthetic(id) {
+      if (!aestheticCache[id]) {
+        const res = await fetch(`themes/aesthetics/${id}.json`);
+        aestheticCache[id] = await res.json();
+      }
+      const aesthetic = aestheticCache[id];
+      const root = document.documentElement;
+      Object.entries(aesthetic.tokens).forEach(([k, v]) => {
+        root.style.setProperty('--' + k, v);
+      });
+    }
+    document.getElementById('aestheticSelect').addEventListener('change', (e) => {
+      loadAesthetic(e.target.value);
+    });
+
     document.getElementById('heroSelect').addEventListener('change', (e) => {
       applyHeroVariant(e.target.value);
     });
@@ -2066,30 +3497,61 @@
       applyHeroVariant(document.getElementById('heroSelect').value);
     });
 
+    // Nav type switcher (Standard / Two-Tier)
+    const navTypeSelect = document.getElementById('navTypeSelect');
+    const navStandard = document.getElementById('previewNav');
+    const navTwoTier = document.getElementById('previewNavTwoTier');
+
+    function getActiveNav() {
+      return navTypeSelect.value === 'two-tier' ? navTwoTier : navStandard;
+    }
+
+    function applyNavMode(mode) {
+      const nav = getActiveNav();
+      nav.classList.remove('nav--transparent', 'nav--transparent-dark', 'nav--transparent-light', 'nav--branded');
+      nav.style.removeProperty('--nav-transparent-bg');
+      nav.style.removeProperty('border-bottom');
+      navColorPicker.style.display = 'none';
+
+      if (mode === 'branded') {
+        nav.classList.add('nav--branded');
+      } else if (mode === 'dark') {
+        nav.classList.add('nav--transparent', 'nav--transparent-dark');
+        navColorPicker.style.display = '';
+        navColorPicker.value = '#2a2a2a';
+      } else if (mode === 'light') {
+        nav.classList.add('nav--transparent', 'nav--transparent-light');
+        navColorPicker.style.display = '';
+        navColorPicker.value = '#ffffff';
+      } else if (mode === 'clear') {
+        nav.classList.add('nav--transparent', 'nav--transparent-dark');
+        nav.style.setProperty('--nav-transparent-bg', 'transparent');
+        nav.style.borderBottom = 'none';
+      }
+    }
+
+    navTypeSelect.addEventListener('change', () => {
+      if (navTypeSelect.value === 'two-tier') {
+        navStandard.style.display = 'none';
+        navTwoTier.style.display = '';
+      } else {
+        navTwoTier.style.display = 'none';
+        navStandard.style.display = '';
+      }
+      // Re-apply current style to the newly shown nav
+      applyNavMode(navModeSelect.value);
+    });
+
     // Transparent nav mode dropdown
     const navModeSelect = document.getElementById('navTransparentMode');
     const navColorPicker = document.getElementById('navTransparentColor');
 
     navModeSelect.addEventListener('change', () => {
-      const nav = document.querySelector('.nav, .nav--two-tier');
-      if (!nav) return;
-      nav.classList.remove('nav--transparent', 'nav--transparent-dark', 'nav--transparent-light');
-      nav.style.removeProperty('--nav-transparent-bg');
-      navColorPicker.style.display = 'none';
-
-      if (navModeSelect.value === 'dark') {
-        nav.classList.add('nav--transparent', 'nav--transparent-dark');
-        navColorPicker.style.display = '';
-        navColorPicker.value = '#2a2a2a';
-      } else if (navModeSelect.value === 'light') {
-        nav.classList.add('nav--transparent', 'nav--transparent-light');
-        navColorPicker.style.display = '';
-        navColorPicker.value = '#ffffff';
-      }
+      applyNavMode(navModeSelect.value);
     });
 
     navColorPicker.addEventListener('input', () => {
-      const nav = document.querySelector('.nav, .nav--two-tier');
+      const nav = getActiveNav();
       if (!nav) return;
       const hex = navColorPicker.value;
       const opacity = navModeSelect.value === 'dark' ? '8a' : 'bf';
@@ -2098,7 +3560,7 @@
 
     // Logo inline toggle
     document.getElementById('logoInline').addEventListener('change', (e) => {
-      const brand = document.querySelector('.nav__brand');
+      const brand = getActiveNav().querySelector('.nav__brand');
       if (brand) {
         brand.classList.toggle('nav__brand--inline', e.target.checked);
         // Add/remove brand-text wrapper

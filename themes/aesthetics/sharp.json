@@ -1,0 +1,10 @@
+{
+  "id": "sharp",
+  "name": "Sharp",
+  "description": "Zero-radius corners, hard offset shadows. Architectural, corporate, B2B feel. Pills still pill-shaped.",
+  "tokens": {
+    "aesthetic-radius": "0",
+    "aesthetic-shadow-card": "0 2px 0 rgba(0, 0, 0, 0.10), 0 4px 0 rgba(0, 0, 0, 0.04)",
+    "aesthetic-border-width": "1px"
+  }
+}
