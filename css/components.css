@@ -8522,3 +8522,26 @@ main > .section--alt + .section--alt:not(.section--dark):not(.cta-banner) {
     margin: 0 auto;
   }
 }
+
+/* ============================================
+   CONTENT LISTS (bullets restored for bare <ul>/<ol> inside .section)
+   ============================================ */
+/* base.css strips list-style globally so nav / footer / mobile-menu lists
+   render cleanly. Page content inside <section> is the opposite case —
+   bare <ul>/<ol> with no class are content lists (e.g. AI-generated
+   bullet lists from the editor) and need disc/decimal markers. */
+.section ul:not([class]),
+.section ol:not([class]) {
+  list-style: disc;
+  padding-left: var(--space-xl);
+  margin-bottom: var(--space-md);
+}
+.section ol:not([class]) {
+  list-style: decimal;
+}
+.section ul:not([class]) li,
+.section ol:not([class]) li {
+  margin-bottom: var(--space-xs);
+  color: var(--color-text-light);
+  line-height: var(--line-height-relaxed);
+}
