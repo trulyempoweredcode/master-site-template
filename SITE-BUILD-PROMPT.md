@@ -43,7 +43,7 @@ Then extract content according to the scenario (see Phase 1).
 **Scenario 1 — Pull from existing site:**
 1. Fetch the client's existing website URL and every linked page
 2. Extract all text content: headings, paragraphs, lists, testimonials, team bios, service descriptions, pricing, FAQs, contact details, opening hours, social links
-3. Download any images the client wants to keep (per Photos setting)
+3. **Enumerate ALL the client's real image assets BEFORE generating anything.** `WebFetch` strips `<img>`/background URLs, so pull the raw HTML and grep for image refs, and probe the common asset folders directly — e.g. `/siteimages/banner1.jpg…bannerN.jpg`, `/userfiles/images/`, `/images/`. Download the real hero/banner, logo, headshots, accreditation badges and section photos. **ALWAYS prefer a real client photo over a generated one** — only generate (Phase 2b) for genuine gaps. (A real clifftop banner was once missed and an AI "desert" hero shipped over it — don't repeat that.)
 4. Note the site's current structure, pages, and navigation hierarchy
 5. Identify the client's natural voice and tone from their existing copy
 
@@ -147,6 +147,10 @@ If Photos = `mixed`, use client photos for personal/team shots and generate for 
 If Photos = `existing only`, download images from the client's existing site. If Photos = `client supplied`, copy from the content folder. If Photos = `none`, use coloured placeholder divs.
 
 ### 2c. Build pages
+
+**Build order — verify before you replicate.** Build the homepage + ONE inner page FIRST, then verify them *visually* (screenshot the rendered page — not just a DOM/`eval` check) to a high quality bar. Only once those genuinely look right should you replicate the scaffold and section patterns across the remaining pages — otherwise a weak layout gets propagated everywhere and has to be redone. **If you cannot render/screenshot the pages in your environment, STOP and ask the user to share a screenshot.** DOM measurements (overflow, byte-identical nav, section order, image 200s) prove the page is *correct*, not that it *looks right* — never sign off on visual quality from measurements alone.
+
+When delegating page builds to subagents, give each a precise per-section component spec (split here, steps here, quals-list here) — left to their own devices they default to flat text blocks.
 
 For each page, use the master template HTML structure:
 - `<a href="#main" class="skip-link">` at the top
@@ -464,6 +468,18 @@ These rules apply to every page on every build. They prevent common visual issue
 
 9. **Contact info uses icon-left layout.** On contact pages, use `.contact-info` > `.contact-info__item` (icon beside title), not `.card--feature` (icon above title). The `.contact-info__label` is bold at `text-base` size; `.contact-info__text` is smaller at `text-sm`. This creates clear visual hierarchy between titles and body text.
 
+10. **Match a component to its section background.** A component whose heading uses `var(--color-bg-alt)` — notably `highlight-box--soft` — visually disappears when placed on a `.section--alt` (same grey): the heading merges into the section and the white content looks like a detached, floating card. **Rule:** use `--soft` callouts only on WHITE (`.section`) backgrounds; on `.section--alt` use the default `highlight-box` (primary-colour heading, which contrasts on any background). Always confirm a component's heading/background colour differs from the section it sits on. (Same principle as rule 3 for icons.)
+
+11. **Match a component to its content length.** Row-based components like `.fee-table` / `.fee-item` (name → dotted leader → price on one line) need horizontal room. Cram them into a narrow `grid--3` column and the detail text wraps, ballooning rows to 150–200px of ragged content. **Stack wide-row components full-width inside `.container--narrow`;** reserve multi-column grids for short, uniform cards (`card--service`, `icon-box`).
+
+12. **No wall-of-text sections.** Every content section must use a varied visual component — `.split` (+ image), `.steps`, an `.icon-box`/`.card` grid, `.quals-list`, `.story-split`, `.blockquote--pull`, `.info-band`, etc. Never stack bare `<p>` paragraphs as a whole section, and aim for **≥4 distinct visual patterns** on any multi-section page. Bulleted lists must use the real list component WITH icons (`.quals-list`, or `.checklist` with inline `<svg>` ticks) — **never plain `<li>` with no marker** (renders as iconless text). Apply this from the first build, not after feedback.
+
+13. **Nav CTA discipline.** Use plain `nav__link`s for menu items. Only add a `btn ... nav__cta` button for a single, strong, *distinct* primary action (e.g. "Book a Home Visit", "Book Online"). Never label the CTA the same as an existing menu item — a "Contact" button sitting next to/over a "Contact" link looks broken. If there is no distinct primary action, make every nav item a plain link.
+
+14. **Eyebrow must not echo its heading.** The `section-label` eyebrow (pill) above a heading must never repeat or be a synonym of the heading directly below it: eyebrow "About" + H1 "About", eyebrow "Fees" + H1 "Fees", eyebrow "Get in Touch" + H1 "Contact" are all wrong. The eyebrow is a short *category*; the heading is a *distinct, descriptive* title. If the page is simply "About", make the H1 specific ("Meet Patrick Goodlet") or drop the eyebrow — never two words that say the same thing stacked on top of each other.
+
+15. **Don't skip heading levels — mind component defaults.** Every page goes H1 → H2 → H3 with no skips. Several components title themselves with `<h3>` by default (e.g. `.fee-table h3`, `.highlight-box` h3). When one sits directly under the page-header `<h1>` with no `<h2>` between, that's an H1→H3 skip — promote the component's title to `<h2>` (size it back down in `theme.css` if the default H2 is too big) or add a real section `<h2>` above it. Also keep relative sizing sane: a price/number/stat must never render *larger* than the card title above it (e.g. `.fee-item__price` defaults to `text-xl` — reduce it per-site if it dwarfs the title).
+
 ---
 
 ## Content Integrity Rules (MANDATORY)
@@ -566,6 +582,14 @@ Address the client directly in second person ("you", "your", "please confirm"). 
 ## Self-Audit Checklist (complete before delivering)
 
 Before reporting the site as ready, verify every item:
+
+**Visual (LOOK at the rendered pages — not just the DOM):**
+- [ ] You have actually viewed the homepage + each page type as a rendered screenshot. If you couldn't, you flagged it to the user instead of signing off blind.
+- [ ] No section is a plain wall of `<p>` text — every content section uses a varied component (split + image, steps, icon-box grid, quals-list, story-split, pull-quote…)
+- [ ] Every callout/box (e.g. `highlight-box`) reads as ONE cohesive element on its section background (heading background ≠ section background)
+- [ ] Lists use the real list component WITH icons (`quals-list`, or `checklist` with svgs) — never bare `<li>`
+- [ ] Pricing/fee components are not cramped — wide-row components (`fee-table`) sit full-width, not in narrow columns
+- [ ] The hero (and section images) use the client's REAL banner/photos where they exist — generated images only fill genuine gaps
 
 **Content integrity:**
 - [ ] Every credential in every trust bar appears in the client's source content
