@@ -3,5 +3,6 @@
   "name": "Clean Slate",
   "palette": "clean-slate",
   "fonts": "clean-bold",
-  "heroStyle": "minimal"
+  "heroStyle": "minimal",
+  "aesthetic": "soft"
 }

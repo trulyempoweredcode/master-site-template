@@ -3,5 +3,6 @@
   "name": "Bold Navy",
   "palette": "bold-navy",
   "fonts": "modern-pro",
-  "heroStyle": "split"
+  "heroStyle": "split",
+  "aesthetic": "soft"
 }

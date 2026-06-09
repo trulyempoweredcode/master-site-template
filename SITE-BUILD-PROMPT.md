@@ -73,7 +73,7 @@ Then extract content according to the scenario (see Phase 1).
 Use the theme selections from the brief. If any are marked "you recommend", choose based on the client's industry, tone, and competitor landscape.
 
 Available options:
-- **Palettes:** calm-sage, bold-navy, warm-terracotta, clean-slate, rich-forest, bright-coral, soft-blush, warm-mocha, trusty-blue, fresh-teal, warm-grey, deep-plum, mint-fresh
+- **Palettes:** calm-sage, bold-navy, warm-terracotta, clean-slate, rich-forest, bright-coral, soft-blush, warm-mocha, trusty-blue, fresh-teal, warm-grey, deep-plum, mint-fresh, playful-sky
 - **Font pairings:** classic-elegance, modern-pro, friendly, clean-bold, editorial, minimal, boutique, corporate, playful
 - **Hero variants (16 total):** Classic group: split (classic two-column), fullwidth (dark overlay centred text), minimal (text only), half (50/50 edge-to-edge). Slope group: slope-dark (angled dark), slope-light (angled light), banner (contained image strip). Image Overlay group: image-left, image-center, image-right (full-bleed photo with dark overlay, text positioned left/centre/right). Image Frost group: frost-dark-left/center/right (frosted glass card over full-vibrancy image, dark tone), frost-light-left/center/right (frosted glass card, light tone). Classic/half can add `hero--reverse` to flip sides.
 - **Nav styles:** default (single-tier), two-tier (brand bar + nav bar with contact info)
@@ -338,6 +338,8 @@ If blog is not needed, skip this section entirely — do not create `blog.html`.
 
 Use these CSS classes from components.css. Do NOT write custom CSS. Everything needed is in the library.
 
+**This is a curated quick-reference, NOT the full library.** The canonical index is `master-site-template/COMPONENTS.md` (~110 components with usage notes, grouped by purpose) — READ IT when planning each page's sections. Anything listed there is fair game even if it isn't repeated below. When COMPONENTS.md and this list disagree, COMPONENTS.md wins.
+
 **Page structure:**
 - `.section` / `.section--alt` / `.section--dark` — page sections with padding. **Never place two consecutive sections with the same background** — alternate between `.section` and `.section--alt` (or `.section--dark`) so each section is visually distinct.
 - `.container` / `.container--narrow` — max-width wrappers
@@ -377,11 +379,18 @@ Use these CSS classes from components.css. Do NOT write custom CSS. Everything n
 - `.highlight-box` / `.highlight-box--secondary` / `.highlight-box--soft` — callout boxes
 - `.blockquote` / `.blockquote--pull` — quotes and pull quotes
 - `.checklist` / `.checklist--subtle` / `.checklist-grid` — tick-icon lists
+- `.quals-list` — qualifications/credentials list with icons (the required component for icon'd bullet lists — see Design Rule 12)
+- `.story-text` — centred header + pull-quote left / body text right
+- `.intro` — homepage welcome split (image + text, `__inner--reversed` to swap sides)
+- `.about-hero` / `.about-split-third` — about-page hero and 1fr/2fr full-bleed split
+- `.two-col-text` — heading full width, body splits into 2 columns
 
 **Cards and grids:**
 - `.card--feature` / `.card--service` — icon + heading + text cards
 - `.icon-box` / `.icon-box--left` / `.icon-box--card` — icon grid items
 - `.steps` / `.steps--connected` / `.step` — numbered process steps (3 items default). Add `.steps--4` for 4-item layouts (4 columns at desktop).
+- `.process-grid` / `.process-step` — 3- or 4-step (`--4`) process WITH an image per step
+- `.process-spine` — vertical numbered process with connector rail, no images (editorial/B2B "methodology" sections)
 - `.image-card` — photo + title + text card
 - `.overlay-card` — image with text overlay
 - `.grid--bento` — featured first card spans 2 rows (left), remaining cards fill 2-col grid (right). Use with `.card--feature` children. Add `.card--highlight` to first card for dark background variant. Use `.card__stat` for large metric numbers.
@@ -402,20 +411,26 @@ Use these CSS classes from components.css. Do NOT write custom CSS. Everything n
 - `.trust-bar__logo-placeholder` — placeholder for accreditation logos
 - `.google-reviews` — compact star rating badge
 - `.comparison` / `.comparison__card` — "right fit" tick/cross cards
+- `.logo-ticker` — infinite-scroll logo marquee (pauses on hover, reduced-motion fallback)
+- `.rated-pill` — inline award/rating badge ("Rated #1 by …")
 
 **Team:**
-- `.team-grid` / `.team-card` — photo + name + role grid
-- `.team-list` / `.team-list__member` — compact horizontal list
+- `.team-grid` / `.team-member` — photo + name + role grid (the child class is `team-member`, NOT `team-card` — `team-card` has no styling)
+- `.team-list` / `.team-list-item` — compact horizontal list
+- For 3-up portrait cards, prefer `.card--image-top.card--portrait` (one component covers services + team)
 
 **CTAs:**
 - `.cta-banner` — full-width coloured CTA section. Use `btn--accent` for the primary CTA. If adding a secondary link, use `btn--secondary` which auto-adapts to white text on dark backgrounds.
 - `.cta-inline` — bordered CTA box within content
 - `.cta-image` — CTA with background image
+- `.cta-mid-banner` — full-width mid-page CTA strip
 - `.announcement-bar` — top-of-page alert strip
 
 **Pricing:**
 - `.pricing-card` / `.pricing-card--featured` — pricing plan cards
-- `.pricing-grid` / `.pricing-grid--3` — pricing card grid
+- `.pricing-grid` / `.pricing-grid--2` / `--3` / `--4` — pricing card grid. **Column modifier MUST match the card count** (`--2` for 2 cards, never `--3`)
+- `.pricing-single` — single-tier pricing block
+- `.treatment-list` — stacked treatment/service menu with price leaders + native expand (spa/clinic menus where description lengths vary; image variants `--image-square` / `--image-circle`)
 - `.fee-table` / `.fee-item` — line-item fee list
 - `.comparison-table` — feature comparison table
 - `.details-table` — key-value detail table
@@ -429,6 +444,15 @@ Use these CSS classes from components.css. Do NOT write custom CSS. Everything n
 - `.form__label--required` — required field indicator
 - `.contact-grid` — contact info + form side-by-side (5:7 ratio, 96px gap on desktop). **Always use this for contact pages**, not `.grid--2`.
 - `.contact-info` / `.contact-info__item` — contact details list
+
+**Services page:**
+- `.services-layout` / `.services-sidebar` — services page with sticky sidebar nav (sidebar JS-generated from `[id^="service-"]` sections)
+- `.service-section` / `.service-detail` — individual service blocks with dividers; `.service-detail__header` for inline icon + title
+
+**Media:**
+- `.gallery` / `.gallery__item` — responsive image grid with click-to-zoom (requires `.lightbox` markup on the page; main.js wires it)
+- `.video-embed` — responsive 16:9 iframe wrapper
+- `.video-split` — video + text split
 
 **Blog:**
 - `.blog-grid` / `.blog-card` — blog listing
@@ -630,7 +654,9 @@ Address the client directly in second person ("you", "your", "please confirm"). 
 
 ## Self-Audit Checklist (complete before delivering)
 
-Before reporting the site as ready, verify every item:
+**FIRST: run the automated validator** — `python scripts/validate_site.py D:/claude-custom-projects/Ai-Editor-Sites/{domain}` (from the Ai-Editor repo root). It mechanically checks CSS order, heading hierarchy, section alternation, SECTION comments, PROFILE markers, form anti-spam fields, lazy loading, alt text, favicon paths, pricing-grid card counts, nav duplicates, titles/descriptions, robots.txt and sitemap coverage. **Fix every ERROR before continuing** — exit code must be 0. Warnings are judgment calls: resolve or consciously accept each one.
+
+Then verify the remaining manual items:
 
 **Visual (LOOK at the rendered pages — not just the DOM):**
 - [ ] You have actually viewed the homepage + each page type as a rendered screenshot. If you couldn't, you flagged it to the user instead of signing off blind.

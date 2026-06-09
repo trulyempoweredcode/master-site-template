@@ -19,6 +19,7 @@ Existing repo: (for scenario 3, e.g. trulyempoweredcode/acme.co.uk)
 
 Content source: existing site | supplied | both
 Content rewrite: full | light | none
+Voice/tone: warm | clinical | formal | conversational | authoritative | nurturing | blend | "extract from content"  (how the copy should read — default: extract from the client's existing copy)
 Photos: existing only | client supplied | generate all | mixed | none
 Image style: warm | professional | clinical | lifestyle | luxury | rustic | minimal | vibrant
 

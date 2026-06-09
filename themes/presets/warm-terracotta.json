@@ -3,5 +3,6 @@
   "name": "Warm Terracotta",
   "palette": "warm-terracotta",
   "fonts": "friendly",
-  "heroStyle": "fullwidth"
+  "heroStyle": "fullwidth",
+  "aesthetic": "soft"
 }

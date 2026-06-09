@@ -3,5 +3,6 @@
   "name": "Calm Sage",
   "palette": "calm-sage",
   "fonts": "classic-elegance",
-  "heroStyle": "split"
+  "heroStyle": "split",
+  "aesthetic": "soft"
 }

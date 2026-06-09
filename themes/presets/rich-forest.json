@@ -3,5 +3,6 @@
   "name": "Rich Forest",
   "palette": "rich-forest",
   "fonts": "editorial",
-  "heroStyle": "gradient"
+  "heroStyle": "gradient",
+  "aesthetic": "soft"
 }

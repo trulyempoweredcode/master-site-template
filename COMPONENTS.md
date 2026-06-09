@@ -67,6 +67,7 @@ Pick exactly one per page. Mobile responsive built in.
 - **`.story-split`** — narrative two-column with lead text.
 - **`.story-text`** — centred header + pull-quote left / body right.
 - **`.text-block`** — generic text block. Variant: `--center`.
+- **`.two-col-text`** — heading spans full width, body text splits into 2 columns via `__columns` (1-col mobile).
 - **`.about-hero`** — about-page hero pattern (image + text).
 - **`.about-split-third`** — 1fr image / 2fr text full-bleed split.
 - **`.intro`** — homepage welcome split (image + text). Use `__inner--reversed` to swap sides.
@@ -101,6 +102,7 @@ Pick exactly one per page. Mobile responsive built in.
 - **`.comparison-table` / `.comparison`** — side-by-side comparison.
 - **`.details-table` / `.details-row`** — generic detail rows.
 - **`.faq-item`** + **`.accordion`** — expandable Q&A. JS-driven (main.js).
+- **`.accordion-grid`** — side-by-side accordions (2-col desktop, 1-col mobile).
 
 ## Testimonials / social proof
 
@@ -155,6 +157,7 @@ Pick exactly one per page. Mobile responsive built in.
 - **`.btn--whatsapp`** — WhatsApp green button.
 - **`.location`** — location info pattern.
 - **`.privacy-content`** — long-form policy/legal content styling.
+- **`.legal-content`** — heading/paragraph rhythm wrapper for legal pages (cookies/privacy body copy).
 - **`.error-page`** — 404 page styling.
 - **`.reveal`** + **`--visible`** — scroll-reveal wrapper (paired with main.js intersection observer). Fades + lifts the element on scroll into view and staggers a cascade across its child grid/list items (`.grid--*`, `.steps`, `.pricing-grid`, `.team-grid`, `.testimonial-grid`, `.quals-list`, `.checklist-grid`, `.fee-table`). **v1.5.5 — directional split reveal:** when a `.reveal` section contains a `.split`, the text column slides in from the left and the image from the right (reversed splits flip the directions); gated to ≥768px, so the stacked mobile split just fades up and never creates a horizontal scrollbar. Honours `prefers-reduced-motion`. **v1.5.5** — the observer is now fully IntersectionObserver-driven; the old synchronous on-load `getBoundingClientRect()` pre-reveal loop was removed because it measured below-the-fold sections as in-viewport before images reserved their height and revealed the whole page at once on load. A guarded post-load safety net reveals only genuinely above-the-fold content. **`.reveal-trigger`** — add alongside `.reveal` (`class="reveal reveal-trigger"`) on a wrapper around a grid/list to fire the children cascade on the *wrapper's* entry without animating the wrapper itself. Use when the list sits far below its section heading (otherwise the section-level `.reveal` fires the cascade while the items are still off-screen).
 - **`.grid--4` / `.grid--5` / `.grid--bento`** — generic grid column counts.

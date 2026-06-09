@@ -3,5 +3,6 @@
   "name": "Bright Coral",
   "palette": "bright-coral",
   "fonts": "minimal",
-  "heroStyle": "fullwidth"
+  "heroStyle": "fullwidth",
+  "aesthetic": "soft"
 }
