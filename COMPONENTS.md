@@ -217,5 +217,5 @@ This release adds JS-driven enhancements that auto-activate when authors use the
 1. **GREP FIRST.** Run `grep -E "^\.<name>" master-site-template/css/components.css` before writing CSS for a name. Don't duplicate existing class names.
 2. **Tokens only.** No hardcoded colours, spacing, or font-families. Theme switchers must work without per-component overrides.
 3. **BEM naming.** `block__element--modifier`. Match the existing patterns.
-4. **Sync chain (every CSS edit):** master-site-template/css/components.css → api/template-files/components.css → bump version + framework hash in api/template-version.php → SCP both + template-version.php to server → add demo block to theme-preview.html → **add entry to this COMPONENTS.md**.
+4. **Sync chain (every CSS edit):** master-site-template/css/components.css → api/template-files/components.css → bump version + framework hash in api/template-version.php → SCP both + template-version.php to server → add demo block to theme-preview.html → **add entry to this COMPONENTS.md** → if the component is something a client might ask the chat editor to add (cards, testimonials, FAQs, CTAs, lists, pricing), update `EditOperationParser::COMPONENT_GUIDE` in api/controllers/EditOperationParser.php too.
 5. **No new components in a single client's theme.css** — they belong in the shared library or nowhere.
