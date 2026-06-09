@@ -487,15 +487,33 @@ These rules apply to every page on every build. They prevent common visual issue
 
 13. **Nav CTA discipline.** Use plain `nav__link`s for menu items. Only add a `btn ... nav__cta` button for a single, strong, *distinct* primary action (e.g. "Book a Home Visit", "Book Online"). Never label the CTA the same as an existing menu item — a "Contact" button sitting next to/over a "Contact" link looks broken. If there is no distinct primary action, make every nav item a plain link.
 
-14. **Section-label eyebrows must not duplicate their heading.** The small `section-label` above a heading (in `page-header` or any section) is a short *category*; the heading is a *distinct, descriptive* title. Never make the pair the same word or synonyms — e.g. eyebrow "About" + H1 "About", eyebrow "Fees" + H1 "Fees", or eyebrow "Get in Touch" + H1 "Contact" all read as a broken echo. Give the H1 a descriptive form (e.g. "Meet [Practitioner]", "Clear, transparent pricing", "Contact [Practitioner]") so the pair reads as label → title.
+14. **Section-label eyebrows must not duplicate their heading.** The small `section-label` above a heading (in `page-header` or any section) is a short *category*; the heading is a *distinct, descriptive* title. Never make the pair the same word or synonyms — e.g. eyebrow "About" + H1 "About", eyebrow "Fees" + H1 "Fees", or eyebrow "Get in Touch" + H1 "Contact" all read as a broken echo. Give the H1 a descriptive form (e.g. "Meet [Practitioner]", "Clear, transparent pricing", "Contact [Practitioner]") so the pair reads as label → title — or drop the eyebrow entirely.
 
 15. **Keep heading hierarchy unbroken through components.** Reinforcing the copywriting rule (never skip H1 → H2 → H3): a component's own title must not create a skip. Notably `.fee-table` defaults its title to `<h3>` — dropped directly under a page `<h1>` it jumps H1 → H3. Use `<h2>` for box/section titles (size them down in `theme.css` if the default H2 is too large for a card), or add a section `<h2>` above the boxes. Verify every page reads H1 → H2 → H3 with no gaps.
 
 16. **Row-list components: full width, restrained price, correct reveal timing.** Wide row components (`.fee-table` / `.fee-item` — name → dotted leader → price on one line) must stack **full width** (e.g. inside `.container--narrow`), never crammed into narrow `grid--3` columns where long detail text wraps into tall, ragged rows. Keep the price (`.fee-item__price`) no larger than the box title. And when a list/grid sits **far below its section heading** (e.g. a `.quals-list` under a heading + intro + paragraph), put `reveal reveal-trigger` on the *list's wrapper* so the scroll cascade fires on the list's own entry — otherwise the section-level `.reveal` fires the cascade while the items are still below the fold and the animation finishes off-screen.
 
-14. **Eyebrow must not echo its heading.** The `section-label` eyebrow (pill) above a heading must never repeat or be a synonym of the heading directly below it: eyebrow "About" + H1 "About", eyebrow "Fees" + H1 "Fees", eyebrow "Get in Touch" + H1 "Contact" are all wrong. The eyebrow is a short *category*; the heading is a *distinct, descriptive* title. If the page is simply "About", make the H1 specific ("Meet Patrick Goodlet") or drop the eyebrow — never two words that say the same thing stacked on top of each other.
+---
 
-15. **Don't skip heading levels — mind component defaults.** Every page goes H1 → H2 → H3 with no skips. Several components title themselves with `<h3>` by default (e.g. `.fee-table h3`, `.highlight-box` h3). When one sits directly under the page-header `<h1>` with no `<h2>` between, that's an H1→H3 skip — promote the component's title to `<h2>` (size it back down in `theme.css` if the default H2 is too big) or add a real section `<h2>` above it. Also keep relative sizing sane: a price/number/stat must never render *larger* than the card title above it (e.g. `.fee-item__price` defaults to `text-xl` — reduce it per-site if it dwarfs the title).
+## Polish Standard (MANDATORY — every build, any style)
+
+"Technically correct" is not the bar. **A standard / "ok"-looking site is a FAIL.** Every site must look bespoke and premium *for its own aesthetic*. The specific look varies by client; the quality bar does not. Apply all of this on the FIRST pass, not after the client asks for it.
+
+1. **Distinctive, layered palette — never a washed-out default.** Build at least a tri-tone system, not "one colour + one accent": an anchor + a co-accent **pulled from the client's real brand assets and photography** + deliberately-tinted neutrals (never flat `#FFF` or generic cool grey) + a fine-detail accent (a metallic or deep tone). One hue washed across everything is the #1 tell of a cheap, AI-made site. The palette must echo something real about the client (their photos, products, room, materials).
+
+2. **Reach for the RICH components, not the flat ones.** Open `theme-preview.html` and pick the strongest fit BEFORE building each section. Default builds over-use flat checklists, icon-cards and identical CTA banners. Prefer, where they fit: `overlay-card` (photo + hover-zoom), `blockquote--pull`, `info-band`, `split--bleed`, `grid--bento`, `approach-grid`, `cta-image`, `hero--showcase`. Deliberately vary the hero/section treatment from the last client you built so sites don't converge on one look.
+
+3. **A decorative layer is required, not optional.** Add tasteful intricacy in the site's `theme.css`: a barely-visible brand-mark watermark bleeding off a section edge; soft radial "glow" ambience tied to something in the client's imagery; hairline/flourish accents under eyebrows; italic-serif (or equivalent) emphasis on key words; tinted, layered shadows. Small touches, big premium signal.
+
+4. **Photography leads.** Surface the client's real photos prominently, and treat generated/stock images (duotone/tint) so they match the palette instead of fighting it. Never ship a page that is all text + icons when imagery is available.
+
+5. **Motion reads as quality.** Scroll-reveal cascades, hover lifts, image zoom, directional reveals — present and tasteful (transform/opacity, ease-out, honour `prefers-reduced-motion`).
+
+6. **Kill sameness.** No two adjacent sections share a component OR a background; no two CTAs identical on a page; every page earns one bold "hero moment"; ≥4 distinct visual patterns per multi-section page.
+
+7. **Tune the aesthetic dials per client.** Use `--aesthetic-radius` / `--aesthetic-shadow-card` / `--aesthetic-border-width` + the font pairing + the palette to make each site's polish feel native to its niche (luxe spa ≠ sharp B2B ≠ warm therapist). The standard is constant; the expression is bespoke.
+
+8. **Mandatory elevation + critique pass before delivery.** Once the build renders, run the `impeccable` skill (or an adversarial design-critique subagent) against the homepage and the busiest inner page, asking one blunt question: **"Is this special, or competent-but-safe?"** Hunt specifically for: washed-out / one-note colour, flat text-only sections, repeated components, missing imagery, a default-looking hero. Fix what it finds. **Do not deliver a build whose flaws only a post-complaint redo would have caught.**
 
 ---
 
