@@ -997,12 +997,12 @@
       </ol></div></div>
     </div>
     <div class="sc-tile">
-      <div class="sc-tile__label"><code>.faq-item.accordion</code> <span class="sc-note">Expandable Q&amp;A.</span></div>
-      <div class="sc-tile__demo"><div style="padding: var(--space-xl); max-width: 720px;"><div class="accordion">
-        <div class="faq-item"><button class="faq-item__question">How long does a typical engagement last?<span class="faq-item__icon">+</span></button><div class="faq-item__answer"><p>Most clients work with us 6 weeks to 6 months.</p></div></div>
-        <div class="faq-item"><button class="faq-item__question">Do you offer online sessions?<span class="faq-item__icon">+</span></button><div class="faq-item__answer"><p>Yes — fully remote, hybrid, or in-person.</p></div></div>
-        <div class="faq-item"><button class="faq-item__question">What's the pricing structure?<span class="faq-item__icon">+</span></button><div class="faq-item__answer"><p>See the pricing section. Block bookings save 15%.</p></div></div>
-      </div></div></div>
+      <div class="sc-tile__label"><code>.faq-item</code> <span class="sc-note">Static Q&amp;A list (always open — no toggle). For an expandable version use <code>.accordion</code> below.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl); max-width: 720px;">
+        <div class="faq-item"><div class="faq-item__question">How long does a typical engagement last?</div><div class="faq-item__answer"><p>Most clients work with us 6 weeks to 6 months.</p></div></div>
+        <div class="faq-item"><div class="faq-item__question">Do you offer online sessions?</div><div class="faq-item__answer"><p>Yes — fully remote, hybrid, or in-person.</p></div></div>
+        <div class="faq-item"><div class="faq-item__question">What's the pricing structure?</div><div class="faq-item__answer"><p>See the pricing section. Block bookings save 15%.</p></div></div>
+      </div></div>
     </div>
     <div class="sc-tile">
       <div class="sc-tile__label"><code>.accordion-grid</code> <span class="sc-note">Two side-by-side accordions for long FAQ lists. 1-col mobile. Triggers auto-wired by main.js.</span></div>
@@ -1178,9 +1178,9 @@
     <div class="sc-tile">
       <div class="sc-tile__label"><code>.pricing-grid--3</code> <span class="sc-note">Three tiers, middle one featured. Best when each tier has roughly the same amount of copy.</span></div>
       <div class="sc-tile__demo"><div style="padding: var(--space-xl);"><div class="pricing-grid pricing-grid--3">
-        <div class="pricing-card"><h3 class="pricing-card__title">Starter</h3><div class="pricing-card__price"><span class="pricing-card__price-amount">£65</span><span class="pricing-card__price-period">/session</span></div><ul class="pricing-card__features"><li>Single session</li><li>Pay-as-you-go</li><li>No commitment</li></ul><a href="#" class="btn btn--secondary pricing-card__cta">Get started</a></div>
-        <div class="pricing-card pricing-card--featured"><h3 class="pricing-card__title">Standard</h3><div class="pricing-card__price"><span class="pricing-card__price-amount">£280</span><span class="pricing-card__price-period">/5 sessions</span></div><ul class="pricing-card__features"><li>Block of 5 sessions</li><li>Save 14%</li><li>Most popular</li></ul><a href="#" class="btn btn--accent pricing-card__cta">Choose plan</a></div>
-        <div class="pricing-card"><h3 class="pricing-card__title">Premium</h3><div class="pricing-card__price"><span class="pricing-card__price-amount">£520</span><span class="pricing-card__price-period">/10 sessions</span></div><ul class="pricing-card__features"><li>Block of 10 sessions</li><li>Save 20%</li><li>Best value</li></ul><a href="#" class="btn btn--secondary pricing-card__cta">Choose plan</a></div>
+        <div class="pricing-card"><h3>Starter</h3><p class="pricing-card__price">£65</p><p class="pricing-card__duration">per session</p><ul class="pricing-card__features"><li>Single session</li><li>Pay-as-you-go</li><li>No commitment</li></ul><a href="#" class="btn btn--secondary">Get started</a></div>
+        <div class="pricing-card pricing-card--featured"><span class="pricing-card__badge">Most Popular</span><h3>Standard</h3><p class="pricing-card__price">£280</p><p class="pricing-card__duration">5 sessions</p><ul class="pricing-card__features"><li>Block of 5 sessions</li><li>Save 14%</li><li>Priority booking</li></ul><a href="#" class="btn btn--accent">Choose plan</a></div>
+        <div class="pricing-card"><h3>Premium</h3><p class="pricing-card__price">£520</p><p class="pricing-card__duration">10 sessions</p><ul class="pricing-card__features"><li>Block of 10 sessions</li><li>Save 20%</li><li>Best value</li></ul><a href="#" class="btn btn--secondary">Choose plan</a></div>
       </div></div></div>
     </div>
     <div class="sc-tile">

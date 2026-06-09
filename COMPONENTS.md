@@ -101,7 +101,8 @@ Pick exactly one per page. Mobile responsive built in.
 - **`.fee-table` / `.fee-item`** — fee list pattern (alternative to pricing-card).
 - **`.comparison-table` / `.comparison`** — side-by-side comparison.
 - **`.details-table` / `.details-row`** — generic detail rows.
-- **`.faq-item`** + **`.accordion`** — expandable Q&A. JS-driven (main.js).
+- **`.accordion`** — expandable Q&A: `accordion__item` > `accordion__trigger` (button with `aria-expanded` + `accordion__icon` svg) + `accordion__content`. JS-driven (main.js wires `.accordion__trigger`).
+- **`.faq-item`** — STATIC Q&A list (`__question` + `__answer`, always open, no toggle). Not interactive — use `.accordion` for expand/collapse.
 - **`.accordion-grid`** — side-by-side accordions (2-col desktop, 1-col mobile).
 
 ## Testimonials / social proof
