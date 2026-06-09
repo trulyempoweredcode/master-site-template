@@ -931,6 +931,10 @@
       <div class="sc-tile__demo"><section class="cta-banner cta-banner--split" style="background: var(--color-secondary);"><div class="cta-banner__content" style="padding: var(--space-2xl) var(--space-xl);"><span class="hero__label">Limited time</span><h2 style="color: #fff; margin: var(--space-sm) 0;">Mental Health Awareness Week — book by Friday</h2><p style="color: rgba(255,255,255,0.82); margin: 0 0 var(--space-md);">Limited spaces this week.</p><div class="cta-banner__buttons"><a href="#" class="btn btn--accent">Check availability →</a></div></div><div class="cta-banner__image-wrap"><img src="https://picsum.photos/seed/cta/600/400" alt="" class="cta-banner__image"><div class="cta-banner__image-fade"></div></div></section></div>
     </div>
     <div class="sc-tile">
+      <div class="sc-tile__label"><code>.cta-mid-banner</code> <span class="sc-note">Full-width mid-page strip — text left, button right. Apply to a <code>.section</code>.</span></div>
+      <div class="sc-tile__demo"><section class="section cta-mid-banner"><div class="container cta-mid-banner__inner"><div><h3>Not sure where to start?</h3><p>Book a free 20-minute call and we'll point you in the right direction.</p></div><a href="#" class="btn btn--accent">Book a call →</a></div></section></div>
+    </div>
+    <div class="sc-tile">
       <div class="sc-tile__label">Buttons <span class="sc-note">Primary, secondary, accent.</span></div>
       <div class="sc-tile__demo"><div class="sc-grid-row"><a href="#" class="btn btn--primary">Primary</a><a href="#" class="btn btn--secondary">Secondary</a><a href="#" class="btn btn--accent">Accent (CTA)</a></div></div>
     </div>
@@ -976,11 +980,53 @@
       </div></div></div>
     </div>
     <div class="sc-tile">
+      <div class="sc-tile__label"><code>.approach-grid</code> <span class="sc-note">Text-only numbered steps — no images. 2-col desktop, 1-col mobile. Use for "How I work" lists.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl);"><div class="approach-grid">
+        <div class="approach-item"><div class="approach-item__number">1</div><h3>We listen first</h3><p>An unhurried conversation about what's going on and what you'd like to change.</p></div>
+        <div class="approach-item"><div class="approach-item__number">2</div><h3>We agree a plan</h3><p>Clear goals and a realistic pace, reviewed together as we go.</p></div>
+        <div class="approach-item"><div class="approach-item__number">3</div><h3>We work at your pace</h3><p>Sessions shaped around you — never a one-size-fits-all programme.</p></div>
+        <div class="approach-item"><div class="approach-item__number">4</div><h3>We review progress</h3><p>Regular check-ins so you always know how far you've come.</p></div>
+      </div></div></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.process-spine</code> <span class="sc-note">Vertical numbered steps with a connector rail. Editorial "methodology" feel — single column, no images.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl); max-width: 720px;"><ol class="process-spine">
+        <li class="process-spine__step"><div class="process-spine__num">01</div><div class="process-spine__body"><h3 class="process-spine__title">Initial consultation</h3><p class="process-spine__text">A free, no-obligation conversation to understand your situation and what you want to achieve.</p></div></li>
+        <li class="process-spine__step"><div class="process-spine__num">02</div><div class="process-spine__body"><h3 class="process-spine__title">Tailored programme</h3><p class="process-spine__text">A clear written plan within 48 hours — what we'll work on, in what order, and why.</p></div></li>
+        <li class="process-spine__step"><div class="process-spine__num">03</div><div class="process-spine__body"><h3 class="process-spine__title">Ongoing sessions</h3><p class="process-spine__text">Regular sessions with progress reviewed at every stage, adjusting the plan as you grow.</p></div></li>
+      </ol></div></div>
+    </div>
+    <div class="sc-tile">
       <div class="sc-tile__label"><code>.faq-item.accordion</code> <span class="sc-note">Expandable Q&amp;A.</span></div>
       <div class="sc-tile__demo"><div style="padding: var(--space-xl); max-width: 720px;"><div class="accordion">
         <div class="faq-item"><button class="faq-item__question">How long does a typical engagement last?<span class="faq-item__icon">+</span></button><div class="faq-item__answer"><p>Most clients work with us 6 weeks to 6 months.</p></div></div>
         <div class="faq-item"><button class="faq-item__question">Do you offer online sessions?<span class="faq-item__icon">+</span></button><div class="faq-item__answer"><p>Yes — fully remote, hybrid, or in-person.</p></div></div>
         <div class="faq-item"><button class="faq-item__question">What's the pricing structure?<span class="faq-item__icon">+</span></button><div class="faq-item__answer"><p>See the pricing section. Block bookings save 15%.</p></div></div>
+      </div></div></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.accordion-grid</code> <span class="sc-note">Two side-by-side accordions for long FAQ lists. 1-col mobile. Triggers auto-wired by main.js.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl);"><div class="accordion-grid">
+        <div class="accordion">
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">Do I need a referral?<svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19" class="accordion__icon-vertical"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <div class="accordion__content"><p>No — you can book directly. Most clients self-refer.</p></div>
+          </div>
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">How long is each session?<svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19" class="accordion__icon-vertical"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <div class="accordion__content"><p>Sessions last 50 minutes, with longer options available on request.</p></div>
+          </div>
+        </div>
+        <div class="accordion">
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">Can I cancel a session?<svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19" class="accordion__icon-vertical"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <div class="accordion__content"><p>Yes — we ask for 48 hours' notice so the slot can be offered to someone else.</p></div>
+          </div>
+          <div class="accordion__item">
+            <button class="accordion__trigger" aria-expanded="false">Do you offer online sessions?<svg class="accordion__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19" class="accordion__icon-vertical"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <div class="accordion__content"><p>Yes — fully remote, hybrid, or in person at the practice.</p></div>
+          </div>
+        </div>
       </div></div></div>
     </div>
   </section>
@@ -1039,6 +1085,27 @@
       <div class="sc-tile__label"><code>.alert</code> + variants <span class="sc-note">Info / success / warning / error.</span></div>
       <div class="sc-tile__demo"><div class="sc-grid-2" style="padding: var(--space-md);"><div class="alert alert--info">Info: Useful note.</div><div class="alert alert--success">Success: Operation completed.</div><div class="alert alert--warning">Warning: Heads-up.</div><div class="alert alert--error">Error: Something went wrong.</div></div></div>
     </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.quals-list</code> <span class="sc-note">Qualifications / credentials with icons. 2-col desktop, 1-col mobile.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl);"><div class="quals-list">
+        <div class="quals-list__item">
+          <div class="quals-list__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+          <div class="quals-list__text"><strong>Professional Qualification</strong>Accredited training programme</div>
+        </div>
+        <div class="quals-list__item">
+          <div class="quals-list__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+          <div class="quals-list__text"><strong>Registered Member of Professional Body</strong>Recognised industry membership</div>
+        </div>
+        <div class="quals-list__item">
+          <div class="quals-list__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+          <div class="quals-list__text"><strong>Enhanced DBS Check</strong>Current and verified</div>
+        </div>
+        <div class="quals-list__item">
+          <div class="quals-list__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+          <div class="quals-list__text"><strong>Fully Insured</strong>Professional indemnity for private practice</div>
+        </div>
+      </div></div></div>
+    </div>
   </section>
 
   <!-- ===== FORMS ===== -->
@@ -1053,6 +1120,42 @@
         <div class="form__group"><label class="form__label" for="sc-msg">Message</label><textarea class="form__textarea" id="sc-msg" rows="3" placeholder="What can we help with?"></textarea></div>
         <div style="display: flex; justify-content: flex-end;"><button type="button" class="btn btn--accent">Send message →</button></div>
       </form></div></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.contact-grid</code> <span class="sc-note">Contact info left + boxed form right — the canonical contact-page layout (see <code>contact.html</code>).</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl);"><div class="contact-grid">
+        <div class="contact-info">
+          <p class="contact-info__intro">We offer a free initial consultation for new clients — a chance to chat about what you're looking for, with no pressure.</p>
+          <div class="contact-info__item">
+            <div class="contact-info__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
+            <div><p class="contact-info__label">Phone</p><p class="contact-info__value">01234 567 890</p></div>
+          </div>
+          <div class="contact-info__item">
+            <div class="contact-info__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
+            <div><p class="contact-info__label">Address</p><p class="contact-info__value">12 High Street, Anytown AB1 2CD</p></div>
+          </div>
+          <div class="contact-info__item">
+            <div class="contact-info__icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
+            <div><p class="contact-info__label">Opening Hours</p><p class="contact-info__value">Monday &ndash; Friday: 9am &ndash; 5pm<br>Saturday: 9am &ndash; 1pm</p></div>
+          </div>
+        </div>
+        <div class="contact-form-wrap">
+          <div class="card contact-form-card">
+            <h2>Send Us a Message</h2>
+            <p>Fill in the form below and we'll get back to you within 24 hours.</p>
+            <form class="form">
+              <input type="text" name="_hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;" aria-hidden="true">
+              <input type="hidden" name="_t" value="">
+              <div class="form__row">
+                <div class="form__group"><label class="form__label form__label--required" for="cg-name">Your name</label><input class="form__input" id="cg-name" type="text" placeholder="Jane Smith"></div>
+                <div class="form__group"><label class="form__label form__label--required" for="cg-email">Email</label><input class="form__input" id="cg-email" type="email" placeholder="jane@example.com"></div>
+              </div>
+              <div class="form__group"><label class="form__label form__label--required" for="cg-msg">Your message</label><textarea class="form__textarea" id="cg-msg" rows="4" placeholder="Tell us a little about what you're looking for."></textarea></div>
+              <button type="button" class="btn btn--primary btn--block">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </div></div></div>
     </div>
   </section>
 
@@ -1078,6 +1181,23 @@
         <div class="pricing-card"><h3 class="pricing-card__title">Starter</h3><div class="pricing-card__price"><span class="pricing-card__price-amount">£65</span><span class="pricing-card__price-period">/session</span></div><ul class="pricing-card__features"><li>Single session</li><li>Pay-as-you-go</li><li>No commitment</li></ul><a href="#" class="btn btn--secondary pricing-card__cta">Get started</a></div>
         <div class="pricing-card pricing-card--featured"><h3 class="pricing-card__title">Standard</h3><div class="pricing-card__price"><span class="pricing-card__price-amount">£280</span><span class="pricing-card__price-period">/5 sessions</span></div><ul class="pricing-card__features"><li>Block of 5 sessions</li><li>Save 14%</li><li>Most popular</li></ul><a href="#" class="btn btn--accent pricing-card__cta">Choose plan</a></div>
         <div class="pricing-card"><h3 class="pricing-card__title">Premium</h3><div class="pricing-card__price"><span class="pricing-card__price-amount">£520</span><span class="pricing-card__price-period">/10 sessions</span></div><ul class="pricing-card__features"><li>Block of 10 sessions</li><li>Save 20%</li><li>Best value</li></ul><a href="#" class="btn btn--secondary pricing-card__cta">Choose plan</a></div>
+      </div></div></div>
+    </div>
+    <div class="sc-tile">
+      <div class="sc-tile__label"><code>.pricing-single</code> <span class="sc-note">One centred plan — for a single offer or flat session fee.</span></div>
+      <div class="sc-tile__demo"><div style="padding: var(--space-xl);"><div class="pricing-single">
+        <div class="pricing-card pricing-card--featured">
+          <span class="pricing-card__badge">Standard Session</span>
+          <h3>Therapy Session</h3>
+          <div class="pricing-card__price">&pound;65</div>
+          <p class="pricing-card__duration">per 50-minute session</p>
+          <ul class="pricing-card__features">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> In person or online</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Free initial consultation</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Flexible scheduling</li>
+          </ul>
+          <a href="#" class="btn btn--primary btn--block">Book a session</a>
+        </div>
       </div></div></div>
     </div>
     <div class="sc-tile">
