@@ -24,6 +24,7 @@ Image style: warm | professional | clinical | lifestyle | luxury | rustic | mini
 
 Palette: (e.g. calm-sage, or "you recommend")
 Font pairing: (e.g. classic-elegance, or "you recommend")
+Aesthetic: soft | sharp | editorial | luxe | brutalist | "you recommend"  (corner radius / shadow / border feel — default soft)
 Hero style: (e.g. split, fullwidth, image, or "you recommend")
 Hero reversed: yes | no
 Nav style: default | two-tier

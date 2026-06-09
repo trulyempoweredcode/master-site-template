@@ -28,19 +28,23 @@
 <meta name="twitter:description" content="{{PAGE_DESCRIPTION — 150-160 chars}}">
 <meta name="twitter:image" content="{{ABSOLUTE_URL_TO_SHARE_IMAGE — 1200x630px}}">
 
-<!-- Favicon -->
-<link rel="icon" href="/favicon.ico" sizes="32x32">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- Favicon — inline SVG data URI: no external file, works at ANY path
+     (incl. GitHub Pages project sites served from /{domain}/, where a root-absolute
+     /favicon.ico resolves to the org root and 404s). Replace {{FAVICON_EMOJI}} with an
+     emoji that fits the business (🦷 dental, 🌿 wellness, ⚖️ legal, 📷 photography…),
+     OR swap the whole tag for a real, RELATIVE-path icon made from the client logo:
+       <link rel="icon" href="favicon.svg" type="image/svg+xml">   (never a leading slash) -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>{{FAVICON_EMOJI}}</text></svg>" type="image/svg+xml">
 
 <!-- Preconnect for Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<!-- Stylesheets -->
-<link rel="stylesheet" href="css/theme.css">
+<!-- Stylesheets — ORDER IS CRITICAL: base → components → theme.
+     theme.css MUST load LAST so client overrides beat component defaults. -->
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/theme.css">
 
 <!--
   STRUCTURED DATA (LocalBusiness)

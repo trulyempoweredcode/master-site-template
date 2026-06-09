@@ -77,6 +77,14 @@ Available options:
 - **Font pairings:** classic-elegance, modern-pro, friendly, clean-bold, editorial, minimal, boutique, corporate, playful
 - **Hero variants (16 total):** Classic group: split (classic two-column), fullwidth (dark overlay centred text), minimal (text only), half (50/50 edge-to-edge). Slope group: slope-dark (angled dark), slope-light (angled light), banner (contained image strip). Image Overlay group: image-left, image-center, image-right (full-bleed photo with dark overlay, text positioned left/centre/right). Image Frost group: frost-dark-left/center/right (frosted glass card over full-vibrancy image, dark tone), frost-light-left/center/right (frosted glass card, light tone). Classic/half can add `hero--reverse` to flip sides.
 - **Nav styles:** default (single-tier), two-tier (brand bar + nav bar with contact info)
+- **Aesthetic presets (5):** the global look-and-feel dial (corner radius, card shadow, border weight) — independent of palette and fonts. Loaded from `master-site-template/themes/aesthetics/{name}.json`, which sets `--aesthetic-radius`, `--aesthetic-shadow-card`, and `--aesthetic-border-width` in `:root`. Cards, buttons, form inputs, and pills all honour these (pills stay pill-shaped via the fixed `--aesthetic-radius-pill` — never override that). Options:
+  - `soft` (default) — 14px corners, layered soft shadow, 1px borders. Friendly/modern. Every existing client site uses this.
+  - `editorial` — 6px corners, near-flat shadow, 1px borders. Magazine/longform/restrained. Good for consultants, writers, content-led brands.
+  - `sharp` — 0 radius, hard offset shadows, 1px borders. Architectural/corporate/B2B.
+  - `luxe` — 20px corners, deep soft shadows, 1px borders. Premium hospitality/wellness/boutique.
+  - `brutalist` — 0 radius, no shadows, heavy 3px borders. High-contrast, indie/contemporary, bold creative brands.
+
+  Pick the one that matches the brand tone + industry (same signal you use for palette/font). If the brief says "you recommend" or omits it, default to `soft` — it never makes a site look wrong. Fold the chosen preset's three token values into `:root` in `theme.css` (see Phase 2a, step 3).
 
 For `hero--image`, `hero--fullwidth`, or `hero--slope-dark` heroes, add `nav--transparent` to the nav for an overlay effect (homepage only). Inner pages always use solid nav.
 
@@ -106,11 +114,12 @@ Identify where the client needs to supply additional content (photos, testimonia
 
 1. Create `D:\claude-custom-projects\Ai-Editor-Sites\{domain}\`
 2. Copy CSS files from master template: `css/base.css`, `css/components.css`
-3. Generate `css/theme.css` from the selected palette + font JSON files. If the font JSON has a `sizes` object, include those as CSS custom property overrides in `:root` (e.g. `--text-h1-desktop: 2.5rem;`). These override the base heading sizes for fonts that render visually larger (sans-serifs).
+3. Generate `css/theme.css` from the selected palette + font JSON files. If the font JSON has a `sizes` object, include those as CSS custom property overrides in `:root` (e.g. `--text-h1-desktop: 2.5rem;`). These override the base heading sizes for fonts that render visually larger (sans-serifs). **If an aesthetic preset other than `soft` was chosen (see 1c),** also emit its three tokens into `:root` from `themes/aesthetics/{name}.json` — e.g. for `luxe`: `--aesthetic-radius: 20px; --aesthetic-shadow-card: 0 8px 32px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04); --aesthetic-border-width: 1px;`. Do NOT emit `--aesthetic-radius-pill` (pills must stay pill-shaped). If the preset is `soft`, emit nothing — base.css already defaults to it.
 4. Copy `js/main.js` from master template
 5. Create `images/` directory
 6. Generate `robots.txt` (allow all, reference sitemap URL)
 7. Generate `sitemap.xml` listing all pages with `<lastmod>` dates
+8. Set the favicon. Use the `head.html` favicon block on every page and replace `{{FAVICON_EMOJI}}` with an emoji that fits the business. It's an inline SVG data URI — no external file, and it works on GitHub Pages project subpaths where a root-absolute `/favicon.ico` would 404. If the client has a real logo/icon, instead write a relative-path `favicon.svg` to the site root and reference it as `href="favicon.svg"` (never `/favicon.svg`).
 
 ### 2b. Generate images (if requested)
 
@@ -201,6 +210,8 @@ base.css MUST load first, then components.css, then theme.css LAST so client-spe
 **Every page must have:**
 - Full SEO head (from head.html template) with unique title, description, OG tags, structured data
 - CSS in correct order: base → components → theme (see above)
+- Favicon via the `head.html` data-URI block with `{{FAVICON_EMOJI}}` replaced — or a relative `favicon.svg` if a real icon was generated. NEVER a root-absolute `/favicon.*` path (it 404s on GitHub Pages project sites)
+- `loading="lazy"` on every content `<img>` EXCEPT an above-the-fold hero/LCP image (which stays eager so it isn't deferred), plus descriptive `alt` on all of them
 - Correct nav link highlighting (`nav__link--active`)
 - Cookie consent + back-to-top HTML before `</body>`
 - Site credit link after footer section comment (outside section comments — not editable by AI editor)
@@ -560,6 +571,20 @@ These rules override all other instructions:
 
 ---
 
+## Accessibility Rules (MANDATORY)
+
+Target WCAG 2.1 AA. base.css and components.css cover most of this — verify on the rendered page, don't assume.
+
+1. **Keyboard:** every interactive element (nav links, mobile toggle, accordion triggers, carousel dots, form fields, buttons) must be reachable and operable by keyboard alone in a logical tab order. The skip-to-content link must be the first focusable element.
+2. **Visible focus:** every focusable element must show a clear focus ring — never `outline: none` without a visible replacement. Confirm focus styles live in base.css and aren't overridden in theme.css.
+3. **Contrast:** body text ≥ 4.5:1 against its background; large text and meaningful UI borders ≥ 3:1. Re-check AFTER the palette is applied — light accent colours on white frequently fail. Fix by adjusting the palette token, not the component.
+4. **Alt text & labels:** every `<img>` has meaningful `alt` (or `alt=""` if purely decorative). Icon-only controls (mobile nav toggle, social icons) need an `aria-label`.
+5. **Semantics:** exactly one `<h1>` per page, no skipped heading levels, `<nav>`/`<main>`/`<footer>` landmarks present, real lists for lists. Accordion triggers must be `<button>`s with `aria-expanded`.
+6. **Forms:** every input has an associated `<label>` (placeholder text is not a label). Validation/error states must be conveyed by more than colour alone.
+7. **Reduced motion:** scroll-reveal and the testimonial carousel must respect `prefers-reduced-motion`; content must remain fully visible if animation is disabled.
+
+---
+
 ## Phase 3: Content Checklist
 
 Create a `content-checklist.html` page that consolidates every content gap identified across the site:
@@ -639,8 +664,18 @@ Before reporting the site as ready, verify every item:
 - [ ] Granular PROFILE markers on every page: `PROFILE:site_title`, `PROFILE:site_slogan`, `PROFILE:logo`, `PROFILE:phone_*`, `PROFILE:email`, `PROFILE:address`, `PROFILE:schema`
 - [ ] robots.txt exists with sitemap reference
 - [ ] sitemap.xml lists all public pages (excludes cookies-policy.html)
+- [ ] CSS link order is base → components → theme on every page (theme LAST, or overrides break)
+- [ ] Favicon present on every page (data-URI emoji or relative favicon.svg — never root-absolute /favicon.* which 404s on GitHub Pages)
+- [ ] Every non-hero <img> has loading="lazy" (the hero/LCP image stays eager)
 - [ ] No console errors
 - [ ] No two consecutive sections share the same background colour on any page
+
+**Accessibility (WCAG AA):**
+- [ ] Every interactive element is keyboard-reachable and shows a visible focus ring
+- [ ] Body text contrast ≥ 4.5:1 against its background (re-checked after the palette was applied)
+- [ ] Every <img> has meaningful alt (or alt="" if decorative); icon-only controls have aria-label
+- [ ] One <h1> per page, no skipped heading levels, nav/main/footer landmarks present
+- [ ] Every form input has a real <label>; reveal/carousel respect prefers-reduced-motion
 
 **Images (if generated):**
 - [ ] All images generated and saved to `images/` directory
