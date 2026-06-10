@@ -9,7 +9,7 @@ This file lists every image the website expects. Please supply photos matching t
 | `hero.jpg` | 800 x 600 px | JPEG | Homepage | Main hero image. Professional portrait of the therapist — ideally a warm, approachable headshot or upper-body shot. Natural lighting preferred. Used at large size across the top of the homepage. |
 | `about-portrait.jpg` | 600 x 800 px | JPEG | Homepage (intro section), About page | Portrait-orientation photo of the therapist. Could be in the therapy room, standing in a doorway, or seated. Should feel warm and professional, not overly corporate. |
 | `office.jpg` | 800 x 600 px (optional) | JPEG | About page (optional) | Interior of the therapy room or practice. Shows a calm, welcoming space — comfortable seating, soft lighting, plants or books. Helps clients know what to expect. |
-| `favicon.ico` | 32 x 32 px | ICO/PNG | All pages (browser tab) | Small icon for the browser tab. Could be initials "SM" or a simple leaf/wellness symbol in the brand green (#5B7B6F). |
+| `favicon.png` | 96 x 96 px | PNG | All pages (browser tab + Google search results) | Square icon generated from the logo. Must be a real crawlable file at least 48 x 48 px or Google shows a generic globe next to the site in search results. An `apple-touch-icon.png` (180 x 180) is generated alongside it. |
 | `og-image.jpg` | 1200 x 630 px | JPEG | Social media sharing | Open Graph image shown when the site URL is shared on Facebook, LinkedIn, Twitter, etc. Should include the therapist's name, title, and a professional photo or the brand colours. |
 
 ## Image Guidelines

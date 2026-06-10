@@ -11,11 +11,19 @@
 <title>{{PAGE_TITLE}} — {{BUSINESS_NAME}}</title>
 <meta name="description" content="{{PAGE_DESCRIPTION — 150-160 chars}}">
 <meta name="author" content="{{BUSINESS_NAME}}">
+<!-- Allow Google to show a large image preview / thumbnail next to search results.
+     Omit on noindex pages (they carry their own robots meta). -->
+<meta name="robots" content="max-image-preview:large">
 
 <!-- Canonical URL -->
 <link rel="canonical" href="{{FULL_PAGE_URL}}">
 
-<!-- Open Graph / Facebook -->
+<!-- Open Graph / Facebook.
+     og:image doubles as Google's preferred search-result thumbnail signal. For
+     person-led businesses (therapist, physio, coach…) use a SQUARE headshot of the
+     practitioner (>=600x600) on the homepage + about page — competitors with a face
+     thumbnail in search results get it from this + a Person schema block, never from
+     CSS background images (Google does not index CSS backgrounds). -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{FULL_PAGE_URL}}">
 <meta property="og:title" content="{{PAGE_TITLE}} — {{BUSINESS_NAME}}">
@@ -28,13 +36,16 @@
 <meta name="twitter:description" content="{{PAGE_DESCRIPTION — 150-160 chars}}">
 <meta name="twitter:image" content="{{ABSOLUTE_URL_TO_SHARE_IMAGE — 1200x630px}}">
 
-<!-- Favicon — inline SVG data URI: no external file, works at ANY path
-     (incl. GitHub Pages project sites served from /{domain}/, where a root-absolute
-     /favicon.ico resolves to the org root and 404s). Replace {{FAVICON_EMOJI}} with an
-     emoji that fits the business (🦷 dental, 🌿 wellness, ⚖️ legal, 📷 photography…),
-     OR swap the whole tag for a real, RELATIVE-path icon made from the client logo:
-       <link rel="icon" href="favicon.svg" type="image/svg+xml">   (never a leading slash) -->
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>{{FAVICON_EMOJI}}</text></svg>" type="image/svg+xml">
+<!-- Favicon — MUST be a real, crawlable image file. Google Search only shows a
+     favicon if Googlebot-Image can fetch a square icon >=48x48px from a stable URL;
+     a data: URI is NOT crawlable and leaves the generic globe icon in search results.
+     At build time, generate from the client logo (square, white or transparent bg):
+       images/favicon.png          96x96   (multiple of 48 — Google's requirement)
+       images/apple-touch-icon.png 180x180 (iOS home screen)
+     Paths are RELATIVE (never a leading slash — root-absolute /favicon.* 404s on
+     GitHub Pages project sites). Pages inside blog/ use ../images/… instead. -->
+<link rel="icon" href="images/favicon.png" type="image/png" sizes="96x96">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 
 <!-- Preconnect for Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">

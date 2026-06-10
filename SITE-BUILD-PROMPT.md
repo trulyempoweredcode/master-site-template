@@ -119,7 +119,10 @@ Identify where the client needs to supply additional content (photos, testimonia
 5. Create `images/` directory
 6. Generate `robots.txt` (allow all, reference sitemap URL)
 7. Generate `sitemap.xml` listing all pages with `<lastmod>` dates
-8. Set the favicon. Use the `head.html` favicon block on every page and replace `{{FAVICON_EMOJI}}` with an emoji that fits the business. It's an inline SVG data URI — no external file, and it works on GitHub Pages project subpaths where a root-absolute `/favicon.ico` would 404. If the client has a real logo/icon, instead write a relative-path `favicon.svg` to the site root and reference it as `href="favicon.svg"` (never `/favicon.svg`).
+8. Generate the favicon — a REAL image file, never a data: URI (Googlebot-Image can't crawl data URIs, so the site gets the generic globe icon in search results). From the client logo (square-padded on white or transparent), create `images/favicon.png` at 96×96 (Google requires a square multiple of 48px) and `images/apple-touch-icon.png` at 180×180. Reference them on EVERY page with relative paths (never a leading slash — root-absolute `/favicon.*` 404s on GitHub Pages project subpaths; pages inside `blog/` use `../images/…`):
+   `<link rel="icon" href="images/favicon.png" type="image/png" sizes="96x96">`
+   `<link rel="apple-touch-icon" href="images/apple-touch-icon.png">`
+9. Google search-result thumbnail: for person-led businesses, save a SQUARE headshot of the practitioner (≥600×600) to `images/`, use it as `og:image`/`twitter:image` on the homepage + about page, keep `<meta name="robots" content="max-image-preview:large">` on every indexable page (already in the head template), and add a `WebPage` JSON-LD block with `primaryImageOfPage` (ImageObject → the headshot) and `mainEntity` (Person → name, jobTitle, image, worksFor) AFTER the `<!-- /PROFILE:schema -->` marker — never inside the PROFILE markers, because Business Details saves regenerate that block with the logo as `image`. Google does NOT index CSS background images, so a headshot that only appears via `background-image` is invisible to it.
 
 ### 2b. Generate images (if requested)
 
@@ -210,7 +213,7 @@ base.css MUST load first, then components.css, then theme.css LAST so client-spe
 **Every page must have:**
 - Full SEO head (from head.html template) with unique title, description, OG tags, structured data
 - CSS in correct order: base → components → theme (see above)
-- Favicon via the `head.html` data-URI block with `{{FAVICON_EMOJI}}` replaced — or a relative `favicon.svg` if a real icon was generated. NEVER a root-absolute `/favicon.*` path (it 404s on GitHub Pages project sites)
+- Favicon as a real file: `images/favicon.png` (96×96, generated from the client logo) + `images/apple-touch-icon.png` (180×180), linked with relative paths. NEVER a data: URI (Google can't crawl it → generic globe in search results) and NEVER a root-absolute `/favicon.*` path (404s on GitHub Pages project sites)
 - `loading="lazy"` on every content `<img>` EXCEPT an above-the-fold hero/LCP image (which stays eager so it isn't deferred), plus descriptive `alt` on all of them
 - Correct nav link highlighting (`nav__link--active`)
 - Cookie consent + back-to-top HTML before `</body>`
@@ -709,7 +712,8 @@ Then verify the remaining manual items:
 - [ ] robots.txt exists with sitemap reference
 - [ ] sitemap.xml lists all public pages (excludes cookies-policy.html)
 - [ ] CSS link order is base → components → theme on every page (theme LAST, or overrides break)
-- [ ] Favicon present on every page (data-URI emoji or relative favicon.svg — never root-absolute /favicon.* which 404s on GitHub Pages)
+- [ ] Favicon is a real file on every page: images/favicon.png 96×96 from the client logo (never a data: URI — Google can't crawl it; never root-absolute /favicon.* — 404s on GitHub Pages)
+- [ ] og:image on every indexable page; homepage + about use a square practitioner headshot (≥600×600) when the business is person-led, with a Person/primaryImageOfPage JSON-LD block outside the PROFILE markers
 - [ ] Every non-hero <img> has loading="lazy" (the hero/LCP image stays eager)
 - [ ] No console errors
 - [ ] No two consecutive sections share the same background colour on any page
