@@ -8917,6 +8917,12 @@ main > .section--alt + .section--alt:not(.section--dark):not(.cta-banner) {
   color: var(--color-text-inverse);
 }
 
+/* :hover (0,2,0) outranks --active (0,1,0) — without this, hovering the
+   active pill paints primary text on a primary background (invisible). */
+.shop-filter--active:hover {
+  color: var(--color-text-inverse);
+}
+
 .shop-empty {
   text-align: center;
   color: var(--color-text-light);
