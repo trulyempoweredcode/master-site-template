@@ -9321,8 +9321,10 @@ main > .section--alt + .section--alt:not(.section--dark):not(.cta-banner) {
   display: inline-block;
   font-size: var(--text-xs);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-accent);
-  background-color: var(--color-accent-light, var(--color-bg-alt));
+  /* Solid accent + white: accent-on-accent-light was unreadable on warm
+     palettes (v1.7.1 contrast fix). */
+  color: #fff;
+  background-color: var(--color-accent);
   border-radius: var(--aesthetic-radius-pill);
   padding: 2px 10px;
   white-space: nowrap;
@@ -9466,6 +9468,18 @@ main > .section--alt + .section--alt:not(.section--dark):not(.cta-banner) {
 }
 
 /* Step 4: summary + form */
+/* The widget form carries .form__group/.form__label but no .form parent
+   (whose column gap normally provides the rhythm), so it sets its own:
+   breathing room under each label and between fields (v1.7.1). */
+.booking-form .form__group {
+  margin-bottom: var(--space-lg);
+}
+
+.booking-form .form__label {
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
 .booking-summary {
   background-color: var(--color-bg-alt);
   border-radius: var(--radius-md);
