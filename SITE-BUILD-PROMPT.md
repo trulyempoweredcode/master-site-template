@@ -237,7 +237,7 @@ base.css MUST load first, then components.css, then theme.css LAST so client-spe
 
 Client sites are hosted on GitHub Pages (static — no PHP). Forms POST to the AI Site Editor API.
 
-1. Set the form `action` to `https://editmy.site/api/form/{site_id}` — the `{site_id}` is the numeric ID from the `sites` table (assigned when the admin creates the site in the portal)
+1. Set the form `action` to `https://editmy.site/api/form/{site_id}` — use the **exact literal token `{site_id}`** (lowercase, in braces). Do NOT substitute `SITE_ID`, a placeholder of your own, or anything else: the CMS auto-connect (`SiteController::fixFormPlaceholdersInRepo`) matches ONLY the literal needle `editmy.site/api/form/{site_id}` and rewrites it to the real numeric ID when the admin registers the site (or clicks "fix form"). Any other placeholder will silently fail to match — the form stays unconnected and drops submissions.
 2. The form must use `method="POST"` and class `form` (main.js handles AJAX submission via `fetch`)
 3. **MANDATORY hidden fields** — the server silently drops submissions without these. They must appear inside every `<form>` that posts to editmy.site:
 
@@ -256,7 +256,7 @@ Client sites are hosted on GitHub Pages (static — no PHP). Forms POST to the A
 
 `_hp` is a honeypot (hidden bots fill it). `_t` is a JS-set timestamp (main.js populates it on page load). `_page` is the current pathname (main.js populates it) so server error alerts can identify which page hosted the broken form. **Even if you forget these, GithubController will auto-inject them on commit** — but build them in correctly so the source matches the live site. See `master-site-template/contact.html` for the canonical form.
 
-**Important:** The site must be registered in the admin portal first to get its `site_id`. After building the site, tell the user to create the site entry in the admin portal and update the form action with the assigned ID. Form submissions are stored in the database and forwarded via per-site SMTP (configured during admin onboarding).
+**Important:** Leave the form action as the literal `{site_id}` token in the source — do NOT hand-edit it to a number. The CMS connects it automatically: when the admin registers the site in the portal (or clicks the per-site "fix form" button), `fixFormPlaceholdersInRepo` rewrites the token to the assigned numeric ID and commits it back to the repo. Form submissions are then stored in the database and forwarded via per-site SMTP (configured during admin onboarding).
 
 ### 2e. robots.txt
 
