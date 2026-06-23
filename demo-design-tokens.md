@@ -1,6 +1,6 @@
 # Demo Design Tokens
 
-When a client picks one of the 9 design examples on the onboarding form (https://www.therapywebgenie.com/managed-design-examples/), look up that style here and apply these tokens to their build.
+When a client picks one of the 9 design examples on the onboarding form (https://www.therapywebgenie.com/design-examples/), look up that style here and apply these tokens to their build.
 
 The client's "any changes you want" answer takes precedence — treat these as the **default baseline**, then layer their requested deltas on top (e.g. "like style 4 but warmer colours" → use style 4 fonts/hero/nav, swap the palette).
 
