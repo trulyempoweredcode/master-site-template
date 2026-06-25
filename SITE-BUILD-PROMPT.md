@@ -70,7 +70,13 @@ Then extract content according to the scenario (see Phase 1).
 
 ### 1c. Theme selection
 
-Use the theme selections from the brief. If any are marked "you recommend", choose based on the client's industry, tone, and competitor landscape.
+The design selections come from the developer's **Site Build Configuration** form in the portal (admin Custom Details), merged into the brief alongside the client's own Design Form answers. Treat each one as an **optional override, not a required input**:
+
+- A **set value** (a specific palette / font / hero / nav / image style) = follow it exactly.
+- **Blank, "Auto — designer's choice", or "you recommend"** = YOU decide it, grounded in the client's brand colour and real assets, their sector and audience, any reference sites they admire, their existing site, and the tone of their content. A site left entirely on Auto must still come out cohesive, distinctive and on-brand — never a flat default (see the Polish Standard).
+- The free-text **Style direction** field (if filled) is a plain-English steer on the overall look and feel — e.g. "clean and airy, lots of whitespace, calming, like example.com". Let it inform every choice, *especially* the Auto ones, and treat it as overriding a generic default where they conflict. It augments the dropdowns; it does not replace a value that was explicitly set.
+
+In the Delivery summary, always state which design choices were specified by the developer and which you decided (and why), so they can be reviewed.
 
 Available options:
 - **Palettes:** calm-sage, bold-navy, warm-terracotta, clean-slate, rich-forest, bright-coral, soft-blush, warm-mocha, trusty-blue, fresh-teal, warm-grey, deep-plum, mint-fresh, playful-sky

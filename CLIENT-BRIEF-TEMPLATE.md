@@ -23,10 +23,13 @@ Voice/tone: warm | clinical | formal | conversational | authoritative | nurturin
 Photos: existing only | client supplied | generate all | mixed | none
 Image style: warm | professional | clinical | lifestyle | luxury | rustic | minimal | vibrant
 
-Palette: (e.g. calm-sage, or "you recommend")
-Font pairing: (e.g. classic-elegance, or "you recommend")
-Aesthetic: soft | sharp | editorial | luxe | brutalist | "you recommend"  (corner radius / shadow / border feel — default soft)
-Hero style: (e.g. split, fullwidth, image, or "you recommend")
+Style direction: (free-text overall look & feel steer, or blank — e.g. "clean and airy, lots of whitespace, calming, like example.com")
+  NOTE: every design field below is an optional override. A set value = follow exactly.
+  Blank, "Auto", or "you recommend" = the builder decides from the client's brand, sector, audience and content.
+Palette: (e.g. calm-sage, or blank / "Auto" / "you recommend")
+Font pairing: (e.g. classic-elegance, or blank / "Auto" / "you recommend")
+Aesthetic: soft | sharp | editorial | luxe | brutalist | blank / "Auto"  (corner radius / shadow / border feel — builder-chosen by default; not captured on the admin form)
+Hero style: (e.g. split, fullwidth, image, or blank / "Auto" / "you recommend")
 Hero reversed: yes | no
 Nav style: default | two-tier
 Transparent nav: yes | no
