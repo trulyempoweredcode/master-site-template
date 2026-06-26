@@ -652,12 +652,17 @@ Address the client directly in second person ("you", "your", "please confirm"). 
 
 ## Phase 4: Git Setup and Deploy
 
+Creating the GitHub repo and turning on Pages is part of the build — do NOT ask the user to pre-create the repo.
+
 1. Initialise git repo in the client site directory
 2. Create initial commit with all files
-3. Add remote for `trulyempoweredcode/{domain}` on GitHub (repo should already exist)
-4. Push to `main` branch
-5. Remind user to enable GitHub Pages on `main` branch in repo Settings > Pages
-6. Report the preview URL: `https://trulyempoweredcode.github.io/{domain}/`
+3. Create the repo under the org and push in one step:
+   `gh repo create trulyempoweredcode/{domain} --public --source=. --remote=origin --push`
+   (Repos are PUBLIC — GitHub Pages project sites on the org's github.io require it. If the repo already exists, instead: `git remote add origin git@github.com:trulyempoweredcode/{domain}.git` then `git push -u origin main`.)
+4. Enable GitHub Pages on the `main` branch (root) via the API:
+   `echo '{"source":{"branch":"main","path":"/"}}' | gh api -X POST repos/trulyempoweredcode/{domain}/pages --input -`
+   A `409` means Pages is already on — ignore it. (UI equivalent: repo Settings → Pages → Branch `main`, folder `/root`.)
+5. Report the preview URL: `https://trulyempoweredcode.github.io/{domain}/` (the first Pages build takes ~1 minute to go live).
 
 ---
 
