@@ -62,7 +62,7 @@ Pick exactly one per page. Mobile responsive built in.
 
 ## Layout / structure
 
-- **`.split`** — 2-column split. Variants: `--bleed` (image fills full edge — drop the container wrapper, no extra CSS needed).
+- **`.split`** — 2-column split. Variants: `--bleed` (image fills full edge — drop the container wrapper, no extra CSS needed). **Author both `.split` and `.split--reverse` with the CONTENT block FIRST in the DOM, image second** — `.split` renders image-right, `.split--reverse` flips the image left via CSS `order` at ≥768px. Content-first DOM means mobile always stacks heading-then-image (consistent + scannable); putting the `<img>` first breaks that AND (pre-fix) left every reverse image on the right. Both `.split__text` and `.split__content` are reordered by `--reverse` (fixed 2026-07-02).
 - **`.split__image`** + `--portrait` / `--landscape` / `--square`.
 - **`.story-split`** — narrative two-column with lead text.
 - **`.story-text`** — centred header + pull-quote left / body right.
@@ -71,7 +71,7 @@ Pick exactly one per page. Mobile responsive built in.
 - **`.about-hero`** — about-page hero pattern (image + text).
 - **`.about-split-third`** — 1fr image / 2fr text full-bleed split.
 - **`.intro`** — homepage welcome split (image + text). Use `__inner--reversed` to swap sides.
-- **`.info-band`** — horizontal feature strip with icons. Variants: `--light`, `--primary`.
+- **`.info-band`** — horizontal feature strip with icons. Variants: `--light`, `--primary`. **Canonical markup: the band is FULL-WIDTH (place it directly in the `<section>`, NOT inside a `.container`) and the items sit in `.container.info-band__inner` — i.e. put the `container` class ON `.info-band__inner`.** Wrapping the band in a container makes the coloured background a narrow centred box instead of stretching the section. `.info-band__inner` now self-centres (max-width + auto margins) as a safety net even without `.container` (fixed 2026-07-02). **A standalone bridging band (e.g. a value strip between the page-header and the first content section) should sit FLUSH — place it directly in `<main>`, NOT inside a padded `.section`, and do NOT put `.reveal` on the band itself** (the reveal's translateY leaves dead space above/below the coloured strip). Only wrap it in a `.section` when it genuinely belongs to a headed content section (e.g. a "why reviews matter" block) — and even then close the heading's section first so the band bridges flush to the next section.
 - **`.divider`** — section divider rule.
 
 ## Process / steps

@@ -3612,7 +3612,8 @@ a.card--service:hover .card__link {
   line-height: var(--line-height-relaxed);
 }
 
-.split__text .btn {
+.split__text .btn,
+.split__content .btn {
   margin-top: var(--space-lg);
 }
 
@@ -3663,7 +3664,8 @@ a.card--service:hover .card__link {
     gap: var(--space-3xl);
   }
 
-  .split--reverse .split__text {
+  .split--reverse .split__text,
+  .split--reverse .split__content {
     order: 2;
   }
 
@@ -4920,6 +4922,14 @@ a.card--service:hover .card__link {
   grid-template-columns: 1fr;
   gap: var(--space-lg);
   text-align: center;
+  /* Self-centering safety net: the band spans full width, the items stay
+     centred to the content width even if the author forgets `.container`
+     on this element. Redundant (harmless) when `.container` is present. */
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-lg);
+  padding-right: var(--space-lg);
 }
 
 .info-band__item {
