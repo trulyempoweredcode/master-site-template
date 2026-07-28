@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Internal dev tool, linked from the client portal. Kept out of search
+       results: robots.txt is no use on a GitHub Pages project site (crawlers
+       only read the one at the domain root, which belongs to another repo),
+       so the per-page directive is what actually does the work. -->
+  <meta name="robots" content="noindex, nofollow">
   <title>Theme Preview — Design System</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -4143,6 +4148,47 @@
     renderPresetButtons();
     renderSwatches();
     updateInfo();
+
+    // Deep link from the client portal's Site Build Config tab:
+    //   ?palette=deep-plum&fonts=boutique&hero=image-frost-light-left&nav=two-tier&reverse=1
+    // Values are slugs of the option's own label (or its value), so the portal
+    // can send its dropdown labels without the two lists sharing ids — its
+    // "Split 50-50" and this page's "Split 50/50" both slug to split-50-50.
+    // Setting .value and dispatching change reuses the existing listeners, so
+    // none of the apply logic is duplicated here.
+    (function applyPortalDeepLink() {
+      const params = new URLSearchParams(window.location.search);
+      if (!params.toString()) return;
+
+      const slug = s => String(s)
+        .replace(/\([^)]*\)/g, ' ')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+
+      function pick(selectId, wanted) {
+        if (!wanted) return;
+        const sel = document.getElementById(selectId);
+        if (!sel) return;
+        const want = slug(wanted);
+        const match = Array.from(sel.options).find(o =>
+          !o.disabled && (slug(o.value) === want || slug(o.textContent) === want)
+        );
+        if (!match) return;
+        sel.value = match.value;
+        sel.dispatchEvent(new Event('change'));
+      }
+
+      pick('paletteSelect', params.get('palette'));
+      pick('fontSelect',    params.get('fonts'));
+      pick('heroSelect',    params.get('hero'));
+      pick('navTypeSelect', params.get('nav'));
+
+      if (params.get('reverse') === '1') {
+        const rev = document.getElementById('heroReverse');
+        if (rev) { rev.checked = true; rev.dispatchEvent(new Event('change')); }
+      }
+    })();
   </script>
 
 <script src="js/main.js"></script>
