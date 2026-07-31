@@ -4987,7 +4987,7 @@ a.card--service:hover .card__link {
    borderline "large text" exemption; hierarchy still comes from size + typeface. */
 .info-band--primary,
 .info-band--primary .info-band__text {
-  color: #FFFFFF;
+  color: var(--info-band-text, #FFFFFF);
 }
 
 .info-band--primary .info-band__icon {
