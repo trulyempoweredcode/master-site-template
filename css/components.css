@@ -2930,6 +2930,13 @@ a.card--service:hover .card__link {
   column-gap: var(--space-lg);
   row-gap: var(--space-xs);
   align-items: start;
+  /* v1.7.7 — align-CONTENT, not just align-items. The card is stretched by the
+     parent grid to match its tallest sibling, and without this the surplus
+     height inflates the heading ROW rather than sitting below the content, so
+     a short card shows an ~80px hole between its h3 and its body text. Only
+     visible when items in a row have uneven text lengths, which is why the
+     even-length theme-preview demo never showed it. */
+  align-content: start;
   padding: var(--space-lg);
   background-color: var(--color-surface);
   border-radius: var(--radius-lg);
@@ -4061,6 +4068,21 @@ a.card--service:hover .card__link {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
+}
+
+/* v1.7.7 — a checklist followed by more content collided with it (0px where
+   the normal paragraph gap is 16px), because the list carries no bottom
+   margin. Two exclusions, both load-bearing:
+     :not(:last-child)          — a checklist that ENDS its container keeps
+                                  margin 0, so no existing layout shifts.
+     :not(.checklist-grid) >    — inside .checklist-grid the lists are siblings
+                                  spaced by the grid's own `gap`; adding a
+                                  margin there double-spaces and grew the grid
+                                  by 16px (measured 290 -> 306 in
+                                  theme-preview). The first, unscoped version of
+                                  this rule DID regress it. */
+:not(.checklist-grid) > .checklist:not(:last-child) {
+  margin-bottom: var(--space-md);
 }
 
 /* Checklist items that use inline SVG instead of ::before — constrain SVG size */

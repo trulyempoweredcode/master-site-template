@@ -987,10 +987,10 @@
       </div></div></div>
     </div>
     <div class="sc-tile">
-      <div class="sc-tile__label"><code>.approach-grid</code> <span class="sc-note">Text-only numbered steps — no images. 2-col desktop, 1-col mobile. Use for "How I work" lists.</span></div>
+      <div class="sc-tile__label"><code>.approach-grid</code> <span class="sc-note">Text-only numbered steps — no images. 2-col desktop, 1-col mobile. Use for "How I work" lists. Items 1 and 2 are deliberately uneven in length: the surplus height on the shorter card must sit BELOW its body text, never as a gap under the heading (v1.7.7 <code>align-content: start</code>). Keep them uneven — an even-length demo hid this bug for months.</span></div>
       <div class="sc-tile__demo"><div style="padding: var(--space-xl);"><div class="approach-grid">
-        <div class="approach-item"><div class="approach-item__number">1</div><h3>We listen first</h3><p>An unhurried conversation about what's going on and what you'd like to change.</p></div>
-        <div class="approach-item"><div class="approach-item__number">2</div><h3>We agree a plan</h3><p>Clear goals and a realistic pace, reviewed together as we go.</p></div>
+        <div class="approach-item"><div class="approach-item__number">1</div><h3>We listen first</h3><p>An unhurried conversation about what's going on.</p></div>
+        <div class="approach-item"><div class="approach-item__number">2</div><h3>We agree a plan</h3><p>Clear goals and a realistic pace, reviewed together as we go, so you always know what the next session is for and how it fits the thing you came in wanting to change.</p></div>
         <div class="approach-item"><div class="approach-item__number">3</div><h3>We work at your pace</h3><p>Sessions shaped around you — never a one-size-fits-all programme.</p></div>
         <div class="approach-item"><div class="approach-item__number">4</div><h3>We review progress</h3><p>Regular check-ins so you always know how far you've come.</p></div>
       </div></div></div>
@@ -2346,6 +2346,22 @@
           <li class="checklist__item">Grief and bereavement</li>
           <li class="checklist__item">Life transitions and changes</li>
         </ul>
+      </div>
+
+      <!-- v1.7.7 regression witness. The demo above ends with the list, so it is
+           :last-child and keeps margin 0 — that is the case the fix must NOT
+           change. This one has prose AFTER the list, which is the case that was
+           broken: the paragraph butted straight against the last tick at 0px
+           where sibling paragraphs sit 16px apart. Do not delete or reorder. -->
+      <div style="max-width: 500px; margin: 0 auto 48px;">
+        <h3 style="margin-bottom: 16px; text-align: center;">Checklist followed by prose</h3>
+        <p>The most obvious signs are a change in someone's behaviour:</p>
+        <ul class="checklist">
+          <li class="checklist__item">being more unwell than usual</li>
+          <li class="checklist__item">becoming snappy or irritable</li>
+          <li class="checklist__item">changes in attendance</li>
+        </ul>
+        <p>This paragraph must clear the last tick by the normal paragraph gap. If it is touching the list, <code>.checklist:not(:last-child)</code> has been lost.</p>
       </div>
 
       <h3 style="margin-bottom: 16px; text-align: center;">Two-Column Checklist Grid</h3>

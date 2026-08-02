@@ -31,12 +31,31 @@ Pick exactly one per page. Mobile responsive built in.
 - **`.hero--half`** — 50/50 split (image left, text right by default). **Image clamped 85vh desktop / 55vh mobile** by default (set `max-height: none` on `.hero__inner / __image-wrap / __image / __content` in your theme.css to opt out — only when needed).
   - **v1.4 ratio modifiers**: `.hero--half--text-wide` (1.45fr / 1fr), `.hero--half--image-wide` (1fr / 1.45fr).
   - **v1.4 image-right**: `.hero--half--image-right` flips the image to the right (text-left layout).
-- **`.hero--image`** — full-bg image with centred text overlay (no frost card).
-- **`.hero--image-left` / `.hero--image-right`** — image-side modifiers (apply to `.hero--image`).
-- **`.hero--showcase`** — frost (glassmorphism) card variants over an image.
-- **`.hero--banner`** — short banner-height hero.
+- **`.hero--image`** — full-bg image with a dark overlay wash and centred text (no frost card).
+- **`.hero--image-left` / `.hero--image-right`** — text-position modifiers (apply alongside `.hero--image`; default is centred). Named for the side the TEXT sits on.
+- **`.hero--showcase`** — full-vibrancy photo with a frosted-glass floating card. `::before` is `display:none`, so there is **no darkening overlay** — the card does the separating, which is why tone matters. Needs two modifiers:
+  - **tone** — **`.hero--showcase-dark`** (card `rgba(0,0,0,.55)`, white text — use over a LIGHT/bright image) or **`.hero--showcase-light`** (card `rgba(255,255,255,.65)`, dark text — use over a DARK image). Get this backwards and the card vanishes into the photo.
+  - **position** — default left, or **`.hero--showcase-center`** / **`.hero--showcase-right`**. (`.hero--showcase-left` exists only as the documented default name; the bare component is already left-aligned.)
+- **`.hero--banner`** — short banner-height hero (image strip 400px ≥768px, text below).
 - **`.hero--minimal`** — text-only, no image.
-- **`.hero--slope-light`** — angled panel cut.
+- **`.hero--slope-dark`** / **`.hero--slope-light`** — angled panel cut behind the text, over a side image. `--dark` inverts heading/body/button colours for the dark panel; `--light` keeps standard text colours. Pair `--slope-dark` with `nav--transparent-dark` on the homepage.
+- **`.hero--reverse`** — side-flip modifier. Applies to `.hero` (classic), `.hero--half`, and both slope variants; ≥768px only, so mobile stacking is unaffected.
+
+**Portal `Hero style` → class map (all 16 values).** The brief's Hero style field is resolved here — nothing else maps it:
+
+| Portal value | Classes |
+|---|---|
+| `classic` / split | `.hero` |
+| `half` | `.hero--half` |
+| `fullwidth` | `.hero--fullwidth` |
+| `minimal` | `.hero--minimal` |
+| `banner` | `.hero--banner` |
+| `slope-dark` / `slope-light` | `.hero--slope-dark` / `.hero--slope-light` |
+| `image-left` / `image-center` / `image-right` | `.hero--image` + `--image-left` / (none) / `--image-right` |
+| `frost-dark-left/center/right` | `.hero--showcase .hero--showcase-dark` + (none) / `--showcase-center` / `--showcase-right` |
+| `frost-light-left/center/right` | `.hero--showcase .hero--showcase-light` + (none) / `--showcase-center` / `--showcase-right` |
+
+Add `hero--reverse` when the brief says Hero reversed: yes (classic / half / slope only).
 - **`.hero__floats`** — wrapper inside `.hero__image-wrap` for absolute-positioned glass stat cards (`.hero__float` + `--tl/--tr/--bl/--br/--ml/--mr`). Hidden under 768px. Use for credibility numbers (years, clients, ROI).
   - **v1.4 cantilever pattern**: wrap the `<img>` in `.hero__image-clip` and add `.hero--floats-cantilever` to `.hero__image-wrap`. Then use `.hero__float--out-r / --out-l / --out-t / --out-b` on individual floats to make them hang past the image edges.
 - **`.hero__heading`** — primary H1 inside the hero. **v1.4 `.hero__heading--animate`** triggers a word-by-word blur-fade entrance (auto-wired by main.js, honours `prefers-reduced-motion`).
@@ -76,7 +95,7 @@ Pick exactly one per page. Mobile responsive built in.
 
 ## Process / steps
 
-- **`.approach-grid`** + **`.approach-item`** — text-only numbered steps (no images). 1-col mobile, 2-col desktop. Use for "How I work" lists.
+- **`.approach-grid`** + **`.approach-item`** — text-only numbered steps (no images). 1-col mobile, 2-col desktop. Use for "How I work" lists, and for any numbered sequence the source copy has written out as `1. … 2. … 3. …` inside plain paragraphs — that is the canonical "sequences to steps" swap. Markup per item: `__number` div + `<h3>` + `<p>`, in that order. **v1.7.7** — carries `align-content: start`. Cards are stretched to the tallest in their row, and without it the surplus height inflated the heading row and left an ~80px hole under the `h3` of any shorter card. Don't remove it, and keep the theme-preview demo's items uneven in length: an even-length demo hid this for months.
 - **`.process-grid`** + **`.process-step`** — 3- or 4-step (`--4`) with **image per step**. Number badge top-left, photo, title, body. Use for "How it works" with visuals.
   - **v1.4 `.process-step--num-centered`** — moves the number from absolute top-left of the image into the body, centered above the title (transparent bg, white border, inherits `currentColor`). Cleaner stepper aesthetic on dark cards.
 - **`.process-spine`** + **`.process-spine__step / __num / __body / __title / __text`** — vertical numbered process with a connector rail down the centre between number nodes. No images, single column. Use for editorial/B2B "methodology" sections where the steps deserve more drama than `.process-grid` (e.g. Hercules Power-First Development). Honours `.section--dark` / `.bg-dark` for inverted treatment.
@@ -180,7 +199,7 @@ Markup for these is GENERATED by the editor (`api/controllers/BookingHtmlBuilder
 
 - **`.highlight-box`** — emphasis block. **Must contain `__heading` + `__content` children.** Never bare h3/p directly. Heading colours auto-invert.
 - **`.blockquote`** — pull-quote. Variant: `--pull` (large pull-quote).
-- **`.checklist`** + **`.checklist-grid`** — bulleted check lists. Inline SVG ticks supported (svg constrained to 20px).
+- **`.checklist`** + **`.checklist-grid`** — bulleted check lists. Inline SVG ticks supported (svg constrained to 20px). Use it for any list the source copy has buried inside a sentence as a comma run ("the signs are x, y and z") — lead in with the sentence up to a colon, then the items. **v1.7.7** — `:not(.checklist-grid) > .checklist:not(:last-child)` carries `margin-bottom: var(--space-md)` so a list followed by more content clears it. Both exclusions matter: a checklist that ends its container keeps `margin: 0`, and one inside `.checklist-grid` is spaced by the grid's own `gap` (the unscoped version double-spaced and grew the grid by 16px).
 - **`.quals-list`** — qualifications list with icons.
 - **`.alert`** — notice block. Variants: `--info`, `--success`, `--warning`, `--error`, `--themed`.
 - **`.badge`** — small inline badge. Variants: `--primary`, `--secondary`, `--accent`, `--outline`, `--subtle`, `--success`, `--warning`, `--error`. `.badge-group` for grouped badges.
