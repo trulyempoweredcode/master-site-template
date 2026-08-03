@@ -1908,6 +1908,17 @@
       <p style="font-size: var(--text-md); max-width: 640px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
       <p style="font-size: var(--text-sm); color: var(--color-text-light); max-width: 640px;">Smaller body text for captions, hints, and secondary information. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
     </div>
+    <!-- v1.7.8 regression witness. Narrow box on purpose: the domain below cannot
+         fit on one line, so without `overflow-wrap: break-word` on h1-h6 it
+         escapes the box and gives the whole PAGE horizontal scroll on mobile.
+         Check this at 375px. If the heading spills out of the dashed border,
+         the rule has been lost. Do not "tidy" the long token away. -->
+    <div class="font-preview__sample">
+      <div class="font-preview__label">Long unbreakable token in a heading (v1.7.8)</div>
+      <div style="max-width: 190px; border: 1px dashed var(--color-border); padding: var(--space-md);">
+        <h3 style="margin-bottom: 0;">Be Better with Bowen (bebetterwithbowen.co.uk)</h3>
+      </div>
+    </div>
   </div>
 
   <!-- BREADCRUMBS -->
