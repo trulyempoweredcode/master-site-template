@@ -25,7 +25,7 @@ Read the client brief from `D:\claude-custom-projects\Ai-Editor-Sites\{domain}\c
 
 Read the master template files first:
 - `master-site-template/css/base.css` — design tokens, grid, buttons
-- `master-site-template/css/components.css` — full component library (~50 components)
+- `master-site-template/css/components.css` — the component library itself (the readable index of it is `COMPONENTS.md`; read that to choose, this to check exact markup)
 - `master-site-template/css/theme.css` — current theme example (Calm Sage)
 - `master-site-template/themes/` — all palettes, fonts, and presets
 - `master-site-template/index.html` — homepage structure reference
@@ -130,19 +130,30 @@ Identify where the client needs to supply additional content (photos, testimonia
    `<link rel="apple-touch-icon" href="images/apple-touch-icon.png">`
 9. Google search-result thumbnail: for person-led businesses, save a SQUARE headshot of the practitioner (≥600×600) to `images/`, use it as `og:image`/`twitter:image` on the homepage + about page, keep `<meta name="robots" content="max-image-preview:large">` on every indexable page (already in the head template), and add a `WebPage` JSON-LD block with `primaryImageOfPage` (ImageObject → the headshot) and `mainEntity` (Person → name, jobTitle, image, worksFor) AFTER the `<!-- /PROFILE:schema -->` marker — never inside the PROFILE markers, because Business Details saves regenerate that block with the logo as `image`. Google does NOT index CSS background images, so a headshot that only appears via `background-image` is invisible to it.
 
-### 2b. Generate images (if requested)
+### 2b. Images — never ship an empty slot
 
-If Photos = `generate all` or `mixed`, use the Gemini image generation tool.
+**This runs on every build, whatever the brief's Photos value says.** A grey placeholder, an empty image slot, a stock-photo look, or an image visibly softer than the slot it sits in is a build failure. The order is always: use a REAL client asset first, and generate only for genuine gaps.
 
-**Tool:** `node tools/generate-image.js` (in project root)
+1. **Enumerate what already exists before generating anything.** Scenario 1: the raw-HTML asset sweep in Phase 1a (WebFetch strips `<img>` and background URLs — pull raw HTML, grep for image refs, probe the common asset folders). Scenario 2: everything in the content folder. Download them, **open and look at them**, and identify the practitioner headshot, premises, signage/logo and their real work. A real client photo beats a generated one every time.
+2. **Generate the remaining gaps** with the Gemini image tool — do not ask permission first, just do it.
+
+**Tool:** `node tools/generate-image.js` (in project root). Key `GEMINI_API_KEY` in `Ai-Editor/.env`, read at use time and never pasted anywhere.
+
+**Model choice is not optional.** The tool defaults to `flash` (`gemini-2.5-flash-image`), which is **hard-capped at 1344×768 no matter what `--size` says — the size flag is inert on that model**. That cap is why a chunk of the existing fleet has soft heroes.
+- **Heroes, page headers, full-width bands, CTA backgrounds → `-m pro`** (`gemini-3-pro-image-preview`, up to 5504×3072).
+- Cards, thumbnails and small splits → `flash` is fine.
+
+**Always downscale the pro output before it ships.** It returns ~5500px on the long edge at 7-10 MB; that must never reach a client repo. Cover-crop to the slot's aspect, resize to roughly 2× the rendered slot width, save JPEG q82-84 (heroes 82, portraits/cards 84). Target under ~440 KB per file. `wordpress-master/scripts/post-process-media.py` is the worked example of this pass (its target table is WP-specific, but the crop-then-resize-then-compress logic is what to copy).
+
+**THE ONE EXCEPTION — never generate over, or AI-upscale, a documentary or archival photograph.** Real people, real artworks, real events, real premises, medical or legal records. Generative models invent detail, and inventing detail inside a record of something real fabricates evidence. Ship those at native size, build the slot resolution-agnostic (`background-size: cover`, no fixed pixel assumptions), keep the original filename as the swap key, and flag it in the content checklist.
 
 **Workflow:**
-1. Based on Phase 1 analysis, identify all images needed (hero, split sections, service cards, page headers, CTAs)
-2. Create a batch file at `{site-dir}/images.json` with prompts tailored to the client's industry and content
-3. Use the **image style** from the brief to set the `--style` flag (maps directly: warm, professional, clinical, lifestyle, luxury, rustic, minimal, vibrant)
-4. Run: `node tools/generate-image.js --batch {site-dir}/images.json`
-5. Verify images generated successfully before proceeding to page builds
-6. Delete `images.json` after generation (it's a build artifact, not a site file)
+1. From Phase 1 analysis, list every image the build needs (hero, split sections, service cards, page headers, CTAs) and mark each one *real asset* or *gap*.
+2. Write a batch file at `{site-dir}/images.json` with prompts tailored to the client's industry and content, for the gaps only.
+3. Set `--style` from the brief's **Image style** (warm, professional, clinical, lifestyle, luxury, rustic, minimal, vibrant).
+4. Run `node tools/generate-image.js --batch {site-dir}/images.json`, adding `-m pro` on the hero/full-width entries.
+5. Downscale the pro outputs, then **look at every generated image** before it goes in a page.
+6. Delete `images.json` after generation (build artifact, not a site file).
 
 **Prompt writing tips:**
 - Be specific about the setting, not generic ("warm physiotherapy treatment room with massage table" not "healthcare image")
@@ -160,9 +171,14 @@ If Photos = `generate all` or `mixed`, use the Gemini image generation tool.
 
 **Style options:** `--style warm | clinical | luxury | lifestyle | minimal | professional | friendly | rustic | vibrant`
 
-If Photos = `mixed`, use client photos for personal/team shots and generate for everything else. Copy client photos into `images/` alongside generated ones.
+**Reading the brief's Photos field.** It says where the REAL assets come from, never whether images are optional:
+- `existing only` — download from the client's existing site; generate anything that site doesn't cover.
+- `client supplied` — copy from the content folder; generate anything it doesn't cover.
+- `mixed` — client photos for personal/team shots, generated for everything else.
+- `generate all` — no usable client assets; generate the lot.
+- `none` — treat as `generate all`. **Never ship coloured placeholder divs or empty slots.** If a slot genuinely cannot be filled (an archival photo the client hasn't sent, per the exception above), design the section so it doesn't need one and put the ask in the content checklist.
 
-If Photos = `existing only`, download images from the client's existing site. If Photos = `client supplied`, copy from the content folder. If Photos = `none`, use coloured placeholder divs.
+Copy client photos into `images/` alongside generated ones.
 
 ### 2c. Build pages
 
@@ -345,141 +361,38 @@ If blog is not needed, skip this section entirely — do not create `blog.html`.
 
 ### Component Library Reference
 
-Use these CSS classes from components.css. Do NOT write custom CSS. Everything needed is in the library.
+**The canonical index is `master-site-template/COMPONENTS.md`.** Read it when planning each
+page's sections — it is the only complete list, it carries the sub-structure each component
+requires, and it holds the portal `Hero style` → class map. There is deliberately no second
+catalogue in this file: the duplicate that used to sit here drifted out of date and went six
+hero variants short, which is how a build can end up unable to find `hero--showcase-dark`.
 
-**This is a curated quick-reference, NOT the full library.** The canonical index is `master-site-template/COMPONENTS.md` (~110 components with usage notes, grouped by purpose) — READ IT when planning each page's sections. Anything listed there is fair game even if it isn't repeated below. When COMPONENTS.md and this list disagree, COMPONENTS.md wins.
+Only use classes that exist in `components.css`. **Do NOT write custom CSS.** If nothing in the
+library fits, FLAG it before building — a new component goes in the shared library or nowhere,
+never in one client's `theme.css`.
 
-**Page structure:**
-- `.section` / `.section--alt` / `.section--dark` — page sections with padding. **Never place two consecutive sections with the same background** — alternate between `.section` and `.section--alt` (or `.section--dark`) so each section is visually distinct.
-- `.container` / `.container--narrow` — max-width wrappers
-- `.page-header` — inner page hero with label + h1 + subtitle
+**Build-time usage rules the catalogue doesn't carry:**
 
-**Heroes (homepage):**
-- `.hero` — classic split (text + image)
-- `.hero--fullwidth` — full-width dark gradient overlay, centred text
-- `.hero--minimal` — text only, centred, subtle gradient background, no image
-- `.hero--half` — 50/50 edge-to-edge split
-- `.hero--image` — full-bleed background photo with dark overlay. Set image via `style="background-image: url('images/hero.jpg')"` on the hero element.
-- `.hero--banner` — contained shorter image strip with text below. Uses the standard hero__image-wrap for the photo.
-- `.hero--slope-dark` — angled slope with dark background
-- `.hero--slope-light` — angled slope with light background
-- `.hero--image-left` / `.hero--image-right` — position text left or right over image overlay (default is centre)
-- `.hero--showcase` — full-vibrancy image with frosted glass floating card. Add `.hero--showcase-dark` or `.hero--showcase-light` for card tone. Add `.hero--showcase-center` or `.hero--showcase-right` for card position (default is left).
-- `.hero--reverse` — modifier (add to classic/half variants to flip image/text sides)
-- `.hero__ticks` — pill-style badges for hero tick-points. Each `<li>` renders as a rounded pill with optional SVG tick icon. Keep text short (3-5 words per pill).
+1. `nav--transparent` is **homepage only**, and only over `hero--image`, `hero--fullwidth` or
+   `hero--slope-dark`. Inner pages always use the solid nav. Pick the tone variant to match:
+   `nav--transparent-dark` over dark/image heroes, `nav--transparent-light` over light ones.
+2. Hero and page-header background photos are set inline on the element —
+   `style="background-image: url('images/hero.jpg')"` — and MUST carry `background-size: cover`
+   and `background-position: center center`, or they clip and tile unpredictably.
+3. `page-header--image` only when the client actually has page-specific imagery. Use it on sites
+   whose homepage hero is dark/image; use the default `page-header` where the homepage hero is
+   light.
+4. `hero__ticks` pills take 3-5 words each. Longer text breaks the pill row.
+5. `cta-banner`: the primary action is `btn--accent`. A secondary link uses `btn--secondary`,
+   which auto-adapts to white on dark backgrounds.
+6. `split--bleed` sits directly inside the `<section>` with no `.container` wrapper — the
+   container is what stops the image bleeding.
+7. Contact pages use `.contact-grid` (5:7 ratio), never `.grid--2`, and `.contact-info__item`
+   for the details list, never `.card--feature`.
+8. The team card child class is `.team-member`. `.team-card` has no styling at all.
 
-**Nav overlay (homepage only):**
-- `.nav--transparent` — makes nav float over the hero with transparent background, white text. Use ONLY on pages with `hero--image`, `hero--fullwidth`, or `hero--slope-dark`. Inner pages should always use the solid nav.
-
-**Page headers (inner pages):**
-- `.page-header` — default light background (bg-alt)
-- `.page-header--dark` — primary colour gradient background, white text
-- `.page-header--image` — background photo with dark overlay. Set image via `style="background-image: url('images/page-header.jpg')"`.
-
-**Testimonials:**
-- `.testimonial-grid` — 2-column grid of testimonial cards
-- `.testimonial-carousel` — single featured rotating testimonial with dot navigation. Needs 2+ `.testimonial` children + `.testimonial-carousel__nav` with dot buttons. JS auto-advances every 6 seconds. Add `.testimonial-carousel__icon` SVG for decorative quote mark.
-
-**Content sections:**
-- `.split` / `.split--reverse` / `.split--text-wide` / `.split--image-wide` — text + image layouts
-- `.split--bleed` / `.split--bleed-reverse` — edge-to-edge full-bleed image on one side (50% viewport), padded text on the other. No container needed — sits outside `.section > .container`. Uses `.split__image` (img tag) + `.split__content`. Wrap in `<section>` (or `<section class="section--alt">` for alt bg).
-- `.text-block` / `.text-block--center` — centred prose
-- `.two-col-text` — heading + two columns of text
-- `.highlight-box` / `.highlight-box--secondary` / `.highlight-box--soft` — callout boxes
-- `.blockquote` / `.blockquote--pull` — quotes and pull quotes
-- `.checklist` / `.checklist--subtle` / `.checklist-grid` — tick-icon lists
-- `.quals-list` — qualifications/credentials list with icons (the required component for icon'd bullet lists — see Design Rule 12)
-- `.story-text` — centred header + pull-quote left / body text right
-- `.intro` — homepage welcome split (image + text, `__inner--reversed` to swap sides)
-- `.about-hero` / `.about-split-third` — about-page hero and 1fr/2fr full-bleed split
-- `.two-col-text` — heading full width, body splits into 2 columns
-
-**Cards and grids:**
-- `.card--feature` / `.card--service` — icon + heading + text cards
-- `.icon-box` / `.icon-box--left` / `.icon-box--card` — icon grid items
-- `.steps` / `.steps--connected` / `.step` — numbered process steps (3 items default). Add `.steps--4` for 4-item layouts (4 columns at desktop).
-- `.process-grid` / `.process-step` — 3- or 4-step (`--4`) process WITH an image per step
-- `.process-spine` — vertical numbered process with connector rail, no images (editorial/B2B "methodology" sections)
-- `.image-card` — photo + title + text card
-- `.overlay-card` — image with text overlay
-- `.grid--bento` — featured first card spans 2 rows (left), remaining cards fill 2-col grid (right). Use with `.card--feature` children. Add `.card--highlight` to first card for dark background variant. Use `.card__stat` for large metric numbers.
-- `.stats` / `.stat--card` — number + label metrics
-- `.grid--2` / `.grid--3` / `.grid--4` — responsive column grids
-
-**Narrative & approach:**
-- `.story-split` — centred heading above, h3 lead text on left, body paragraphs on right. Uses `--container-wide`. Preferred over steps for therapist journey/story sections.
-- `.approach-grid` / `.approach-item` / `.approach-item__number` — numbered philosophy/values grid (2 columns). Use 4 items (2x2) to avoid orphans.
-- `.info-band` / `.info-band--primary` — bold stat strip (3 items). Uses `.info-band__item` > `.info-band__icon` + `.info-band__item-text` > `.info-band__title` + `.info-band__text`.
-
-**Social proof:**
-- `.testimonial` — quote + author + stars
-- `.testimonial--avatar` — centred with avatar
-- `.testimonial-grid` — 2-column grid of testimonials
-- `.trust-bar` — accreditation/logo bar (flex container, centred)
-- `.trust-bar__logos` — inner flex wrapper for logo items (use this inside `.trust-bar` section)
-- `.trust-bar__logo-placeholder` — placeholder for accreditation logos
-- `.google-reviews` — compact star rating badge
-- `.comparison` / `.comparison__card` — "right fit" tick/cross cards
-- `.logo-ticker` — infinite-scroll logo marquee (pauses on hover, reduced-motion fallback)
-- `.rated-pill` — inline award/rating badge ("Rated #1 by …")
-
-**Team:**
-- `.team-grid` / `.team-member` — photo + name + role grid (the child class is `team-member`, NOT `team-card` — `team-card` has no styling)
-- `.team-list` / `.team-list-item` — compact horizontal list
-- For 3-up portrait cards, prefer `.card--image-top.card--portrait` (one component covers services + team)
-
-**CTAs:**
-- `.cta-banner` — full-width coloured CTA section. Use `btn--accent` for the primary CTA. If adding a secondary link, use `btn--secondary` which auto-adapts to white text on dark backgrounds.
-- `.cta-inline` — bordered CTA box within content
-- `.cta-image` — CTA with background image
-- `.cta-mid-banner` — full-width mid-page CTA strip
-- `.announcement-bar` — top-of-page alert strip
-
-**Pricing:**
-- `.pricing-card` / `.pricing-card--featured` — pricing plan cards
-- `.pricing-grid` / `.pricing-grid--2` / `--3` / `--4` — pricing card grid. **Column modifier MUST match the card count** (`--2` for 2 cards, never `--3`)
-- `.pricing-single` — single-tier pricing block
-- `.treatment-list` — stacked treatment/service menu with price leaders + native expand (spa/clinic menus where description lengths vary; image variants `--image-square` / `--image-circle`)
-- `.fee-table` / `.fee-item` — line-item fee list
-- `.comparison-table` — feature comparison table
-- `.details-table` — key-value detail table
-
-**FAQ:**
-- `.accordion` / `.accordion__item` / `.accordion__trigger` / `.accordion__content` — expandable FAQ
-- `.accordion-grid` — side-by-side accordions
-
-**Forms:**
-- `.form` / `.form__group` / `.form__row` / `.form__input` / `.form__textarea` — form elements
-- `.form__label--required` — required field indicator
-- `.contact-grid` — contact info + form side-by-side (5:7 ratio, 96px gap on desktop). **Always use this for contact pages**, not `.grid--2`.
-- `.contact-info` / `.contact-info__item` — contact details list
-
-**Services page:**
-- `.services-layout` / `.services-sidebar` — services page with sticky sidebar nav (sidebar JS-generated from `[id^="service-"]` sections)
-- `.service-section` / `.service-detail` — individual service blocks with dividers; `.service-detail__header` for inline icon + title
-
-**Media:**
-- `.gallery` / `.gallery__item` — responsive image grid with click-to-zoom (requires `.lightbox` markup on the page; main.js wires it)
-- `.video-embed` — responsive 16:9 iframe wrapper
-- `.video-split` — video + text split
-
-**Blog:**
-- `.blog-grid` / `.blog-card` — blog listing
-- `.blog-post` / `.blog-post__body` / `.blog-post__meta` — article layout
-
-**Utilities:**
-- `.section-label` — uppercase category label above headings
-- `.section-subtitle` — muted subtitle below headings
-- `.breadcrumbs` — page path navigation
-- `.alert` / `.alert--info` / `.alert--warning` — notice boxes
-- `.badge` — small label tags
-- `.back-to-top` — scroll-to-top button
-- `.cookie-banner` — GDPR consent bar
-
-**Footer variants:**
-- `.footer` — default 4-column footer
-- `.footer--simple` — minimal single-row footer
-- `.footer--two-col` — brand + links two-column
+Component-to-section fit (wide rows full width, callout backgrounds, icon'd lists, heading
+hierarchy) is covered by the Design Rules immediately below — those are mandatory, not advisory.
 
 ---
 

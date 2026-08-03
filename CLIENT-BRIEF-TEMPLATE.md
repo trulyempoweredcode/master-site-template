@@ -8,14 +8,26 @@ Copy this file to `D:\claude-custom-projects\Ai-Editor-Sites\{domain}\client-bri
 Business name:
 Domain:
 
+Site type: static | wordpress
+  static    = flat HTML + GitHub Pages. Build with SITE-BUILD-PROMPT.md.
+  wordpress = Elementor clone of the atomic master. Build with WP-SITE-BUILD-PROMPT.md instead.
+MCP server: (wordpress only — the per-client novamira-* server name, from portal f_novamira_mcp)
+
+Build target: (wordpress only — the install the build happens on, from portal f_wp_url)
+  Portal f_wp_url:
+  Probed site_url():
+  Verified on:
+  Both lines must be present and identical before ANY write. Blank f_wp_url = STOP and ask.
+  A probed value matching the client's live domain = STOP, you are pointed at their live site.
+
 Scenario: (1 | 2 | 3)
   1 = New site — pull content from client's existing website
-  2 = New site — content supplied in local folder
+  2 = New site — content supplied in local folder (also used for a wireframe conversion)
   3 = Existing site built by us — convert to current template system
 
 Existing site URL: (for scenario 1, or blank)
-Content folder: (for scenario 2, e.g. D:\claude-custom-projects\Ai-Editor-Sites\{domain}\content\)
-Existing repo: (for scenario 3, e.g. trulyempoweredcode/acme.co.uk)
+Content folder: (for scenario 2, e.g. D:\claude-custom-projects\Ai-Editor-Sites\{domain}\portal-content\)
+Existing repo: (for scenario 3, e.g. trulyempoweredcode/acme.co.uk — or the wireframe repo)
 
 Content source: existing site | supplied | both
 Content rewrite: full | light | none
