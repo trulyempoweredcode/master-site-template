@@ -72,6 +72,14 @@ Build those two to the full Polish Standard, gate them, blind-critique them agai
 fix, re-critique — **and only then fan out**. A weak slice replicated across nine pages costs
 nine times what it costs to fix once.
 
+**This is enforced, not requested.** `build-spec.json` carries `slice_approved`, and while it
+is `null` `verify_spec.py` errors on any page on disk other than `index.html` and one page of
+the `repeating_archetype`, naming every file that ran ahead. Absent, `null` and blank all mean
+NOT approved, so forgetting the key fails closed. Once the user has approved the slice at Stop
+1, stamp it with the time they did — `"2026-08-08T14:20:00Z"` — and the whole site comes into
+scope. A word (`yes`, `true`, `approved`) **exits 2**: the field is the audit record of when a
+human signed off, and a gate that takes any truthy string is one anyone can talk past.
+
 Everything downstream inherits the slice: the fan-out copies its chrome, section rhythm and
 component choices rather than re-deciding them. On flat, the single owner of a shared visual
 property is the framework CSS (`css/base.css` + `css/components.css`) — so when the cross-page
@@ -93,7 +101,9 @@ client already supplied, or push to the GitHub Pages preview.
        screenshots side by side. Then show the user **4 images** — both pages, desktop and
        ~375px, captured with `scripts/shots.py` — plus **one contact sheet of every image
        generated for the whole site**. Expect up to two rounds here; that is normal, and it is
-       far cheaper than repeating a fault across twelve pages.
+       far cheaper than repeating a fault across twelve pages. **When they approve, stamp
+       `slice_approved` in `build-spec.json` with the time they did** — until you do,
+       `verify_spec.py` reds every page the fan-out builds.
 2. [ ] **Before delivery.** Every gate in the Self-Audit Checklist exits 0, **and** every page
        has been rendered desktop and ~375px, looked at, and what was seen has been fixed. Hand
        over one contact sheet (desktop and mobile) plus the written checklist of what is still
@@ -248,6 +258,27 @@ archetypes, the component list per page, the theme tokens and the image slots. I
 checker cannot parse is a gate that passes vacuously, which is worse than no gate. If the spec
 cannot be written because a decision is still open, the decision is not made: go back to 1c/1d
 rather than building around it.
+
+**Then prove it exists, before Phase 2 lays out a single page:**
+
+```
+python scripts/verify_spec.py <site-dir> --preflight        # exit 0 required
+```
+
+This is the **spec-presence precondition**. Nothing used to force `build-spec.json` to exist,
+so a build that simply never wrote one failed silently — no spec, no comparison, green build.
+Preflight reads the spec and stops: exit 2 if it is missing, does not parse, is missing a
+required key, carries a blank `reference.why`, or holds a malformed `slice_approved`; exit 0
+when it is sound. The site directory is still empty at this point, and that is the state it
+expects.
+
+**Create `{client-dir}` here, not in Phase 2a.** The spec has to live somewhere and preflight
+reads a directory, so step 1 of 2a (`mkdir Ai-Editor-Sites/{domain}`) happens now — everything
+else in 2a still waits. Point preflight at a directory that does not exist yet and it exits 2
+with `not a directory`, which reads like a broken tool rather than an ordering mistake.
+
+**Set `slice_approved` to `null`.** It stays null until the user has approved the slice at
+Stop 1. See "Slice first" above for what that buys you.
 
 The client never reads it. It exists so that
 
@@ -737,11 +768,14 @@ Creating the GitHub repo and turning on Pages is part of the build — do NOT as
 
 ## Self-Audit Checklist (complete before delivering)
 
-**Mechanical gates first, eyes second — never the other way round. All three exit 0 before Stop 2.**
+**Mechanical gates first, eyes second — never the other way round. All four exit 0 before Stop 2.**
+(`verify_spec.py <site-dir> --preflight` has already run back in Phase 1g, before any page was
+laid out — if you cannot point at that run, the spec-lock never had a precondition.)
 
 1. `python scripts/validate_site.py D:/claude-custom-projects/Ai-Editor-Sites/{domain}` (from the Ai-Editor repo root). It mechanically checks CSS order, heading hierarchy, section alternation, SECTION comments, PROFILE markers, form anti-spam fields, lazy loading, alt text, favicon paths, pricing-grid card counts, nav duplicates, titles/descriptions, robots.txt and sitemap coverage, **and layout variety** (a page of 3+ content bands that never once selects a library component is an ERROR; a single text container holding 400+ words is an ERROR — 900+ on a blog post is a warning, since clients author their own posts). **Fix every ERROR before continuing** — exit code must be 0. Warnings are judgment calls: resolve or consciously accept each one.
-2. `python scripts/verify_spec.py D:/claude-custom-projects/Ai-Editor-Sites/{domain} D:/claude-custom-projects/Ai-Editor-Sites/{domain}/build-spec.json` — the built site against the plan declared in Phase 1g. A page that quietly lost a component, a sibling that grew an extra band, or a token that stopped matching fails here.
-3. `python scripts/shots.py <preview-url> --out <dir> --pages home:/index.html about:/about.html … --contact-sheet <file.png>` — every page, desktop and ~375px. **Name every page in `--pages`, separated by SPACES**: with no `--pages` the run captures `/` alone and reports success, and a comma-joined list is read as ONE made-up URL. **Do not add `--mobile`** — both viewports are captured by default and `--mobile` RESTRICTS the run to mobile, so the desktop pass never happens. Run `--selftest` first; if it fails, fix the route rather than falling back to a weaker check. Then `Read` the contact sheet yourself: a capture nobody looked at is not a check.
+2. `python scripts/verify_spec.py D:/claude-custom-projects/Ai-Editor-Sites/{domain} D:/claude-custom-projects/Ai-Editor-Sites/{domain}/build-spec.json` — the built site against the plan declared in Phase 1g. A page that quietly lost a component, a sibling that grew an extra band, or a token that stopped matching fails here. It also holds slice-first: if `slice_approved` is still `null` every page past the slice is an ERROR, so by delivery it must carry the timestamp of the user's Stop 1 approval.
+3. `python scripts/check_defect_ledger.py` — **every fault reported during this build has a row in `DEFECT-LEDGER.md`, written before its fix.** No row, no fix. The checker fails a gate cell naming a file that does not exist, a blank required cell, or a commit hash resolving in neither repo. If a script could have caught the fault and none does, the row says `OPEN:` plus what would catch it.
+4. `python scripts/shots.py <preview-url> --out <dir> --pages home:/index.html about:/about.html … --contact-sheet <file.png>` — every page, desktop and ~375px. **Name every page in `--pages`, separated by SPACES**: with no `--pages` the run captures `/` alone and reports success, and a comma-joined list is read as ONE made-up URL. **Do not add `--mobile`** — both viewports are captured by default and `--mobile` RESTRICTS the run to mobile, so the desktop pass never happens. Run `--selftest` first; if it fails, fix the route rather than falling back to a weaker check. Then `Read` the contact sheet yourself: a capture nobody looked at is not a check.
 
 Then verify the remaining manual items:
 
@@ -840,4 +874,4 @@ When complete, report to the user:
 6. Site ID needed for form action (from admin portal) and SMTP setup instructions
 7. Any decisions made that need the user's review
 8. **Design system advisory** (optional) — If during the build you created any custom layout, section pattern, hero variant, or component that doesn't exist in the master template's component library, note it here. Suggest whether it would be useful to add back to the master template for future client builds. Format: component name, what it does, which client needed it, and why it could be reusable.
-9. **Gate evidence** — the exit-0 lines from `validate_library.py`, `verify_spec.py` and `validate_site.py`, the `verify-live.py` result on the plain URL, and confirmation that you rendered and looked at every page at desktop and ~375px. A build reported done without these is reported done on trust.
+9. **Gate evidence** — the exit-0 lines from `validate_library.py`, `verify_spec.py --preflight` (from before the first page was laid out), `verify_spec.py`, `validate_site.py` and `check_defect_ledger.py`, the `verify-live.py` result on the plain URL, and confirmation that you rendered and looked at every page at desktop and ~375px. A build reported done without these is reported done on trust.
