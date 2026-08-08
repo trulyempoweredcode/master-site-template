@@ -1,0 +1,28 @@
+{
+  "id": "forest-and-cream",
+  "name": "Forest & Cream",
+  "description": "Calm, natural, reassuring — therapists, counsellors, wellbeing practitioners. The palette behind demo style 2 (demo-psychotherapist).",
+  "colors": {
+    "primary": "#3A6B4E",
+    "primary-light": "#5A8B6E",
+    "primary-dark": "#2A4F38",
+    "secondary": "#C8956A",
+    "secondary-light": "#D4AB85",
+    "secondary-dark": "#A07848",
+    "accent": "#8B7355",
+    "accent-light": "#A89070",
+    "bg": "#FDFBF8",
+    "bg-alt": "#F2EDE6",
+    "bg-dark": "#2A3D30",
+    "surface": "#FFFFFF",
+    "surface-alt": "#F8F5F0",
+    "text": "#2E3830",
+    "text-light": "#5A6B5E",
+    "text-inverse": "#FDFBF8",
+    "text-heading": "#1E2B22",
+    "border": "#D8D2C8",
+    "border-light": "#E8E4DC",
+    "success": "#4A8B5E",
+    "error": "#B85B5B"
+  }
+}

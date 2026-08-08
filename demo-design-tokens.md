@@ -4,6 +4,50 @@ When a client picks one of the 9 design examples on the onboarding form (https:/
 
 The client's "any changes you want" answer takes precedence — treat these as the **default baseline**, then layer their requested deltas on top (e.g. "like style 4 but warmer colours" → use style 4 fonts/hero/nav, swap the palette).
 
+## THE DEMO IS THE SPEC — read this before using the table
+
+**This table is a token lookup, and a token lookup is NOT a design brief.** Palette and fonts are the
+smallest part of a theme. The hero type, the section pattern, the header, the footer and the component
+choices all come from the demo too. **Open `Ai-Editor-Sites/demo-{name}/{page}.html` and mirror it
+section-for-section** — `grep -oE '<!-- SECTION: [^>]*-->'` gives you the page plan. Capture the demo's
+pages as screenshots first and use them as the bar. On 2026-08-07 a build took only the palette and font
+names from this table, never opened the demo, and shipped the wrong hero, the wrong header, the wrong
+footer and photo cards where the demo has icon cards. See `feedback_build_the_demo_they_picked.md`.
+
+**A pasted demo URL beats the style number.** The design-examples link on the questionnaire has been
+broken, so clients pick a number at random and then paste the demo they actually want. Trust the URL.
+
+## Palette + font pairing SLUGS (the actual library files)
+
+| # | Palette slug | Font pairing slug |
+|---|---|---|
+| 1 | `soft-blush` | `playful` |
+| 2 | `forest-and-cream` | `classic-humanist` |
+| 3 | `trusty-blue` | `corporate` |
+| 4 | `calm-sage` | `soft-geometric` |
+| 5 | `bold-navy` | `clean-bold` |
+| 6 | `warm-terracotta` | `corporate` |
+| 7 | `clean-slate` | `editorial` |
+| 8 | `warm-mocha` | `rounded-warm` |
+| 9 | `deep-plum` | `modern-pro` |
+
+Files live in `master-site-template/themes/palettes|fonts/` and `wordpress-master/palettes|font-pairings/`
+(both platforms, same slug). `forest-and-cream` and `classic-humanist` were **added 2026-08-07** — Forest &
+Cream was missing entirely despite being a style clients pick, which caused a build to approximate it with
+`rich-forest` (mustard accent instead of the demo's warm tan).
+
+**A missing slug is a LIBRARY BUG. Add it to the shared library from the demo's own `css/theme.css`
+tokens — never approximate with the nearest palette, and never build a bespoke one inside a client site.**
+`soft-geometric` and `rounded-warm` were **added 2026-08-08**, closing the last two gaps. Every style
+1-9 now resolves to a real palette file and a real pairing file on both platforms.
+
+**Do NOT trust the `Font Pairing:` comment in a demo's `css/theme.css` header.** demo-nutritionist says
+`Minimal (Sora + Work Sans)` and demo-massage-therapist says `Friendly (Nunito + Open Sans)`, but
+`minimal.json` is Inter/Inter and `friendly.json` is Poppins/Merriweather. Those comments name pairings
+that exist and contain entirely different fonts, so a builder who trusts the label ships the wrong
+typeface while believing it matched the demo. **The `@import` and `--font-heading` / `--font-body` lines
+in the same file are the truth** — read those, not the comment.
+
 ## Lookup table
 
 | # | Demo | Palette name | Heading font | Body font | Hero type | Reversed | Nav style | Transparent nav | Image style |
