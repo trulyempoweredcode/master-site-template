@@ -7416,23 +7416,15 @@ a.card--service:hover .card__link {
   box-shadow: none;
 }
 
-/* =============================================
-   SMOOTH LINK UNDERLINE ANIMATION
-   Animated underline grows from left on hover.
-   ============================================= */
-.content a:not(.btn) {
-  text-decoration: none;
-  background-image: linear-gradient(var(--color-primary), var(--color-primary));
-  background-size: 0% 2px;
-  background-position: left bottom;
-  background-repeat: no-repeat;
-  transition: background-size var(--transition-base);
-  padding-bottom: 1px;
-}
-
-.content a:not(.btn):hover {
-  background-size: 100% 2px;
-}
+/* SMOOTH LINK UNDERLINE ANIMATION - REMOVED in v1.7.10.
+   It was scoped to `.content`, and no element in master or across the fleet has
+   ever carried that class: a sweep of every shipped page in master-site-template
+   and all client sites found zero exact `content` class tokens. (Beware the false
+   positive - a substring search matches `privacy-content` and `cookies-content`
+   and reports ~74 pages.) So the rule could never fire. Prose links are handled
+   by the `main p a` / `main li a` rule instead - see the "Inline content links"
+   entry in COMPONENTS.md. If an animated underline is ever wanted, add it there
+   rather than reviving a class nothing applies. */
 
 /* =============================================
    PRINT STYLES
