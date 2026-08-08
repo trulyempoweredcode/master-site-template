@@ -3400,14 +3400,36 @@ a.card--service:hover .card__link {
   color: var(--color-secondary-light);
 }
 
+/* Breadcrumbs on a dark page-header.
+   TWO NAMING CONVENTIONS ON PURPOSE - do not "tidy" either set away.
+   PLURAL (.breadcrumbs__item / __separator / __item--active) is the real one:
+   it is what blog-post.html, theme-preview.html and 44 client pages actually
+   emit, and it is the set with base styling further down this file. Only the
+   SINGULAR names (.breadcrumb__link / __current / __separator) were listed here
+   originally, so they matched nothing and a dark header left the breadcrumbs in
+   their default dark-on-dark colours, i.e. invisible. The singular selectors are
+   retained purely so any hand-written markup using them keeps working.
+   The anchor is overridden explicitly: .breadcrumbs__item a sets its own colour,
+   so colouring only the parent item would never reach the link. */
+.page-header--dark .breadcrumbs__item,
 .page-header--dark .breadcrumb__link {
   color: rgba(255, 255, 255, 0.7);
 }
 
+.page-header--dark .breadcrumbs__item a {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.page-header--dark .breadcrumbs__item a:hover {
+  color: var(--color-text-inverse);
+}
+
+.page-header--dark .breadcrumbs__item--active,
 .page-header--dark .breadcrumb__current {
   color: var(--color-text-inverse);
 }
 
+.page-header--dark .breadcrumbs__separator,
 .page-header--dark .breadcrumb__separator {
   color: rgba(255, 255, 255, 0.4);
 }
@@ -3467,14 +3489,27 @@ a.card--service:hover .card__link {
   color: rgba(255, 255, 255, 0.75);
 }
 
+/* Breadcrumbs on an image page-header. Same two-convention story as
+   .page-header--dark above - see the comment there before editing. */
+.page-header--image .breadcrumbs__item,
 .page-header--image .breadcrumb__link {
   color: rgba(255, 255, 255, 0.7);
 }
 
+.page-header--image .breadcrumbs__item a {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.page-header--image .breadcrumbs__item a:hover {
+  color: var(--color-text-inverse);
+}
+
+.page-header--image .breadcrumbs__item--active,
 .page-header--image .breadcrumb__current {
   color: var(--color-text-inverse);
 }
 
+.page-header--image .breadcrumbs__separator,
 .page-header--image .breadcrumb__separator {
   color: rgba(255, 255, 255, 0.4);
 }
@@ -7309,6 +7344,14 @@ a.card--service:hover .card__link {
 /* =============================================
    CARD HOVER LIFTS
    Subtle lift effect on interactive cards.
+
+   .team-card intentionally has NO base rule and must not be given one. It is a
+   hover-intensity hook, not a standalone component: it is always written
+   alongside .card (see creativewellness.co.uk/about.html, which uses
+   "card card--image-top card--portrait team-card"), so .card supplies the base
+   styling and .card:hover the default -2px lift, and this rule upgrades that
+   lift to -4px. The real standalone team component is .team-member.
+   Do not delete it as an orphan either - a live client site depends on it.
    ============================================= */
 .card--service:hover,
 .icon-box--card:hover,

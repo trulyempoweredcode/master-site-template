@@ -6,6 +6,7 @@ Instructions for building a client website. To start a build, just tell Claude t
 **Master template:** `D:\claude-custom-projects\Ai-Editor\master-site-template\`
 **Client sites:** `D:\claude-custom-projects\Ai-Editor-Sites\{domain}\`
 **Brief template:** `D:\claude-custom-projects\Ai-Editor\master-site-template\CLIENT-BRIEF-TEMPLATE.md`
+**Method:** `D:\claude-custom-projects\Ai-Editor\GAUNTLET-PROMPT.md`
 
 ---
 
@@ -14,6 +15,103 @@ Instructions for building a client website. To start a build, just tell Claude t
 1. Copy `CLIENT-BRIEF-TEMPLATE.md` to `Ai-Editor-Sites/{domain}/client-brief.md` and fill it in
 2. Tell Claude: "Build a new site for {domain} — read the build prompt and client brief"
 3. Claude reads this file + the client brief and works autonomously
+
+---
+
+## What this file is, and is not
+
+It is the **build procedure** for the flat platform. The build *shape* — why the slice comes
+first, what a blind critic is for, the cross-page critic, why each gate exists and what a stop
+is — lives once in `GAUNTLET-PROMPT.md`. **Read that first**, and do not expect it repeated
+here. What follows is the flat-specific half: which two pages to build first, which scripts gate
+them, and the component, layout, copy and QC rules for a static HTML site.
+
+## Session start — check the library before you build against it
+
+Run this from the repo root, **before anything is laid out**, every session:
+
+```
+python scripts/validate_library.py          # exit 0 required; --json for machine output
+```
+
+It validates the **library itself** — the palettes and font pairings in
+`master-site-template/themes/`, the style rows in `demo-design-tokens.md`, and every component
+`COMPONENTS.md` claims exists — not a built site. It prints `  ERROR  <msg>` / `  warn   <msg>`
+lines then a total; exit 1 on any ERROR.
+
+Run it first because building against a broken library is the expensive failure, not the loud
+one. A palette or pairing named in the docs but missing from `themes/` is a **library bug and a
+stop**: Forest & Cream had no entry on either platform, so a build shipped a mustard accent
+against the demo's warm tan and nothing failed until the client looked at it.
+
+Then prove the capture route, before you rely on a single screenshot:
+
+```
+python scripts/shots.py --selftest
+```
+
+`--selftest` captures one known-good PUBLIC url (example.com, deliberately not one of ours, so a
+failure means the ROUTE is broken rather than our site being down) and exits non-zero if the
+route is broken. It takes no base URL — the site does not exist yet at this point. **If it
+fails, fix the route.** It never degrades to a DOM measurement, a `javascript_tool` query,
+curl+grep, or a subagent's "screenshot reviewed" — those prove the markup is *correct*, never
+that the page *looks right*. A broken capture route is a gate failure, not one of the two
+conditional stops below: repair it and carry on, don't ask.
+
+## Slice first — build two pages, not twelve
+
+**The slice is `index.html` plus the single most-repeated inner archetype.** Pick the archetype
+by how much approving it settles: group the pages in the planned nav by shape and take the
+largest group. On a flat site that is usually the standard content page — `page-header` +
+alternating content sections + CTA — so `services.html` or `about.html`. Where the site has
+several sibling per-service, per-treatment or per-location pages, that group wins outright,
+because its shape is the one the fan-out copies most. A one-off shape (contact, pricing, the
+blog listing, the legal pages) is never the slice: approving it settles only itself.
+
+Build those two to the full Polish Standard, gate them, blind-critique them against the demo,
+fix, re-critique — **and only then fan out**. A weak slice replicated across nine pages costs
+nine times what it costs to fix once.
+
+Everything downstream inherits the slice: the fan-out copies its chrome, section rhythm and
+component choices rather than re-deciding them. On flat, the single owner of a shared visual
+property is the framework CSS (`css/base.css` + `css/components.css`) — so when the cross-page
+critic finds two pages disagreeing, **strip the override out of `theme.css`**, never set the two
+pages to matching values.
+
+## The stops — two planned, two conditional
+
+`GAUNTLET-PROMPT.md` carries the reasoning for this shape. What follows is the flat checklist.
+**Anything not on this list is a decision you make, record, and carry on from** — not a question
+to hold the build open for. Never stop to generate an image, choose a component, write copy the
+client already supplied, or push to the GitHub Pages preview.
+
+**Planned — both happen on every build:**
+
+1. [ ] **After the slice, before any fan-out.** `index.html` and the chosen archetype built,
+       `python scripts/validate_site.py <site-dir>` exit 0, `python scripts/verify_spec.py
+       <site-dir> <spec-path>` exit 0, and a blind critic clean against the demo's reference
+       screenshots side by side. Then show the user **4 images** — both pages, desktop and
+       ~375px, captured with `scripts/shots.py` — plus **one contact sheet of every image
+       generated for the whole site**. Expect up to two rounds here; that is normal, and it is
+       far cheaper than repeating a fault across twelve pages.
+2. [ ] **Before delivery.** Every gate in the Self-Audit Checklist exits 0, **and** every page
+       has been rendered desktop and ~375px, looked at, and what was seen has been fixed. Hand
+       over one contact sheet (desktop and mobile) plus the written checklist of what is still
+       missing from the client.
+
+**Conditional — stop only if it fires:**
+
+3. [ ] **The brief's style number and the demo URL the client pasted contradict each other.**
+       Do not guess which one they meant — report both and ask. (A client picked "Style 9" at
+       random because the form's link was broken, then pasted the demo she actually wanted in
+       the same answer.)
+4. [ ] **The library has no answer.** A component, palette, font pairing or preset the content
+       genuinely needs and the library lacks. Say plainly what the content needs and what the
+       library lacks. It goes into the **shared library first** and is used from there — never
+       built inside one client's `theme.css`, never approximated with the nearest thing.
+
+Missing client inputs — a testimonial, a headshot, an address, an accreditation — are **not** a
+stop. They go in the content checklist (Phase 3) and are handed over at Stop 2.
 
 ---
 
@@ -70,6 +168,34 @@ Then extract content according to the scenario (see Phase 1).
 
 ### 1c. Theme selection
 
+**Demo-led or bespoke — settle this before anything else.** If the client picked a demo (a style
+number on the form, or better, a demo URL they pasted), **the demo is the spec**. Resolve the
+style number to a demo with `master-site-template/demo-design-tokens.md` (styles 1-9), then read
+that demo's real HTML in `Ai-Editor-Sites/demo-{name}/`, run
+`grep -oE '<!-- SECTION: [^>]*-->'` over each page for its section plan, capture it as the
+reference bar into `{client-dir}/reference-demo/`, and mirror it section for section —
+substituting only copy, imagery and tokens. The selections below should already agree with it;
+where a set value contradicts the demo, say so rather than silently picking one. A style number
+that contradicts a pasted demo URL is conditional stop 3.
+
+**A bespoke build still gets a base demo.** "No reference" must never mean "no bar" — a critic
+with no reference produces flattery, and "looks good" is exactly the standard that failed. Read
+the client properly first (their copy, existing site, documents, photos, who they serve, their
+price point, how formal their own writing is), then choose one of the nine style demos in
+`demo-design-tokens.md` as the base bar. (`demo-shop` is a feature demo, not a style bar — it is
+not one of the nine.) Pick on **register** — formality and warmth — not on sector, because all
+nine sit in the therapy/wellness register. **Write the reasoning BEFORE building**, into
+`build-spec.json` and the Delivery summary; written afterwards it is decoration and the critic
+ends up grading against the builder's own taste. Send the user the direction plus a client-ready
+version of the rationale and **start building immediately — this is not a stop.** Everything
+downstream is then identical to a client-picked demo. If nothing fits at all, that is a library
+gap (conditional stop 4), not a licence to stretch a demo out of shape.
+
+If the demo's palette or font pairing has no named entry in `master-site-template/themes/`, that
+is a **library bug**: it goes into the shared library first and is used from there. Never
+approximate with the nearest palette, and never build a bespoke one inside a client's
+`theme.css`.
+
 The design selections come from the developer's **Site Build Configuration** form in the portal (admin Custom Details), merged into the brief alongside the client's own Design Form answers. Treat each one as an **optional override, not a required input**:
 
 - A **set value** (a specific palette / font / hero / nav / image style) = follow it exactly.
@@ -111,6 +237,33 @@ Identify where the client needs to supply additional content (photos, testimonia
 - **Full rewrite:** Improve messaging, tighten copy, add persuasive structure. Maintain the client's voice. Do not introduce new factual claims.
 - **Light rewrite:** Fix grammar, improve flow and readability, tighten wordy sentences. Keep the client's original structure and meaning.
 - **No rewrite:** Use content verbatim. Only restructure into the component layout.
+
+### 1g. Spec-lock — emit `build-spec.json`
+
+Before a single page is written, emit **`{client-dir}/build-spec.json`** — the pages, the
+archetypes, the component list per page, the theme tokens and the image slots. It is what 1c and
+1d already decided, written down in a form a script can check.
+
+**The schema is `scripts/build_spec_schema.md` — read it before writing the file.** A spec the
+checker cannot parse is a gate that passes vacuously, which is worse than no gate. If the spec
+cannot be written because a decision is still open, the decision is not made: go back to 1c/1d
+rather than building around it.
+
+The client never reads it. It exists so that
+
+```
+python scripts/verify_spec.py <site-dir> <spec-path>
+```
+
+can fail the build when the built site deviates from its own declared plan — a page that quietly
+lost a component, an archetype sibling that grew an extra band, a token that stopped matching.
+Run it **after the slice**, where it must exit 0 before Stop 1, and **again after the fan-out**,
+where it must exit 0 before Stop 2.
+
+Emit it BEFORE building, never after. A spec written from the finished site records what was
+built rather than what was chosen, and can never catch drift. Keep the file in the client
+directory afterwards — unlike `images.json` it is not a build artifact to delete, it is the ship
+gate's input.
 
 ---
 
@@ -182,9 +335,11 @@ Copy client photos into `images/` alongside generated ones.
 
 ### 2c. Build pages
 
-**Build order — verify before you replicate.** Build the homepage + ONE inner page FIRST, then verify them *visually* (screenshot the rendered page — not just a DOM/`eval` check) to a high quality bar. Only once those genuinely look right should you replicate the scaffold and section patterns across the remaining pages — otherwise a weak layout gets propagated everywhere and has to be redone. **If you cannot render/screenshot the pages in your environment, STOP and ask the user to share a screenshot.** DOM measurements (overflow, byte-identical nav, section order, image 200s) prove the page is *correct*, not that it *looks right* — never sign off on visual quality from measurements alone.
+**Build order — the slice, then the fan-out.** Build `index.html` + the most-repeated inner archetype FIRST (see "Slice first" above for how to choose it), then verify them *visually* — capture the rendered pages with `python scripts/shots.py <base-url> --out <dir> --pages home:/index.html <archetype>:/<archetype>.html`, which captures desktop AND ~375px in one run, and `Read` the images yourself. That, plus `validate_site.py` and `verify_spec.py` both at exit 0 and a clean blind critic, is **Stop 1**. Only once the slice has passed do you replicate the scaffold and section patterns across the remaining pages — otherwise a weak layout gets propagated everywhere and has to be redone.
 
-When delegating page builds to subagents, give each a precise per-section component spec (split here, steps here, quals-list here) — left to their own devices they default to flat text blocks.
+DOM measurements (overflow, byte-identical nav, section order, image 200s) prove the page is *correct*, not that it *looks right* — never sign off on visual quality from measurements alone. **If the capture route is broken, fix the capture route** (`shots.py --selftest` is how you find out). Do not substitute a weaker check and carry on, and do not treat it as a reason to interrupt the build. Only if the route genuinely cannot be repaired do you say so and ask the user to share a screenshot.
+
+When delegating page builds to subagents, give each a precise per-section component spec (split here, steps here, quals-list here) — left to their own devices they default to flat text blocks. That spec already exists: hand them their page's component list from `build-spec.json`, not a paraphrase of it. Each fan-out page gets its own blind critic, and the fan-out as a whole gets one cross-page critic over all sibling pages together — see `GAUNTLET-PROMPT.md`.
 
 For each page, use the master template HTML structure:
 - `<a href="#main" class="skip-link">` at the top
@@ -369,7 +524,8 @@ hero variants short, which is how a build can end up unable to find `hero--showc
 
 Only use classes that exist in `components.css`. **Do NOT write custom CSS.** If nothing in the
 library fits, FLAG it before building — a new component goes in the shared library or nowhere,
-never in one client's `theme.css`.
+never in one client's `theme.css`. That flag is **conditional stop 4**: it is one of only two
+things that interrupt a build.
 
 **Build-time usage rules the catalogue doesn't carry:**
 
@@ -459,7 +615,7 @@ These rules apply to every page on every build. They prevent common visual issue
 
 7. **Tune the aesthetic dials per client.** Use `--aesthetic-radius` / `--aesthetic-shadow-card` / `--aesthetic-border-width` + the font pairing + the palette to make each site's polish feel native to its niche (luxe spa ≠ sharp B2B ≠ warm therapist). The standard is constant; the expression is bespoke.
 
-8. **Mandatory elevation + critique pass before delivery.** Once the build renders, run the `impeccable` skill (or an adversarial design-critique subagent) against the homepage and the busiest inner page, asking one blunt question: **"Is this special, or competent-but-safe?"** Hunt specifically for: washed-out / one-note colour, flat text-only sections, repeated components, missing imagery, a default-looking hero. Fix what it finds. **Do not deliver a build whose flaws only a post-complaint redo would have caught.**
+8. **Mandatory elevation + critique pass — at the slice, not just before delivery.** Once the two slice pages render, run the `impeccable` skill (or an adversarial design-critique subagent) against them, asking one blunt question: **"Is this special, or competent-but-safe?"** Hunt specifically for: washed-out / one-note colour, flat text-only sections, repeated components, missing imagery, a default-looking hero. Fix what it finds, then re-critique. Run it again over the fan-out before delivery. It happens at Stop 1 because that is when the answer is still cheap to act on — a "competent-but-safe" verdict on a finished twelve-page site is twelve pages of rework. **Do not deliver a build whose flaws only a post-complaint redo would have caught.**
 
 ---
 
@@ -581,12 +737,16 @@ Creating the GitHub repo and turning on Pages is part of the build — do NOT as
 
 ## Self-Audit Checklist (complete before delivering)
 
-**FIRST: run the automated validator** — `python scripts/validate_site.py D:/claude-custom-projects/Ai-Editor-Sites/{domain}` (from the Ai-Editor repo root). It mechanically checks CSS order, heading hierarchy, section alternation, SECTION comments, PROFILE markers, form anti-spam fields, lazy loading, alt text, favicon paths, pricing-grid card counts, nav duplicates, titles/descriptions, robots.txt and sitemap coverage. **Fix every ERROR before continuing** — exit code must be 0. Warnings are judgment calls: resolve or consciously accept each one.
+**Mechanical gates first, eyes second — never the other way round. All three exit 0 before Stop 2.**
+
+1. `python scripts/validate_site.py D:/claude-custom-projects/Ai-Editor-Sites/{domain}` (from the Ai-Editor repo root). It mechanically checks CSS order, heading hierarchy, section alternation, SECTION comments, PROFILE markers, form anti-spam fields, lazy loading, alt text, favicon paths, pricing-grid card counts, nav duplicates, titles/descriptions, robots.txt and sitemap coverage, **and layout variety** (a page of 3+ content bands that never once selects a library component is an ERROR; a single text container holding 400+ words is an ERROR — 900+ on a blog post is a warning, since clients author their own posts). **Fix every ERROR before continuing** — exit code must be 0. Warnings are judgment calls: resolve or consciously accept each one.
+2. `python scripts/verify_spec.py D:/claude-custom-projects/Ai-Editor-Sites/{domain} D:/claude-custom-projects/Ai-Editor-Sites/{domain}/build-spec.json` — the built site against the plan declared in Phase 1g. A page that quietly lost a component, a sibling that grew an extra band, or a token that stopped matching fails here.
+3. `python scripts/shots.py <preview-url> --out <dir> --pages home:/index.html about:/about.html … --contact-sheet <file.png>` — every page, desktop and ~375px. **Name every page in `--pages`, separated by SPACES**: with no `--pages` the run captures `/` alone and reports success, and a comma-joined list is read as ONE made-up URL. **Do not add `--mobile`** — both viewports are captured by default and `--mobile` RESTRICTS the run to mobile, so the desktop pass never happens. Run `--selftest` first; if it fails, fix the route rather than falling back to a weaker check. Then `Read` the contact sheet yourself: a capture nobody looked at is not a check.
 
 Then verify the remaining manual items:
 
 **Visual (LOOK at the rendered pages — not just the DOM):**
-- [ ] You have actually viewed the homepage + each page type as a rendered screenshot. If you couldn't, you flagged it to the user instead of signing off blind.
+- [ ] You have actually viewed EVERY page as a rendered screenshot, desktop and ~375px, via `scripts/shots.py`, and fixed what you saw. If the capture route was broken you repaired it — you did not substitute a DOM check, and you did not sign off blind.
 - [ ] No section is a plain wall of `<p>` text — every content section uses a varied component (split + image, steps, icon-box grid, quals-list, story-split, pull-quote…)
 - [ ] Every callout/box (e.g. `highlight-box`) reads as ONE cohesive element on its section background (heading background ≠ section background)
 - [ ] Lists use the real list component WITH icons (`quals-list`, or `checklist` with svgs) — never bare `<li>`
@@ -680,3 +840,4 @@ When complete, report to the user:
 6. Site ID needed for form action (from admin portal) and SMTP setup instructions
 7. Any decisions made that need the user's review
 8. **Design system advisory** (optional) — If during the build you created any custom layout, section pattern, hero variant, or component that doesn't exist in the master template's component library, note it here. Suggest whether it would be useful to add back to the master template for future client builds. Format: component name, what it does, which client needed it, and why it could be reusable.
+9. **Gate evidence** — the exit-0 lines from `validate_library.py`, `verify_spec.py` and `validate_site.py`, the `verify-live.py` result on the plain URL, and confirmation that you rendered and looked at every page at desktop and ~375px. A build reported done without these is reported done on trust.
