@@ -108,6 +108,16 @@ client already supplied, or push to the GitHub Pages preview.
        has been rendered desktop and ~375px, looked at, and what was seen has been fixed. Hand
        over one contact sheet (desktop and mobile) plus the written checklist of what is still
        missing from the client.
+3. [ ] **Once the user approves that finished site, OPEN THE REVISION ROUND.** That is what
+       delivers the build. The round is where the client previews and leaves change requests;
+       an email is not a substitute and breaks the loop `ai-editor-revision-round` reads.
+       **Opening a round notifies the client automatically, and the user's approval is the
+       go-ahead for that - do not stop and ask again.** Follow the order in
+       `TECP_Revisions_Admin::handle_round_create()`: `TECP_Round::create($cid, 'Round 1')`,
+       then `TECP_Round::set_preview_url($rid, $url)` (before notifying, or the invite carries
+       no link), then `TECP_Revisions_Notify::notify_round_open($rid)`. Omitting the third call
+       fails silently. Read `client_notified_at` back to prove it went. Full reasoning in
+       `GAUNTLET-PROMPT.md`.
 
 **Conditional — stop only if it fires:**
 
@@ -119,6 +129,13 @@ client already supplied, or push to the GitHub Pages preview.
        genuinely needs and the library lacks. Say plainly what the content needs and what the
        library lacks. It goes into the **shared library first** and is used from there — never
        built inside one client's `theme.css`, never approximated with the nearest thing.
+
+**Keep the portal stage current at every one of those points.** Rick reads the admin client list
+as a snapshot of where everyone stands, so a stale stage lies to him. On the `web` track: set
+**3 In development** the moment you start building, **4 Revisions** when you open the round, and
+**5 Awaiting approval** once every change request is actioned and answered. 6 to 9 are automatic
+or Rick's. Always pass `waiting_on_client` in the SAME `TECP_Client::update()` call as
+`progress_stage`, or the flag is silently reset to 0. Full ladder in `GAUNTLET-PROMPT.md`.
 
 Missing client inputs — a testimonial, a headshot, an address, an accreditation — are **not** a
 stop. They go in the content checklist (Phase 3) and are handed over at Stop 2.

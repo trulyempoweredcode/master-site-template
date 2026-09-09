@@ -8,7 +8,7 @@ Copy this file to `D:\claude-custom-projects\Ai-Editor-Sites\{domain}\client-bri
 Business name:
 Domain:
 
-Site type: static | wordpress
+Site type: wordpress | static   (wordpress is the default since 4 Sep 2026; blank in the portal means wordpress)
   static    = flat HTML + GitHub Pages. Build with SITE-BUILD-PROMPT.md.
   wordpress = Elementor clone of the atomic master. Build with WP-SITE-BUILD-PROMPT.md instead.
 MCP server: (wordpress only — the per-client novamira-* server name, from portal f_novamira_mcp)
