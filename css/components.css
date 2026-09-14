@@ -3603,7 +3603,8 @@ a.card--service:hover .card__link {
 
 .footer__legal {
   display: flex;
-  gap: var(--space-lg);
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-lg);
   justify-content: center;
 }
 
