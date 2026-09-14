@@ -18,7 +18,7 @@ Every component is token-driven (uses `var(--color-*)`, `var(--space-*)`, `var(-
 - **`.skip-link`** — accessibility skip-to-content.
 - **`.breadcrumbs`** — page trail. `__item`, `__separator`, `__item--active`.
 - **`.page-header`** — title block at top of inner pages. Variants: `--dark`, `--image`. Use `.page-header__meta` utility for readable text on dark/image variants.
-- **`.footer`** — site footer (multi-column). Variant: `--simple` for a single-line variant.
+- **`.footer`** — site footer (multi-column). Variant: `--simple` for a single-line variant. The `__legal` row wraps (v1.7.11), so any number of legal or policy links is fine.
 - **`.back-to-top`** — floating back-to-top button.
 - **`.cookie-banner`** — GDPR cookie consent.
 - **`.site-credit`** — small "built by" credit row.
