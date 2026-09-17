@@ -2607,6 +2607,14 @@ a.card--service:hover .card__link {
   padding: var(--space-2xl);
 }
 
+/* v1.7.12 - at phone width 48px of card padding left a 229px field inside a 327px card and the
+   enquiry dropdown truncated its own selected value (Elspeth Campbell review, 2026-09-17). */
+@media (max-width: 767px) {
+  .contact-form-card {
+    padding: var(--space-lg);
+  }
+}
+
 .contact-form-card h2 {
   font-size: var(--text-xl);
   margin-bottom: var(--space-sm);
