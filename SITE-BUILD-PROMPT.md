@@ -336,6 +336,7 @@ gate's input.
 **This runs on every build, whatever the brief's Photos value says.** A grey placeholder, an empty image slot, a stock-photo look, or an image visibly softer than the slot it sits in is a build failure. The order is always: use a REAL client asset first, and generate only for genuine gaps.
 
 1. **Enumerate what already exists before generating anything.** Scenario 1: the raw-HTML asset sweep in Phase 1a (WebFetch strips `<img>` and background URLs — pull raw HTML, grep for image refs, probe the common asset folders). Scenario 2: everything in the content folder. Download them, **open and look at them**, and identify the practitioner headshot, premises, signage/logo and their real work. A real client photo beats a generated one every time.
+   - **A poor practitioner portrait is improved, never requested again (Rick, 30-09-2026).** Soft, small, badly lit or a snapshot: follow `wordpress-master/PORTRAIT-ENHANCE.md` (Higgsfield's best ChatGPT image model, identity locked). The original stays on the page; the improved one is offered to the client beside it and used only on their yes.
 2. **Generate the remaining gaps** with the Gemini image tool — do not ask permission first, just do it.
 
 **Tool:** `node tools/generate-image.js` (in project root). Key `GEMINI_API_KEY` in `Ai-Editor/.env`, read at use time and never pasted anywhere.
