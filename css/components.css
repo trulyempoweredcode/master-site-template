@@ -3064,7 +3064,10 @@ a.card--service:hover .card__link {
   position: relative;
   padding-left: var(--space-xl);
   margin-bottom: var(--space-sm);
-  font-size: var(--text-sm);
+  /* v1.7.13 - inherit, not --text-sm. A post or service write-up puts a list
+     straight after paragraphs, and at --text-sm the bullets read 16px against
+     19px prose (canonburyclinic.co.uk blog posts, 2026-10-01). */
+  font-size: inherit;
   color: var(--color-text-light);
   line-height: var(--line-height-normal);
 }
@@ -3073,7 +3076,8 @@ a.card--service:hover .card__link {
   content: '';
   position: absolute;
   left: 0;
-  top: 7px;
+  /* Centred on the first line at any font size (was a fixed 7px). */
+  top: calc(var(--line-height-normal) * 0.5em - 4px);
   width: 8px;
   height: 8px;
   border-radius: var(--radius-full);
@@ -8737,6 +8741,22 @@ main > .section--alt + .section--alt:not(.section--dark):not(.cta-banner):not(.c
   margin-bottom: var(--space-xs);
   color: var(--color-text-light);
   line-height: var(--line-height-relaxed);
+}
+/* v1.7.13 - .service-detail draws its own dot with ::before, but the rules
+   above out-rank .service-detail ul (0,2,1 vs 0,1,1), so a plain list in a
+   .service-detail column got the browser's disc beside that dot: a double
+   bullet in every post body (canonburyclinic.co.uk, 2026-10-01). Hand those
+   lists back to the component. Added as an override rather than by narrowing
+   the selectors above, because a selector that disappears from this file is
+   copied into each site's theme.css by the update's orphan-CSS migration,
+   which would bring the double bullet straight back. */
+.section .service-detail ul:not([class]) {
+  list-style: none;
+  padding-left: 0;
+}
+.section .service-detail ul:not([class]) li {
+  margin-bottom: var(--space-sm);
+  line-height: var(--line-height-normal);
 }
 
 /* ============================================
