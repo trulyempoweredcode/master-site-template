@@ -152,7 +152,8 @@ Add `hero--reverse` when the brief says Hero reversed: yes (classic / half / slo
 
 ## Blog
 
-- **`.blog-grid`** + **`.blog-card`** — blog index listing. Slots: `__image`, `__date`, `__title`, `__excerpt`, `__link`.
+- **`.blog-grid`** + **`.blog-card`**: blog index listing. Slots: `__image`, `__category` (v1.7.14, small primary-colour label above the date), `__date`, `__title`, `__excerpt`, `__link`. `.blog-empty` is the no-posts message and spans the whole grid.
+- **`.blog-filters`** + **`.blog-filter`** (`--active`) (v1.7.14): category filter pills, same look as `.shop-filter`. A SIBLING above `.blog-grid` (`<div class="container blog-filters">`), never inside it. `BlogListingHtml` emits it with its click script once a blog has 2+ categories and removes both when it drops to one; do not hand-place it.
 - **`.blog-post`** + slots `__hero`, `__meta`, `__author`, `__share` — single post page.
 
 ## Gallery / media

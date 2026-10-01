@@ -7074,6 +7074,68 @@ a.card--service:hover .card__link {
   height: 16px;
 }
 
+/* v1.7.14 - category label on a blog card, above the date. Until now the
+   listing emitted this span with no CSS behind it, so it read as a line of
+   plain body text (canonburyclinic.co.uk, 2026-10-01). */
+.blog-card__category {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-xs);
+}
+
+/* v1.7.14 - category filter pills above the blog grid, emitted by the listing
+   generator once a site has 2+ categories. A sibling of .blog-grid, never a
+   child: inside the grid it took the first card slot. Same look as
+   .shop-filter, separate classes so a change to one cannot break the other. */
+.blog-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+}
+
+.blog-filter {
+  padding: var(--space-xs) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--aesthetic-radius-pill);
+  background: transparent;
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.blog-filter:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.blog-filter--active {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+/* :hover (0,2,0) outranks --active (0,1,0); keep the active pill readable. */
+.blog-filter--active:hover {
+  color: var(--color-text-inverse);
+}
+
+/* v1.7.14 - the listing's empty state. It sits inside .blog-grid, so it spans
+   every column rather than squeezing into the first card slot. */
+.blog-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--color-text-light);
+  padding: var(--space-2xl) 0;
+}
+
 /* =============================================
    LEGAL CONTENT
    Privacy, cookies, terms — long-form prose pages
