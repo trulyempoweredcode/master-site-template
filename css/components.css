@@ -534,6 +534,19 @@
   }
 }
 
+/* v1.7.15 - below 1100px the bottom bar holds only the menu button, pinned
+   24px from the top. A brand that wraps to two lines (canonburyclinic.co.uk)
+   left the button level with the top of the name instead of beside it.
+   Stretch the bar over the header's height and centre the button in it. */
+@media (max-width: 1099px) {
+  .nav--two-tier .nav__bottom {
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+  }
+}
+
 .nav__top {
   position: relative;
 }
@@ -660,6 +673,22 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   line-height: 1.2;
+}
+
+/* v1.7.15 - on a phone the bar is 56px tall and the brand gets ~200px, so a
+   long practice name was cut to "Canonb..." with the tagline squeezed into
+   three 11px lines beside it (canonburyclinic.co.uk). Drop the tagline and
+   let the name use two lines instead. */
+@media (max-width: 479px) {
+  .nav-scroll__title {
+    display: none;
+  }
+  .nav-scroll__name {
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
 }
 
 .nav-scroll__right {
@@ -1453,6 +1482,9 @@ body:has(.nav__mobile--from-scroll.nav__mobile--open) .nav-scroll__toggle-bar:nt
 
 .hero--image .hero__label {
   color: var(--color-secondary-light);
+  /* v1.7.15 - the heading carries a shadow, the label did not, and a small
+     gold line over a busy photograph was hard to read (canonburyclinic.co.uk). */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 14px rgba(0, 0, 0, 0.45);
 }
 
 .hero--image .hero__heading {
@@ -3044,6 +3076,21 @@ a.card--service:hover .card__link {
   margin-bottom: var(--space-md);
 }
 
+/* v1.7.15 - .service-detail h2 is --text-xl (26px), but a bare h3 uses
+   --text-h3 (26px on a phone, 28px on desktop), so FAQ questions under an h2
+   in a post or service write-up were as big as, or bigger than, the heading
+   above them (canonburyclinic.co.uk posts at 375px). Always a step smaller,
+   and never larger than the site's own h3 size. */
+.service-detail h3 {
+  font-size: min(var(--text-lg), var(--text-h3));
+}
+
+@media (min-width: 768px) {
+  .service-detail h3 {
+    font-size: min(var(--text-lg), var(--text-h3-desktop));
+  }
+}
+
 .service-detail p {
   color: var(--color-text-light);
   line-height: var(--line-height-relaxed);
@@ -3792,6 +3839,15 @@ a.card--service:hover .card__link {
   margin: 0;
 }
 
+/* v1.7.15 - a bleed column touches the viewport edge, and the reveal starts
+   it 34px further out (translateX), so every bleed split with a column on the
+   right gave the whole page a 34px sideways scroll until it animated in
+   (canonburyclinic.co.uk about and laser-therapy pages). Clip the band, never
+   html or body. */
+.section:has(.split--bleed) {
+  overflow-x: clip;
+}
+
 @media (min-width: 768px) {
   .split--bleed {
     grid-template-columns: 1fr 1fr;
@@ -4148,7 +4204,9 @@ a.card--service:hover .card__link {
   display: flex;
   align-items: flex-start;
   gap: var(--space-sm);
-  font-size: var(--text-base);
+  /* v1.7.15 - inherit, not --text-base: a checklist follows a paragraph and
+     read 17px against 19px (canonburyclinic.co.uk laser-therapy.html). */
+  font-size: inherit;
   color: var(--color-text);
   line-height: var(--line-height-normal);
 }
@@ -4166,7 +4224,7 @@ a.card--service:hover .card__link {
   display: flex;
   align-items: flex-start;
   gap: var(--space-sm);
-  font-size: var(--text-base);
+  font-size: inherit;
   color: var(--color-text);
   line-height: var(--line-height-normal);
 }
@@ -6999,6 +7057,41 @@ a.card--service:hover .card__link {
 .blog-card:hover {
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
+}
+
+/* v1.7.15 - cards in a row are the same height (grid stretch), but the body
+   was not, so "Read more" sat wherever the excerpt ended and drifted between
+   neighbours. Column flex pins it to the bottom of every card. */
+.blog-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-card__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-card__link {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* v1.7.15 - a lone card on the last row sits in the middle, not hard left
+   with two empty slots beside it (10 posts in a 3-column grid). */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .blog-grid > .blog-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc((100% - var(--space-xl)) / 2);
+  }
+}
+
+@media (min-width: 1024px) {
+  .blog-grid > .blog-card:last-child:nth-child(3n+1) {
+    grid-column: 2;
+  }
 }
 
 .blog-card__image {

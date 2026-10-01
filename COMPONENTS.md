@@ -82,6 +82,7 @@ Add `hero--reverse` when the brief says Hero reversed: yes (classic / half / slo
 ## Layout / structure
 
 - **`.split`** — 2-column split. Variants: `--bleed` (image fills full edge — drop the container wrapper, no extra CSS needed). **Author both `.split` and `.split--reverse` with the CONTENT block FIRST in the DOM, image second** — `.split` renders image-right, `.split--reverse` flips the image left via CSS `order` at ≥768px. Content-first DOM means mobile always stacks heading-then-image (consistent + scannable); putting the `<img>` first breaks that AND (pre-fix) left every reverse image on the right. Both `.split__text` and `.split__content` are reordered by `--reverse` (fixed 2026-07-02).
+- **`.split--bleed` sections clip sideways overflow (v1.7.15)** so the reveal's 34px slide cannot give the page a horizontal scroll. Never fix that by clipping html or body.
 - **`.split__image`** + `--portrait` / `--landscape` / `--square`.
 - **`.story-split`** — narrative two-column with lead text.
 - **`.story-text`** — centred header + pull-quote left / body right.
@@ -152,7 +153,7 @@ Add `hero--reverse` when the brief says Hero reversed: yes (classic / half / slo
 
 ## Blog
 
-- **`.blog-grid`** + **`.blog-card`**: blog index listing. Slots: `__image`, `__category` (v1.7.14, small primary-colour label above the date), `__date`, `__title`, `__excerpt`, `__link`. `.blog-empty` is the no-posts message and spans the whole grid.
+- **`.blog-grid`** + **`.blog-card`**: blog index listing. Slots: `__image`, `__category` (v1.7.14, small primary-colour label above the date), `__date`, `__title`, `__excerpt`, `__link`. `.blog-empty` is the no-posts message and spans the whole grid. Since v1.7.15 the Read more link is pinned to the bottom of each card and a lone card on the last row is centred.
 - **`.blog-filters`** + **`.blog-filter`** (`--active`) (v1.7.14): category filter pills, same look as `.shop-filter`. A SIBLING above `.blog-grid` (`<div class="container blog-filters">`), never inside it. `BlogListingHtml` emits it with its click script once a blog has 2+ categories and removes both when it drops to one; do not hand-place it.
 - **`.blog-post`** + slots `__hero`, `__meta`, `__author`, `__share` — single post page.
 
