@@ -82,7 +82,7 @@ Add `hero--reverse` when the brief says Hero reversed: yes (classic / half / slo
 ## Layout / structure
 
 - **`.split`** — 2-column split. Variants: `--bleed` (image fills full edge — drop the container wrapper, no extra CSS needed). **Author both `.split` and `.split--reverse` with the CONTENT block FIRST in the DOM, image second** — `.split` renders image-right, `.split--reverse` flips the image left via CSS `order` at ≥768px. Content-first DOM means mobile always stacks heading-then-image (consistent + scannable); putting the `<img>` first breaks that AND (pre-fix) left every reverse image on the right. Both `.split__text` and `.split__content` are reordered by `--reverse` (fixed 2026-07-02).
-- **`.split--bleed` sections clip sideways overflow (v1.7.15)** so the reveal's 34px slide cannot give the page a horizontal scroll. Never fix that by clipping html or body.
+- **`.split--bleed` sections clip sideways overflow (v1.7.15)** so the reveal's 34px slide cannot give the page a horizontal scroll. Never fix that by clipping html or body. Since v1.7.16 the bleed photo fills the band's full height at 768px and up (never shorter than the old 4:3), so long text no longer leaves it floating.
 - **`.split__image`** + `--portrait` / `--landscape` / `--square`.
 - **`.story-split`** — narrative two-column with lead text.
 - **`.story-text`** — centred header + pull-quote left / body right.

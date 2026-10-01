@@ -3877,6 +3877,46 @@ a.card--service:hover .card__link {
   }
 }
 
+/* v1.7.16 - a bleed photo kept a fixed 4:3 box, so beside text taller than it
+   (three paragraphs at 1280px) it floated mid-band with up to ~400px of empty
+   half-band above and below (canonburyclinic.co.uk laser-therapy and about).
+   The photo now fills the band's full height. min-height keeps the old 4:3
+   height of a half-width column, so a band with short text looks as before.
+   Covers both markups in the fleet: img as a direct child, or inside
+   .split__image-wrap. */
+@media (min-width: 768px) {
+  .split--bleed {
+    align-items: stretch;
+  }
+
+  .split--bleed > .split__content {
+    align-self: center;
+  }
+
+  .split--bleed > .split__image,
+  .split--bleed > .split__image-wrap {
+    min-height: min(37.5vw, 80vh);
+  }
+
+  .split--bleed > .split__image {
+    height: 100%;
+    max-height: none;
+    aspect-ratio: auto;
+  }
+
+  .split--bleed > .split__image-wrap {
+    position: relative;
+  }
+
+  .split--bleed > .split__image-wrap > .split__image {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    max-height: none;
+    aspect-ratio: auto;
+  }
+}
+
 /* =============================================
    CONTENT: FULL-WIDTH TEXT
    Centered heading + text, no image.
