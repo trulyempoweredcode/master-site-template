@@ -846,7 +846,7 @@ Then verify the remaining manual items:
 - [ ] Form action is `https://editmy.site/api/form/{site_id}` with correct site ID
 - [ ] Granular PROFILE markers on every page: `PROFILE:site_title`, `PROFILE:site_slogan`, `PROFILE:logo`, `PROFILE:phone_*`, `PROFILE:email`, `PROFILE:address`, `PROFILE:schema`
 - [ ] robots.txt exists with sitemap reference
-- [ ] sitemap.xml lists all public pages (excludes cookies-policy.html)
+- [ ] sitemap.xml lists all public pages and no noindex page (never privacy.html or cookies-policy.html; the CMS generator enforces this since 2026-10-01, D135)
 - [ ] CSS link order is base → components → theme on every page (theme LAST, or overrides break)
 - [ ] Favicon is a real file on every page: images/favicon.png 96×96 from the client logo (never a data: URI — Google can't crawl it; never root-absolute /favicon.* — 404s on GitHub Pages)
 - [ ] og:image on every indexable page; homepage + about use a square practitioner headshot (≥600×600) when the business is person-led, with a Person/primaryImageOfPage JSON-LD block outside the PROFILE markers
