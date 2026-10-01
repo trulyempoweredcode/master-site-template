@@ -7506,6 +7506,18 @@ a.card--service:hover .card__link {
   transform: none;
 }
 
+/* v1.7.17 - the reversed-split slide (.reveal .split--reverse .split__content,
+   0,3,0) out-ranks the reset above (0,2,0), so on a photo-left band the 34px
+   offset never cleared: text pushed past the right edge and a gap beside the
+   photo, on every desktop visit (canonburyclinic.co.uk laser-therapy). Same
+   weight, later in the file, so it wins. */
+.reveal--visible .split--reverse .split__text,
+.reveal--visible .split--reverse .split__content,
+.reveal--visible .split--reverse .split__image,
+.reveal--visible .split--reverse .split__image-placeholder {
+  transform: none;
+}
+
 /* Checklist grid cascade — same staggered fade-up as the other grids/lists */
 .reveal .checklist-grid > * {
   opacity: 0;
