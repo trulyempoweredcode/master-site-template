@@ -670,6 +670,10 @@ These rules apply to every page on every build. They prevent common visual issue
 
 ## Content Integrity Rules (MANDATORY)
 
+9. **Editorial type scale - set it in `theme.css`, never leave the framework default.** Desktop H1 about 64 to 80px and H2 about 40 to 56px, clamped so mobile stays H1 38 to 44px, H2 28 to 34px: `--text-h1-desktop: clamp(2.75rem, 5.5vw, 5rem); --text-h2-desktop: clamp(2rem, 3.6vw, 3.5rem);` (tune per font; a wide sans needs the lower end). Measured 2026-10-07 on the originals we are asked to match: H1 72 to 86px, H2 48 to 53px; the framework default 48/38px reads timid beside them. Check at 1440px and 375px: no heading wraps to 4+ lines on mobile or breaks a word. The old "H1 <= 48px" cap is retired.
+
+10. **The build bar: depth, real photography, real copy.** (a) A homepage has at least 8 content bands and at least 8 real images; `validate_site.py` fails a thinner one. (b) Photography is the client's own, pulled from their existing site, portal uploads and social, or generated to match the brand, never stock placeholders, never a grey box, never `blog-placeholder.jpg`. (c) Copy is the client's own words, tightened but never invented (Content Integrity Rules); a gap goes in the checklist, not filled with filler. (d) Use the signature components where the content fits: `day-schedule`, `stat-strip--warm`, `video-carousel`, `press-bar`, `arch-media`, `service-list--numbered`, `blog-card--editorial` (see COMPONENTS.md, Signature components).
+
 These rules override all other instructions:
 
 1. **Never invent factual claims.** Every credential, qualification, trust signal, and testimonial must come directly from the client's source content. Zero exceptions.

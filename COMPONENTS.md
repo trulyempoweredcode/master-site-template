@@ -234,6 +234,18 @@ Not components, but listed here so nobody re-solves them with a one-off in a cli
 - **`.section-label`** — small uppercase text label above a heading. **v1.4 `.section-label--pill`** turns it into a dark-navy pill (matches hero label aesthetic). Color variants: `--pill-primary`, `--pill-accent`.
 - **`.pill--glow`** — **v1.4** — animated box-shadow ring on any pill / badge / `.section-label`. Drives the "campaign" / "limited spaces" feel. Color variants: `--glow-accent` (orange), `--glow-primary` (blue). Override with `--pill-glow-rgb: R,G,B` for any other tint. Honours `prefers-reduced-motion`.
 
+## Signature components (added 2026-10-07)
+
+Seven patterns the originals we are asked to match use and the library lacked. All token-driven, additive, no script. Demo blocks: `theme-preview.html` > "Signature components". Use each only with facts the client has supplied (Content Integrity): real press outlets, a real rating, real testimonial videos.
+
+- **`.day-schedule`** + `__item`, `__time`, `__card`, `__title`, `__text` - hour-by-hour cards on a vertical rail ("a day at the retreat", "class timetable"). Markup is an `<ol>` of `<li class="day-schedule__item">`. `--grid` turns it into a 2/3-column card grid with the time as a chip. Use instead of a bullet list of times.
+- **`.stats--warm`** (on `.stats`, with the normal `.stat` / `__number` / `__label` / `__sub` children) - quiet tinted strip, big accent numbers, hairline dividers, small caps labels. Counter animation (`data-target`) works unchanged. Use instead of `.stat--card` when the look is warm or editorial.
+- **`.video-carousel`** + `__item`, `__media`, `__quote`, `__name`, `__role`, `__play` - swipeable row of portrait video testimonials. Native scroll-snap and native `<video controls preload="none" poster>`, no JS. For a poster that links out, put an `<a>` + `<img>` + `<span class="video-carousel__play">` inside `__media`. Give the region `role="region" aria-label`.
+- **`.press-bar`** + `__label`, `__list`, `__item`, `__outlet`, `__quote` - "As featured in" strip with an optional one-line quote per outlet; sits directly under the hero. `__outlet` is text or a logo `<img>` (greyscaled). Only outlets the client has actually been featured in.
+- **`.arch-media`** + `__img`, `__badge`, `__badge-value`, `__badge-label` - photo cropped to an arch with a floating proof badge (rating, years, clients). Put it in a two-column band beside text. `--right` moves the badge to the right edge. Badge text must be a client-supplied fact.
+- **`.service-list`** + `__item`, `__link`, `__body`, `__title`, `__text`, `__arrow`; `--numbered` - hairline-divided rows with a CSS-generated 01, 02, 03 number, title, one line and an arrow. Use instead of a grid of identical icon cards when the offer is a list. Never type the numbers.
+- **`.blog-grid--editorial`** + **`.blog-card--editorial`** (+ **`.blog-card--feature`** on the first card for a wide lead story) with new slots **`.blog-card__meta`** (flex row) and **`.blog-card__read-time`** - magazine-style cards: no card chrome, category and read time above a larger headline. Opt-in; the plain `.blog-card` is unchanged. The portal's blog listing generator does not emit these classes; hand-placed on build-time pages only.
+
 ## v1.5 — Aesthetic dials
 
 Per-site aesthetic variation via three CSS custom-property dials. Defaults preserve the v1.4 "soft modern" look — existing sites are unchanged unless their `theme.css` opts in.
