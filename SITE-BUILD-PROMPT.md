@@ -445,10 +445,16 @@ base.css MUST load first, then components.css, then theme.css LAST so client-spe
 - Correct nav link highlighting (`nav__link--active`)
 - Cookie consent + back-to-top HTML before `</body>`
 - Site credit link after footer section comment (outside section comments — not editable by AI editor)
-  - The template credit links to `https://www.therapywebgenie.com/website-design/` and the visible text "Website design by Therapy Webgenie" (no heart, no "made with": it wrapped on mobile), where only "Therapy Webgenie" is the link (keep the anchor as the plain brand name). On every page, swap the href and the word(s) before "website design" to match the client's profession, using the table below. If none fits, leave the default.
+  - The template credit links to `https://www.therapywebgenie.com/website-design/` and the visible text "Website design by Therapy Webgenie" (no heart, no "made with": it wrapped on mobile), where only "Therapy Webgenie" is the link (keep the anchor as the plain brand name). On every page, swap the href and the word(s) before "website design" to match the client's profession, using the table below. If none fits, leave the default. This is the ONE table of credit pages; the WordPress prompt points here.
+    - **The link is always `rel="noopener nofollow"`** (Rick, 10-10-2026). Google's spam policies name "widely distributed links in the footers or templates of various sites" as link spam unless they carry `rel="nofollow"` or `rel="sponsored"`, and one credit on every page of every client site is exactly that pattern. Never make the profession words the link: keyword-rich anchors across many sites are the other pattern the same policy names.
     - hypnotherapist: `/website-design/hypnotherapists/` ("Hypnotherapist website design by [Therapy Webgenie]")
     - chiropractor: `/website-design/chiropractors/`; counsellor: `/website-design/counsellors/`; osteopath: `/website-design/osteopaths/`; physiotherapist: `/website-design/physiotherapists/`; psychotherapist: `/website-design/psychotherapists/`; CBT therapist: `/website-design/cbt/`
     - clinic: `/clinic-website-design/`; coach: `/coaching-website-design/`
+    - massage, bodywork, Bowen, sports massage: `/websites-for-therapists/body-based-practitioners/` ("Massage therapist website design by")
+    - reiki, reflexology, acupuncture, EFT, holistic: `/websites-for-therapists/complementary-therapists/` ("Reflexologist website design by", "Holistic therapist website design by")
+    - another mental-health practice (clinical psychologist, EMDR, a therapy service): `/websites-for-therapists/mental-health-practitioners/`; any other therapy (nutritionist): `/websites-for-therapists/`
+    - not a therapy business (a salon, cleaner, tutor, charity, writer): the default "Website design by" and `/website-design/`
+    - Which page each site got and why: run the fleet check in the Ai-Editor memory `reference_how_to_verify.md` ("Footer credit"), never a list kept here.
 - **PROFILE comment markers** for portal auto-injection (see section 2h below)
 - Logo in nav via `<img>` tag with `class="nav__logo"` — do NOT use inline width/height styles, let CSS handle sizing
 - If using `nav__brand--inline` (logo beside title), wrap name + title spans in `<div class="nav__brand-text">`
@@ -848,7 +854,7 @@ Then verify the remaining manual items:
 - [ ] Cookie consent banner present on every page (links to cookies-policy.html)
 - [ ] cookies-policy.html exists with correct business details
 - [ ] Footer legal links include both Privacy Policy and Cookie Policy on every page
-- [ ] Site credit link present on every page (outside section comments), pointing at the client's profession page, not the homepage
+- [ ] Site credit link present on every page (outside section comments), pointing at the client's profession page, not the homepage, with `rel="noopener nofollow"`
 - [ ] Back-to-top button present on every page
 - [ ] Skip-to-content link present on every page
 - [ ] Section comments on every content section
