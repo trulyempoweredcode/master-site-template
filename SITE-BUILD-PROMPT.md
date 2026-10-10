@@ -444,6 +444,10 @@ base.css MUST load first, then components.css, then theme.css LAST so client-spe
 - Correct nav link highlighting (`nav__link--active`)
 - Cookie consent + back-to-top HTML before `</body>`
 - Site credit link after footer section comment (outside section comments — not editable by AI editor)
+  - The template credit links to `https://www.therapywebgenie.com/website-design/` and the visible text "Website design by Therapy Webgenie" (no heart, no "made with": it wrapped on mobile), where only "Therapy Webgenie" is the link (keep the anchor as the plain brand name). On every page, swap the href and the word(s) before "website design" to match the client's profession, using the table below. If none fits, leave the default.
+    - hypnotherapist: `/website-design/hypnotherapists/` ("Hypnotherapist website design by [Therapy Webgenie]")
+    - chiropractor: `/website-design/chiropractors/`; counsellor: `/website-design/counsellors/`; osteopath: `/website-design/osteopaths/`; physiotherapist: `/website-design/physiotherapists/`; psychotherapist: `/website-design/psychotherapists/`; CBT therapist: `/website-design/cbt/`
+    - clinic: `/clinic-website-design/`; coach: `/coaching-website-design/`
 - **PROFILE comment markers** for portal auto-injection (see section 2h below)
 - Logo in nav via `<img>` tag with `class="nav__logo"` — do NOT use inline width/height styles, let CSS handle sizing
 - If using `nav__brand--inline` (logo beside title), wrap name + title spans in `<div class="nav__brand-text">`
@@ -843,7 +847,7 @@ Then verify the remaining manual items:
 - [ ] Cookie consent banner present on every page (links to cookies-policy.html)
 - [ ] cookies-policy.html exists with correct business details
 - [ ] Footer legal links include both Privacy Policy and Cookie Policy on every page
-- [ ] Site credit link present on every page (outside section comments)
+- [ ] Site credit link present on every page (outside section comments), pointing at the client's profession page, not the homepage
 - [ ] Back-to-top button present on every page
 - [ ] Skip-to-content link present on every page
 - [ ] Section comments on every content section
