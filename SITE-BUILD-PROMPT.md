@@ -171,6 +171,7 @@ Then extract content according to the scenario (see Phase 1).
 3. **Enumerate ALL the client's real image assets BEFORE generating anything.** `WebFetch` strips `<img>`/background URLs, so pull the raw HTML and grep for image refs, and probe the common asset folders directly — e.g. `/siteimages/banner1.jpg…bannerN.jpg`, `/userfiles/images/`, `/images/`. Download the real hero/banner, logo, headshots, accreditation badges and section photos. **ALWAYS prefer a real client photo over a generated one** — only generate (Phase 2b) for genuine gaps. (A real clifftop banner was once missed and an AI "desert" hero shipped over it — don't repeat that.)
 4. Note the site's current structure, pages, and navigation hierarchy
 5. Identify the client's natural voice and tone from their existing copy
+6. **Record every address the old site has, while it is still up:** `python scripts/address_guard.py record <old-site-url> <site-dir>` (from the Ai-Editor folder; it must exit 0). It writes `<site-dir>/.old-addresses.txt`, which ships with the site; once the domain moves, the weekly old-address guard checks each address still works and writes a forwarding page where one does not (D132). Run it before the domain moves: afterwards the old pages are gone and only the Internet Archive can recover them.
 
 **Scenario 2 — Supplied content:**
 1. Read ALL files in the content folder (Word docs, PDFs, text files, images)
