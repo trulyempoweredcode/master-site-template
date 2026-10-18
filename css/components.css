@@ -10854,7 +10854,8 @@ main > .section.band:not(.section--alt):not(.section--dark):not(.cta-banner):not
    falls back to the old value): --btn-accent-text / --btn-accent-hover-text
    (base.css), --nav-name-color, --nav-title-size, --nav-title-transform,
    --nav-title-tracking, --font-signature, --signature-style,
-   --signature-size, --hero-actions-justify. First used by figspeech.co.uk.
+   --signature-size, --hero-actions-justify, --blockquote-rule-color,
+   --nav-title-phone-display. First used by figspeech.co.uk.
    ============================================= */
 
 /* Hero tick pills, bold: white pills, 16px words, green ticks. */
@@ -10900,6 +10901,33 @@ main > .section.band:not(.section--alt):not(.section--dark):not(.cta-banner):not
   .blockquote--pull.blockquote--bold {
     padding-left: 0;
     padding-right: 0;
+  }
+}
+
+/* Hero lead line: the subtitle one step up from the hero text, in bold. */
+.hero__text--lead {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-normal);
+}
+
+/* Bold quote mark: a short rule instead of the quote glyph, which a rounded
+   display font draws small enough to read as a stray character. */
+.blockquote--pull.blockquote--bold::before {
+  content: '';
+  width: 64px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--blockquote-rule-color, currentColor);
+  margin: 0 auto var(--space-lg);
+}
+
+/* Token hook: the tagline under the brand name on small phones. A logo, a
+   name and a two-line tagline are taller than the 72px bar; a site can set
+   --nav-title-phone-display: none to keep the bar clean (default unchanged). */
+@media (max-width: 479px) {
+  .nav__title {
+    display: var(--nav-title-phone-display, inline);
   }
 }
 
