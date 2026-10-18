@@ -10773,3 +10773,62 @@ a.service-list__link:hover .service-list__title {
     aspect-ratio: 4 / 3;
   }
 }
+
+/* =============================================
+   COLOUR BANDS (v1.7.20, 2026-10-18)
+   Put a whole band (.section, .hero, .page-header) on one of four brand
+   colours: class="section band band--2". Each slot defaults to a palette
+   colour (1 primary, 2 secondary, 3 accent, 4 bg-dark); a site retargets a
+   slot in its theme.css :root with --band-N-bg and sets the text colour that
+   reads on it with --band-N-text (white by default: give a light colour a
+   dark ink so its text stays at 4.5:1 or better). Cards and steps inside a
+   band keep their own surface and text colours; only the band's own heading,
+   label, intro, quote and hero words take the band's text colour.
+   First used by figspeech.co.uk (her orange, coral, lime and teal bands).
+   ============================================= */
+.band--1 { --band-bg: var(--band-1-bg, var(--color-primary));   --band-text: var(--band-1-text, var(--color-text-inverse)); }
+.band--2 { --band-bg: var(--band-2-bg, var(--color-secondary)); --band-text: var(--band-2-text, var(--color-text-inverse)); }
+.band--3 { --band-bg: var(--band-3-bg, var(--color-accent));    --band-text: var(--band-3-text, var(--color-text-inverse)); }
+.band--4 { --band-bg: var(--band-4-bg, var(--color-bg-dark));   --band-text: var(--band-4-text, var(--color-text-inverse)); }
+
+.band {
+  background-color: var(--band-bg);
+  color: var(--band-text);
+}
+
+.band > .container > :is(h1, h2, h3, p, .section-label, .section-subtitle),
+.band .hero__heading,
+.band .hero__text,
+.band .hero__label,
+.band .blockquote__text,
+.band .blockquote__cite,
+.band .blockquote--pull::before,
+.band .split__text > :is(h2, h3, p),
+.band .split__content > :is(h2, h3, p) {
+  color: inherit;
+}
+
+/* The outline button takes the band's text colour, so it reads on any band. */
+.band .btn--secondary:not(.card .btn, .process-step .btn) {
+  color: var(--band-text);
+  border-color: var(--band-text);
+}
+
+.band .btn--secondary:not(.card .btn, .process-step .btn):hover {
+  background-color: var(--band-text);
+  color: var(--band-bg);
+}
+
+/* A band is its own background. These two mirror the alternation safety net
+   (GOLDEN RULE) one class stronger, so the net never repaints a band and never
+   tints the plain section after one. Overrides, not an edit to the net's own
+   selector, so no site's copy of the net changes. */
+main > .section:not(.section--alt):not(.section--dark):not(.cta-banner):not(.cta-mid-banner)
+  + .section.band:not(.section--alt):not(.section--dark):not(.cta-banner):not(.cta-mid-banner) {
+  background-color: var(--band-bg);
+}
+
+main > .section.band:not(.section--alt):not(.section--dark):not(.cta-banner):not(.cta-mid-banner)
+  + .section:not(.band):not(.section--alt):not(.section--dark):not(.cta-banner):not(.cta-mid-banner) {
+  background-color: var(--color-bg);
+}
