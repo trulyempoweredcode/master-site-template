@@ -68,6 +68,7 @@ Add `hero--reverse` when the brief says Hero reversed: yes (classic / half / slo
 
 - **`.card`** — generic surface card (icon-led by default). Modifiers: `--service`, `--feature`, `--highlight`, `--image-top` (photo at top, with optional `.card__badge` corner pill — `__badge--accent` for secondary tint, add `.card--portrait` for 1:1 team headshots).
 - **`.icon-box`** - icon + heading + text block. Variants: `--card`, `--left`.
+- **`.card__image-wrap--square`** (**v1.7.20**) - on the `.card__image-wrap` of a `.card--image-top`: a 1:1 box, so a square picture (a child's drawing, a logo) shows whole instead of cropped to 4:3.
 - **`.card__icon--bold`** (**v1.7.20**) - on a `.card__icon`: a 64px solid disc in the primary colour with a 32px white icon, for bright, child-friendly sites. Works on alt sections and bands.
 - **`.image-card`** — image-led card pattern.
 - **`.overlay-card`** — text overlay over a photo.
