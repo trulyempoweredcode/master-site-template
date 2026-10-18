@@ -71,7 +71,7 @@
 
 .nav__name {
   font-family: var(--font-heading);
-  font-size: var(--text-lg);
+  font-size: var(--nav-name-size, var(--text-lg));
   font-weight: var(--font-weight-bold);
   color: var(--nav-name-color, var(--color-text-heading));
   line-height: 1.2;
@@ -435,7 +435,7 @@
   background-color: var(--color-surface);
   border-bottom: 1px solid var(--color-border-light);
   transition: box-shadow var(--transition-base);
-  padding: 20px 0;
+  padding: var(--nav-two-tier-padding, 20px) 0; /* v1.7.20 hook */
 }
 
 .nav--two-tier.nav--scrolled {
@@ -447,7 +447,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 20px;
+  padding-top: var(--nav-top-padding, 20px); /* v1.7.20 hook */
   padding-bottom: var(--space-sm);
 }
 
@@ -2675,6 +2675,9 @@ a.card--service:hover .card__link {
 .form__group--checkbox input[type="checkbox"] {
   margin-top: 4px;
   flex-shrink: 0;
+  width: var(--form-check-size, auto); /* v1.7.20 hooks: a bigger tap target */
+  height: var(--form-check-size, auto);
+  accent-color: var(--form-check-accent, auto);
 }
 
 .form__group--checkbox label {
@@ -10856,7 +10859,8 @@ main > .section.band:not(.section--alt):not(.section--dark):not(.cta-banner):not
    --nav-title-tracking, --font-signature, --signature-style,
    --signature-size, --hero-actions-justify, --blockquote-rule-color,
    --nav-title-phone-display, --btn-radius (base.css), --page-header-padding,
-   --page-header-padding-desktop. First used by figspeech.co.uk.
+   --page-header-padding-desktop, --nav-two-tier-padding, --nav-top-padding,
+   --nav-name-size, --form-check-size, --form-check-accent. First used by figspeech.co.uk.
    ============================================= */
 
 /* Hero tick pills, bold: white pills, 16px words, green ticks. */
