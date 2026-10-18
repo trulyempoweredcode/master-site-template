@@ -10947,7 +10947,7 @@ main > .section.band:not(.section--alt):not(.section--dark):not(.cta-banner):not
 .footer__logo {
   display: block;
   width: auto;
-  max-height: 72px;
+  height: 72px; /* fixed, so the space is kept before a lazy logo loads */
   margin-bottom: var(--space-md);
   border-radius: var(--radius-md);
 }

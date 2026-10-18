@@ -20,7 +20,7 @@ Every component is token-driven (uses `var(--color-*)`, `var(--space-*)`, `var(-
 - **`.page-header`** — title block at top of inner pages. Variants: `--dark`, `--image`. Use `.page-header__meta` utility for readable text on dark/image variants. **v1.7.12 `.page-header__actions`** - a centred button row under the header text with the gap owned by the slot (`margin-top: var(--space-lg)`); `.page-header p` carries `margin: 0 auto`, so a bare `.btn` after it sits flush on the paragraph. Use it whenever a page-header (including one used as a mid-page full-width image band) ends in a button.
 - **`.footer`** — site footer (multi-column). Variant: `--simple` for a single-line variant. The `__legal` row wraps (v1.7.11), so any number of legal or policy links is fine.
 - **`.back-to-top`** - floating back-to-top button.
-- **`.footer__logo`** (**v1.7.20**) - the brand mark as an `<img>` in `.footer__brand`, above `.footer__brand-name`, at most 72px tall.
+- **`.footer__logo`** (**v1.7.20**) - the brand mark as an `<img>` in `.footer__brand`, above `.footer__brand-name`, 72px tall (fixed, so a lazy-loaded logo never shifts the footer). Give the `<img>` its width and height attributes.
 - **`.cookie-banner`** — GDPR cookie consent.
 - **`.site-credit`** — small "built by" credit row.
 
