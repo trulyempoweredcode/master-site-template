@@ -10855,7 +10855,7 @@ main > .section.band:not(.section--alt):not(.section--dark):not(.cta-banner):not
    (base.css), --nav-name-color, --nav-title-size, --nav-title-transform,
    --nav-title-tracking, --font-signature, --signature-style,
    --signature-size, --hero-actions-justify, --blockquote-rule-color,
-   --nav-title-phone-display. First used by figspeech.co.uk.
+   --nav-title-phone-display, --btn-radius (base.css). First used by figspeech.co.uk.
    ============================================= */
 
 /* Hero tick pills, bold: white pills, 16px words, green ticks. */
@@ -10893,8 +10893,14 @@ main > .section.band:not(.section--alt):not(.section--dark):not(.cta-banner):not
 .blockquote--bold .blockquote__text {
   font-style: normal;
   font-weight: var(--font-weight-bold);
-  font-size: var(--text-2xl);
+  font-size: var(--text-lg);
   line-height: var(--line-height-tight);
+}
+
+@media (min-width: 768px) {
+  .blockquote--bold .blockquote__text {
+    font-size: var(--text-2xl);
+  }
 }
 
 @media (max-width: 767px) {

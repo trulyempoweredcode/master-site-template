@@ -264,7 +264,7 @@ strong {
   font-size: var(--text-base);
   font-weight: var(--font-weight-medium);
   line-height: 1;
-  border-radius: var(--aesthetic-radius);
+  border-radius: var(--btn-radius, var(--aesthetic-radius)); /* v1.7.20 hook: pill buttons */
   transition: all var(--transition-base);
   text-decoration: none;
   border: calc(var(--aesthetic-border-width) + 1px) solid transparent;
