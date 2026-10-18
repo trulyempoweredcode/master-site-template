@@ -3419,7 +3419,7 @@ a.card--service:hover .card__link {
    PAGE HEADER (inner pages)
    ============================================= */
 .page-header {
-  padding: 96px 0;
+  padding: var(--page-header-padding, 96px) 0; /* v1.7.20 hook: a site can tighten title bands on phones */
   background-color: var(--color-bg-alt);
   text-align: center;
 }
@@ -3437,7 +3437,7 @@ a.card--service:hover .card__link {
 
 @media (min-width: 768px) {
   .page-header {
-    padding: var(--space-3xl) 0;
+    padding: var(--page-header-padding-desktop, var(--space-3xl)) 0;
   }
 }
 
@@ -10855,7 +10855,8 @@ main > .section.band:not(.section--alt):not(.section--dark):not(.cta-banner):not
    (base.css), --nav-name-color, --nav-title-size, --nav-title-transform,
    --nav-title-tracking, --font-signature, --signature-style,
    --signature-size, --hero-actions-justify, --blockquote-rule-color,
-   --nav-title-phone-display, --btn-radius (base.css). First used by figspeech.co.uk.
+   --nav-title-phone-display, --btn-radius (base.css), --page-header-padding,
+   --page-header-padding-desktop. First used by figspeech.co.uk.
    ============================================= */
 
 /* Hero tick pills, bold: white pills, 16px words, green ticks. */

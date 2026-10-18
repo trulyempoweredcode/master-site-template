@@ -265,6 +265,7 @@ Each falls back to the old value, so a site changes only when its `theme.css` `:
 - **`--nav-name-color`**, **`--nav-title-size`**, **`--nav-title-transform`**, **`--nav-title-tracking`** - the brand name colour and the tagline under it (default heading colour; 13px uppercase, 0.08em tracking). A long tagline in sentence case with no tracking stays on one line.
 - **`--font-signature`**, **`--signature-style`**, **`--signature-size`** - the `.signature` line in a split (default the heading font, italic, `--text-xl`). For a handwritten signature import a script font (e.g. Caveat) in `theme.css` and set `--signature-style: normal`.
 - **`--hero-actions-justify`** - the hero buttons' alignment on phones (default centred). Set `flex-start` when the hero text is left-aligned.
+- **`--page-header-padding`** / **`--page-header-padding-desktop`** - the top and bottom padding of `.page-header` (default 96px on phones, `--space-3xl` from 768px). Tighten the phone value when the title band pushes the first content (a contact form) too far down.
 - **`--nav-title-phone-display`** - set `none` to drop the tagline under the brand name below 480px, where a logo, a name and a two-line tagline outgrow the 72px bar (default shown).
 
 ## v1.5 — Aesthetic dials
