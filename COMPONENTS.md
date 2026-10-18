@@ -165,6 +165,7 @@ Add `hero--reverse` when the brief says Hero reversed: yes (classic / half / slo
 - **`.gallery-grid` / `.gallery-item` / `.gallery-empty` / `.gallery-lightbox`** — Images-panel admin gallery (separate from public `.gallery`).
 - **`.video-embed`** — responsive 16:9 iframe wrapper. Variant: `--placeholder`.
 - **`.video-split`** — video + text split.
+- **`.photo-band`** (**v1.7.19**) - one wide photo as its own band, optional caption. `section.section.photo-band > .container > figure.photo-band__figure > img.photo-band__img` + optional `figcaption.photo-band__caption`. 21:9 on desktop, 4:3 on phones, rounded like the other photos. `--full` runs it edge to edge with no rounding (drops the band's top and bottom padding). For a single photo between text sections; three or more photos are a `.gallery`.
 
 ## Shop (v1.6 — Shop upgrade feature)
 

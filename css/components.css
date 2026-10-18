@@ -10722,3 +10722,54 @@ a.service-list__link:hover .service-list__title {
     font-size: var(--text-h3-desktop);
   }
 }
+
+/* =============================================
+   PHOTO BAND (v1.7.19, 2026-10-18)
+   One wide photo with an optional caption, as its own band.
+   Markup: section.section.photo-band > .container > figure.photo-band__figure
+           > img.photo-band__img + figcaption.photo-band__caption (optional)
+   --full runs the photo edge to edge (no container width, no rounding).
+   ============================================= */
+.photo-band__figure {
+  margin: 0;
+}
+
+.photo-band__img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+
+.photo-band__caption {
+  margin-top: var(--space-sm);
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  text-align: center;
+}
+
+.photo-band--full {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.photo-band--full .container {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.photo-band--full .photo-band__img {
+  border-radius: 0;
+}
+
+.photo-band--full .photo-band__caption {
+  padding: 0 var(--space-lg) var(--space-md);
+}
+
+@media (max-width: 767px) {
+  .photo-band__img {
+    aspect-ratio: 4 / 3;
+  }
+}
