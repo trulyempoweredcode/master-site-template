@@ -19,7 +19,8 @@ Every component is token-driven (uses `var(--color-*)`, `var(--space-*)`, `var(-
 - **`.breadcrumbs`** — page trail. `__item`, `__separator`, `__item--active`.
 - **`.page-header`** — title block at top of inner pages. Variants: `--dark`, `--image`. Use `.page-header__meta` utility for readable text on dark/image variants. **v1.7.12 `.page-header__actions`** - a centred button row under the header text with the gap owned by the slot (`margin-top: var(--space-lg)`); `.page-header p` carries `margin: 0 auto`, so a bare `.btn` after it sits flush on the paragraph. Use it whenever a page-header (including one used as a mid-page full-width image band) ends in a button.
 - **`.footer`** — site footer (multi-column). Variant: `--simple` for a single-line variant. The `__legal` row wraps (v1.7.11), so any number of legal or policy links is fine.
-- **`.back-to-top`** — floating back-to-top button.
+- **`.back-to-top`** - floating back-to-top button.
+- **`.footer__logo`** (**v1.7.20**) - the brand mark as an `<img>` in `.footer__brand`, above `.footer__brand-name`, at most 72px tall.
 - **`.cookie-banner`** — GDPR cookie consent.
 - **`.site-credit`** — small "built by" credit row.
 
@@ -59,12 +60,14 @@ Add `hero--reverse` when the brief says Hero reversed: yes (classic / half / slo
 - **`.hero__floats`** — wrapper inside `.hero__image-wrap` for absolute-positioned glass stat cards (`.hero__float` + `--tl/--tr/--bl/--br/--ml/--mr`). Hidden under 768px. Use for credibility numbers (years, clients, ROI).
   - **v1.4 cantilever pattern**: wrap the `<img>` in `.hero__image-clip` and add `.hero--floats-cantilever` to `.hero__image-wrap`. Then use `.hero__float--out-r / --out-l / --out-t / --out-b` on individual floats to make them hang past the image edges.
 - **`.hero__heading`** — primary H1 inside the hero. **v1.4 `.hero__heading--animate`** triggers a word-by-word blur-fade entrance (auto-wired by main.js, honours `prefers-reduced-motion`).
-- **`.hero__stats`** — inline stat row inside hero content.
+- **`.hero__stats`** - inline stat row inside hero content.
+- **`.hero__ticks--bold`** (**v1.7.20**) - bolder tick pills: white pills, 16px words, green ticks. Opt-in on `ul.hero__ticks`; the plain pills are unchanged.
 
 ## Cards
 
 - **`.card`** — generic surface card (icon-led by default). Modifiers: `--service`, `--feature`, `--highlight`, `--image-top` (photo at top, with optional `.card__badge` corner pill — `__badge--accent` for secondary tint, add `.card--portrait` for 1:1 team headshots).
-- **`.icon-box`** — icon + heading + text block. Variants: `--card`, `--left`.
+- **`.icon-box`** - icon + heading + text block. Variants: `--card`, `--left`.
+- **`.card__icon--bold`** (**v1.7.20**) - on a `.card__icon`: a 64px solid disc in the primary colour with a 32px white icon, for bright, child-friendly sites. Works on alt sections and bands.
 - **`.image-card`** — image-led card pattern.
 - **`.overlay-card`** — text overlay over a photo.
 - **`.bento`** — bento-grid layout for varied card sizes.
@@ -92,7 +95,7 @@ Add `hero--reverse` when the brief says Hero reversed: yes (classic / half / slo
 - **`.about-split-third`** — 1fr image / 2fr text full-bleed split.
 - **`.intro`** — homepage welcome split (image + text). Use `__inner--reversed` to swap sides.
 - **`.info-band`** — horizontal feature strip with icons. Variants: `--light`, `--primary`. **Canonical markup: the band is FULL-WIDTH (place it directly in the `<section>`, NOT inside a `.container`) and the items sit in `.container.info-band__inner` — i.e. put the `container` class ON `.info-band__inner`.** Wrapping the band in a container makes the coloured background a narrow centred box instead of stretching the section. `.info-band__inner` now self-centres (max-width + auto margins) as a safety net even without `.container` (fixed 2026-07-02). **A standalone bridging band (e.g. a value strip between the page-header and the first content section) should sit FLUSH — place it directly in `<main>`, NOT inside a padded `.section`, and do NOT put `.reveal` on the band itself** (the reveal's translateY leaves dead space above/below the coloured strip). Only wrap it in a `.section` when it genuinely belongs to a headed content section (e.g. a "why reviews matter" block) — and even then close the heading's section first so the band bridges flush to the next section. **v1.7.6** — the `--primary` gradient's light stop is tokenised as **`--info-band-from`** (default `var(--color-primary-dark)`), so a site can warm or cool the band from its own `theme.css` `:root` without forking components.css: `:root { --info-band-from: #976c5c; }`. Text on the `--primary` variant is now pure white for BOTH the title and the sub-line — a lighter stop pushed the inverse-cream title to ~4.3:1 and the old 70%-white sub-line to ~3.1:1, under AA; hierarchy comes from size and typeface, not opacity. `.info-band__title` is `--text-lg`.
-- **`.divider`** — section divider rule.
+- **`.divider`** - section divider rule.
 - **`.band`** + **`.band--1`** to **`.band--4`** (**v1.7.20**) - puts a whole band in one of four brand colours: `<section class="section band band--2">`, and the same classes work on `.hero` and `.page-header` (an orange hero, a coral quote band, a lime services band). Each slot defaults to a palette colour (1 primary, 2 secondary, 3 accent, 4 bg-dark). A site retargets a slot with tokens only, in its `theme.css` `:root`: `--band-2-bg: #FF5757; --band-2-text: #2A1535;`. `--band-N-text` is white by default: give a light colour a dark ink so its text stays at 4.5:1. The band's own heading, label, intro, quote (mark included), hero words and outline buttons take the band's text colour; cards and steps inside it keep their own surface. Bands are exempt from the alternation safety net (each is its own background), and `validate_site.py` counts each slot as its own background, so two adjacent bands of the same slot still fail. Use for bright, bold brands (children's services); a calm site still alternates `.section` / `.section--alt`.
 
 ## Process / steps
@@ -132,7 +135,7 @@ Add `hero--reverse` when the brief says Hero reversed: yes (classic / half / slo
 - **`.testimonial-grid`** — multi-card grid.
 - **`.testimonial-carousel`** — slider variant. **Never use on demo homepages** — always 3 cards in `grid--3` instead.
 - **`.google-reviews`** — Google Reviews embed slot styling.
-- **`.trust-bar`** — logo strip (single row, static).
+- **`.trust-bar`** - logo strip (single row, static).
   - **v1.7.20 `.trust-bar--colour`** - shows the logos in their own colours at full strength (the plain strip greys and fades them until hover). Use for registration and membership bodies, whose logos and small print should read as issued.
 - **`.logo-ticker`** + **`__viewport`** + **`__track`** + **`__item`** + **`__logo`** + **`__pill`** — infinite-scroll horizontal marquee. Pauses on hover. Falls back to scrollable list for `prefers-reduced-motion`. Use real `<img class="logo-ticker__logo">` OR `.logo-ticker__pill` text fallback.
   - **v1.4 modifiers**: `.logo-ticker--no-fade` drops the gradient edge mask (use when you want logos to bleed to the screen edge). `.logo-ticker--no-pause` keeps the animation running on hover.
@@ -212,7 +215,8 @@ Markup for these is GENERATED by the editor (`api/controllers/BookingHtmlBuilder
 ## Content blocks
 
 - **`.highlight-box`** — emphasis block. **Must contain `__heading` + `__content` children.** Never bare h3/p directly. Heading colours auto-invert.
-- **`.blockquote`** — pull-quote. Variant: `--pull` (large pull-quote).
+- **`.blockquote`** - pull-quote. Variant: `--pull` (large pull-quote).
+  - **v1.7.20 `.blockquote--bold`** - with `--pull`: the quote upright and bold at `--text-2xl` instead of italic. Use when the heading font has no italic (Baloo 2, most rounded display fonts), or the browser fakes a slanted one. Full width on phones.
 - **`.checklist`** + **`.checklist-grid`** — bulleted check lists. Inline SVG ticks supported (svg constrained to 20px). Use it for any list the source copy has buried inside a sentence as a comma run ("the signs are x, y and z") — lead in with the sentence up to a colon, then the items. **v1.7.7** — `:not(.checklist-grid) > .checklist:not(:last-child)` carries `margin-bottom: var(--space-md)` so a list followed by more content clears it. Both exclusions matter: a checklist that ends its container keeps `margin: 0`, and one inside `.checklist-grid` is spaced by the grid's own `gap` (the unscoped version double-spaced and grew the grid by 16px).
 - **`.quals-list`** — qualifications list with icons.
 - **`.alert`** — notice block. Variants: `--info`, `--success`, `--warning`, `--error`, `--themed`.
@@ -234,6 +238,7 @@ Not components, but listed here so nobody re-solves them with a one-off in a cli
 - **`.error-page`** — 404 page styling.
 - **`.reveal`** + **`--visible`** — scroll-reveal wrapper (paired with main.js intersection observer). Fades + lifts the element on scroll into view and staggers a cascade across its child grid/list items (`.grid--*`, `.steps`, `.pricing-grid`, `.team-grid`, `.testimonial-grid`, `.quals-list`, `.checklist-grid`, `.fee-table`). **v1.5.5 — directional split reveal:** when a `.reveal` section contains a `.split`, the text column slides in from the left and the image from the right (reversed splits flip the directions); gated to ≥768px, so the stacked mobile split just fades up and never creates a horizontal scrollbar. Honours `prefers-reduced-motion`. **v1.5.5** — the observer is now fully IntersectionObserver-driven; the old synchronous on-load `getBoundingClientRect()` pre-reveal loop was removed because it measured below-the-fold sections as in-viewport before images reserved their height and revealed the whole page at once on load. A guarded post-load safety net reveals only genuinely above-the-fold content. **`.reveal-trigger`** — add alongside `.reveal` (`class="reveal reveal-trigger"`) on a wrapper around a grid/list to fire the children cascade on the *wrapper's* entry without animating the wrapper itself. Use when the list sits far below its section heading (otherwise the section-level `.reveal` fires the cascade while the items are still off-screen).
 - **`.grid--4` / `.grid--5` / `.grid--bento`** — generic grid column counts.
+- **`.section-subtitle`** - the intro line under a section heading (styled in base.css). Inside a `.band` it takes the band's text colour.
 - **`.section-label`** — small uppercase text label above a heading. **v1.4 `.section-label--pill`** turns it into a dark-navy pill (matches hero label aesthetic). Color variants: `--pill-primary`, `--pill-accent`.
 - **`.pill--glow`** — **v1.4** — animated box-shadow ring on any pill / badge / `.section-label`. Drives the "campaign" / "limited spaces" feel. Color variants: `--glow-accent` (orange), `--glow-primary` (blue). Override with `--pill-glow-rgb: R,G,B` for any other tint. Honours `prefers-reduced-motion`.
 
@@ -248,6 +253,15 @@ Seven patterns the originals we are asked to match use and the library lacked. A
 - **`.arch-media`** + `__img`, `__badge`, `__badge-value`, `__badge-label` - photo cropped to an arch with a floating proof badge (rating, years, clients). Put it in a two-column band beside text. `--right` moves the badge to the right edge. Badge text must be a client-supplied fact.
 - **`.service-list`** + `__item`, `__link`, `__body`, `__title`, `__text`, `__arrow`; `--numbered` - hairline-divided rows with a CSS-generated 01, 02, 03 number, title, one line and an arrow. Use instead of a grid of identical icon cards when the offer is a list. Never type the numbers.
 - **`.blog-grid--editorial`** + **`.blog-card--editorial`** (+ **`.blog-card--feature`** on the first card for a wide lead story) with new slots **`.blog-card__meta`** (flex row) and **`.blog-card__read-time`** - magazine-style cards: no card chrome, category and read time above a larger headline. Opt-in; the plain `.blog-card` is unchanged. The portal's blog listing generator does not emit these classes; hand-placed on build-time pages only.
+
+## v1.7.20: Token hooks (theme.css only)
+
+Each falls back to the old value, so a site changes only when its `theme.css` `:root` sets one:
+
+- **`--btn-accent-text`** / **`--btn-accent-hover-text`** - the ink on `.btn--accent` (default the inverse text colour). Set a dark ink when the secondary colour is light (an orange or lime accent fails 4.5:1 with white).
+- **`--nav-name-color`**, **`--nav-title-size`**, **`--nav-title-transform`**, **`--nav-title-tracking`** - the brand name colour and the tagline under it (default heading colour; 13px uppercase, 0.08em tracking). A long tagline in sentence case with no tracking stays on one line.
+- **`--font-signature`**, **`--signature-style`**, **`--signature-size`** - the `.signature` line in a split (default the heading font, italic, `--text-xl`). For a handwritten signature import a script font (e.g. Caveat) in `theme.css` and set `--signature-style: normal`.
+- **`--hero-actions-justify`** - the hero buttons' alignment on phones (default centred). Set `flex-start` when the hero text is left-aligned.
 
 ## v1.5 — Aesthetic dials
 
