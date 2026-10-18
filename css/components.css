@@ -10832,3 +10832,16 @@ main > .section.band:not(.section--alt):not(.section--dark):not(.cta-banner):not
   + .section:not(.band):not(.section--alt):not(.section--dark):not(.cta-banner):not(.cta-mid-banner) {
   background-color: var(--color-bg);
 }
+
+/* =============================================
+   FULL-COLOUR LOGO ROW (v1.7.20, 2026-10-18)
+   .trust-bar greys and fades its logos; add .trust-bar--colour to show them
+   in their own colours at full strength (registration and membership bodies,
+   whose small print must stay readable). Markup: div.trust-bar.trust-bar--colour
+   > img.trust-bar__logo. First used by figspeech.co.uk (HCPC, RCSLT, ASLTIP).
+   ============================================= */
+.trust-bar--colour .trust-bar__logo,
+.trust-bar--colour .trust-bar__logo:hover {
+  opacity: 1;
+  filter: none;
+}

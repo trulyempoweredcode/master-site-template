@@ -133,6 +133,7 @@ Add `hero--reverse` when the brief says Hero reversed: yes (classic / half / slo
 - **`.testimonial-carousel`** — slider variant. **Never use on demo homepages** — always 3 cards in `grid--3` instead.
 - **`.google-reviews`** — Google Reviews embed slot styling.
 - **`.trust-bar`** — logo strip (single row, static).
+  - **v1.7.20 `.trust-bar--colour`** - shows the logos in their own colours at full strength (the plain strip greys and fades them until hover). Use for registration and membership bodies, whose logos and small print should read as issued.
 - **`.logo-ticker`** + **`__viewport`** + **`__track`** + **`__item`** + **`__logo`** + **`__pill`** — infinite-scroll horizontal marquee. Pauses on hover. Falls back to scrollable list for `prefers-reduced-motion`. Use real `<img class="logo-ticker__logo">` OR `.logo-ticker__pill` text fallback.
   - **v1.4 modifiers**: `.logo-ticker--no-fade` drops the gradient edge mask (use when you want logos to bleed to the screen edge). `.logo-ticker--no-pause` keeps the animation running on hover.
 - **`.rated-pill`** — inline award/rating badge ("Rated #1 by …"). `__icon` + `__highlight` for emphasised text. Variant: `--accent`.
