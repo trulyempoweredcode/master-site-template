@@ -5823,6 +5823,14 @@ a.card--service:hover .card__link {
   gap: var(--space-xl);
 }
 
+/* Each list fills its column (the base .accordion centres itself with
+   auto margins, which in a grid shrinks it to its longest question). */
+.accordion-grid .accordion {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
 @media (min-width: 768px) {
   .accordion-grid {
     grid-template-columns: 1fr 1fr;
@@ -10216,7 +10224,7 @@ main li:not([class]) a:not([class]):hover {
 }
 
 .stats--warm .stat__label {
-  font-size: var(--text-xs);
+  font-size: var(--text-sm);
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -10381,7 +10389,7 @@ main li:not([class]) a:not([class]):hover {
 .press-bar__label {
   margin: 0 0 var(--space-md);
   text-align: center;
-  font-size: var(--text-xs);
+  font-size: var(--text-sm);
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -10423,7 +10431,7 @@ main li:not([class]) a:not([class]):hover {
   display: block;
   quotes: none;
   margin-top: var(--space-xs);
-  font-size: var(--text-xs);
+  font-size: var(--text-sm);
   font-style: italic;
   line-height: var(--line-height-tight);
   color: var(--color-text-light);
