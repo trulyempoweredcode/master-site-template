@@ -10409,6 +10409,11 @@ main li:not([class]) a:not([class]):hover {
   text-align: center;
 }
 
+/* An odd last outlet takes the whole row on phones, centred, not alone on the left. */
+.press-bar__item:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
 .press-bar__outlet {
   display: block;
   font-family: var(--font-heading);
