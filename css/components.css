@@ -4299,6 +4299,32 @@ a.card--service:hover .card__link {
   background-size: 18px;
 }
 
+/* Numbered variant (v1.7.22, 2026-10-22): the same list with 1, 2, 3 in the
+   circle where the tick sits, for steps or anything in order. Markup:
+   ol.checklist.checklist--numbered > li.checklist__item (never type the
+   numbers). The circle is larger than the tick's so the number is 16px. */
+.checklist--numbered {
+  counter-reset: checklist-number;
+}
+
+.checklist--numbered .checklist__item {
+  counter-increment: checklist-number;
+}
+
+.checklist--numbered .checklist__item::before {
+  content: counter(checklist-number);
+  width: 26px;
+  height: 26px;
+  margin-top: 0;
+  background-image: none;
+  color: var(--color-text-inverse);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: 26px;
+  text-align: center;
+}
+
 /* =============================================
    CONTENT: TWO-COLUMN CHECKLIST GRID
    Side-by-side checklists. Used for conditions,
@@ -6318,6 +6344,19 @@ a.card--service:hover .card__link {
 .divider--primary svg path,
 .divider--primary svg polygon {
   fill: var(--color-primary);
+}
+
+/* Line variant (v1.7.22, 2026-10-22): a thin rule between two parts of the
+   text in one column, where .divider alone (a wave or other shape between
+   bands, drawn by its SVG) would draw nothing. It takes the colour of the
+   text around it, faintly, so it reads on a white section and on a colour
+   band. Markup: div.divider.divider--line (no SVG inside). */
+.divider--line {
+  height: 0;
+  margin: var(--space-xl) 0;
+  overflow: visible;
+  border-top: 1px solid currentColor;
+  opacity: 0.25;
 }
 
 /* --- Video Embed --- */
@@ -10788,6 +10827,33 @@ a.service-list__link:hover .service-list__title {
   .photo-band__img {
     aspect-ratio: 4 / 3;
   }
+}
+
+/* =============================================
+   TEXT PHOTO (v1.7.22, 2026-10-22)
+   One photo inside a column of text, between paragraphs: as wide as the
+   column, its own shape, rounded like the library's other photos. A very
+   tall photo is cut to 600px, keeping its upper part, where faces usually
+   are. For one wide photo as a band of its own, use .photo-band.
+   Markup: img.text-photo, a child of the text column.
+   ============================================= */
+.text-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 600px;
+  object-fit: cover;
+  object-position: 50% 30%;
+  margin: var(--space-lg) 0;
+  border-radius: var(--radius-lg);
+}
+
+.text-photo:first-child {
+  margin-top: 0;
+}
+
+.text-photo:last-child {
+  margin-bottom: 0;
 }
 
 /* =============================================
