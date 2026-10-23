@@ -10916,6 +10916,31 @@ main > .section.band:not(.section--alt):not(.section--dark):not(.cta-banner):not
   background-color: var(--color-bg);
 }
 
+/* Words in a band's text columns (v1.7.23, 2026-10-23). Headings, paragraphs and ticked lists that sit in a
+   text column inside a band (including what a client adds in the Page Editor or the AI Site Editor) take the
+   band's text colour, like the band's own heading; before this only words straight in .container or a split
+   column did, so words in a .text-block or intro column stayed dark on a dark band. A quote on its own panel
+   (.blockquote without --pull) keeps the panel's colours, so it never turns light-on-light; a pull quote has
+   no panel and still takes the band's colour. Cards and steps keep their own colours, as before. */
+.band :is(.container, .container--narrow, .text-center, .text-left, .text-block, .text-block--center, .intro__text,
+  .service-detail, .split__text, .split__content, .story-split__text, .story-text__header, .story-text__content,
+  .video-split__header, .video-split__content, .about-split-third__text, .legal-content, div:not([class]))
+  > :is(h2, h3, p):not(.card *, .process-step *),
+.band :is(.container, .container--narrow, .text-center, .text-left, .text-block, .text-block--center, .intro__text,
+  .service-detail, .split__text, .split__content, .story-split__text, .story-text__header, .story-text__content,
+  .video-split__header, .video-split__content, .about-split-third__text, .legal-content, div:not([class]))
+  > .checklist:not(.card *, .process-step *) > .checklist__item {
+  color: inherit;
+}
+
+.band .blockquote:not(.blockquote--pull) .blockquote__text {
+  color: var(--color-text);
+}
+
+.band .blockquote:not(.blockquote--pull) .blockquote__cite {
+  color: var(--color-text-heading);
+}
+
 /* =============================================
    FULL-COLOUR LOGO ROW (v1.7.20, 2026-10-18)
    .trust-bar greys and fades its logos; add .trust-bar--colour to show them
