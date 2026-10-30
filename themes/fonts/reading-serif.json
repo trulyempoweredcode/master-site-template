@@ -1,0 +1,23 @@
+{
+  "id": "reading-serif",
+  "name": "Reading Serif",
+  "description": "Calm and easy to read - sturdy screen serif headings (Merriweather) with a clean sans body (DM Sans)",
+  "heading": {
+    "family": "Merriweather",
+    "fallback": "Georgia, 'Times New Roman', serif",
+    "weights": [400, 700],
+    "italic": true,
+    "import": "Merriweather:ital,wght@0,400;0,700;1,400"
+  },
+  "body": {
+    "family": "DM Sans",
+    "fallback": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    "weights": [400, 500, 600, 700],
+    "import": "DM+Sans:wght@400;500;600;700"
+  },
+  "sizes": {
+    "text-h1-desktop": "2.6rem",
+    "text-h2-desktop": "2rem",
+    "text-h3-desktop": "1.4rem"
+  }
+}
