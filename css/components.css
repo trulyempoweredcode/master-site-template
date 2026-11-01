@@ -12362,3 +12362,41 @@ h2 {
 .contact-form-card.contact-form-card--muted {
   padding: var(--contact-form-padding, var(--space-2xl));
 }
+
+/* =============================================
+   SPACING FIXES (01-11-2026, allansalmon.com)
+   Three gaps every site could hit, fixed for all.
+   ============================================= */
+
+/* Header logo: a 70px logo in the 72px bar touched both edges. Kept to
+   56px so the bar always has 8px of air above and below it. */
+.nav__logo {
+  max-height: var(--nav-logo-height, 56px);
+}
+
+/* Pricing: text after a pricing card sat flush against it. */
+.pricing-single:not(:last-child),
+.pricing-grid:not(:last-child) {
+  margin-bottom: var(--space-xl);
+}
+
+/* Qualifications: exactly three boxes sit on one row on desktop instead of
+   two plus an orphan. On tablets the third box takes the full row. Not
+   inside a split column, which is too narrow for three. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .quals-list:has(> :nth-child(3):last-child):not(.split__content .quals-list) > :last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* three across needs more than a narrow container gives, so the row
+     widens past it, centred, up to 1040px */
+  .quals-list:has(> :nth-child(3):last-child):not(.split__content .quals-list) {
+    --quals-row-width: min(1040px, calc(100vw - 4rem));
+    grid-template-columns: repeat(3, 1fr);
+    width: var(--quals-row-width);
+    margin-left: calc((100% - var(--quals-row-width)) / 2);
+    margin-right: calc((100% - var(--quals-row-width)) / 2);
+  }
+}
