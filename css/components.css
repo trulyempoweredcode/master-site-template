@@ -12374,6 +12374,17 @@ h2 {
   max-height: var(--nav-logo-height, 56px);
 }
 
+/* Header height (v1.7.26): a site whose logo looks tight sets
+   --nav-height in theme.css (88px gives a 56px logo 16px of white space above
+   and below). The phone menu starts below the header at any height. */
+.nav__inner {
+  height: var(--nav-height, 72px);
+}
+
+.nav__mobile {
+  padding-top: calc(var(--nav-height, 72px) + var(--space-xl));
+}
+
 /* Pricing: text after a pricing card sat flush against it. */
 .pricing-single:not(:last-child),
 .pricing-grid:not(:last-child) {
