@@ -14,6 +14,7 @@ Every component is token-driven (uses `var(--color-*)`, `var(--space-*)`, `var(-
 
 - **`.nav`** — top navigation. Variants: `--two-tier` (brand bar + nav bar with contact info), `--branded`, `--transparent`, `--transparent-dark`, `--transparent-light`. Hierarchical config via DB `nav_config_json`.
 - **`.nav-scroll`** — sticky condensed nav that slides in on scroll. Use `--visible` to toggle.
+- **`.nav--sticky`** (**v1.7.27**) - add to `.nav` to keep the full header at the top while the page scrolls; anchor links land below it. Use instead of `.nav-scroll`, not with it.
 - **`.announcement-bar`** — slim full-width promo strip above nav. Variants: `--secondary`, `--subtle`, `--accent`. Supports rich layout: `__inner` + `__msg` + `__pill` + `__link` for promo + CTA. Or use plain centred text + `<a>`.
 - **`.skip-link`** — accessibility skip-to-content.
 - **`.breadcrumbs`** — page trail. `__item`, `__separator`, `__item--active`.
@@ -109,7 +110,7 @@ Add `hero--reverse` when the brief says Hero reversed: yes (classic / half / slo
 - **`.process-grid`** + **`.process-step`** — 3- or 4-step (`--4`) with **image per step**. Number badge top-left, photo, title, body. Use for "How it works" with visuals.
   - **v1.4 `.process-step--num-centered`** — moves the number from absolute top-left of the image into the body, centered above the title (transparent bg, white border, inherits `currentColor`). Cleaner stepper aesthetic on dark cards.
 - **`.process-spine`** + **`.process-spine__step / __num / __body / __title / __text`** — vertical numbered process with a connector rail down the centre between number nodes. No images, single column. Use for editorial/B2B "methodology" sections where the steps deserve more drama than `.process-grid` (e.g. Hercules Power-First Development). Honours `.section--dark` / `.bg-dark` for inverted treatment.
-- **`.steps` / `.step`** — generic step widget.
+- **`.steps` / `.step`** — generic step widget. **v1.7.27 `.steps--numerals`** - a large light numeral (write `01`, `02`, `03` in `.step__number`) instead of the dark circle, full-size step titles, all centred. Token `--step-numeral-color` (accent by default). Not with `--connected`. Also **v1.7.27 `--card-title-gap`** sets the space under `.card__title` (default 0.5rem).
 
 ## Comparison / timelines
 

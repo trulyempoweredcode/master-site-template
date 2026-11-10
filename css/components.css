@@ -2361,7 +2361,8 @@ body:has(.nav--transparent) .hero--showcase {
 .card__title {
   font-size: var(--text-h3-desktop);
   margin-top: var(--space-xs);
-  margin-bottom: var(--space-sm);
+  /* v1.7.27 token hook: --card-title-gap, the space under a card title */
+  margin-bottom: var(--card-title-gap, var(--space-sm));
 }
 
 .card__text {
@@ -12410,4 +12411,44 @@ h2 {
     margin-left: calc((100% - var(--quals-row-width)) / 2);
     margin-right: calc((100% - var(--quals-row-width)) / 2);
   }
+}
+
+/* v1.7.27 (10-11-2026): .steps--numerals - the same steps with a large, light
+   numeral (write it as 01, 02, 03) in place of the dark circle, and the step
+   title at full h3 size, all centred. Made for
+   a converted site whose original used big thin sage numbers (allansalmon.com).
+   Token: --step-numeral-color (defaults to the accent colour). Do not combine
+   with .steps--connected: the connector line is drawn for the circle. */
+.steps--numerals .step {
+  padding: 0;
+}
+
+.steps--numerals .step__number {
+  width: auto;
+  height: auto;
+  background: none;
+  border-radius: 0;
+  color: var(--step-numeral-color, var(--color-accent));
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 3rem;
+  line-height: 1;
+  margin: 0 0 var(--space-lg);
+}
+
+.steps--numerals .step__title {
+  font-size: var(--text-h3-desktop);
+  margin-bottom: var(--space-md);
+}
+
+/* v1.7.27 (10-11-2026): .nav--sticky - the full header stays at the top of the
+   screen while the page scrolls (allansalmon.com's original did this). Anchor
+   links land below it. Use instead of .nav-scroll, not with it. */
+.nav--sticky {
+  position: sticky;
+  top: 0;
+}
+
+html:has(.nav--sticky) {
+  scroll-padding-top: var(--nav-height, 72px);
 }
