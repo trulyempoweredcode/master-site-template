@@ -130,12 +130,11 @@ client already supplied, or push to the GitHub Pages preview.
        library lacks. It goes into the **shared library first** and is used from there — never
        built inside one client's `theme.css`, never approximated with the nearest thing.
 
-**Keep the portal stage current at every one of those points.** Rick reads the admin client list
-as a snapshot of where everyone stands, so a stale stage lies to him. On the `web` track: set
-**3 In development** the moment you start building, **4 Revisions** when you open the round, and
-**5 Awaiting approval** once every change request is actioned and answered. 6 to 9 are automatic
-or Rick's. Always pass `waiting_on_client` in the SAME `TECP_Client::update()` call as
-`progress_stage`, or the flag is silently reset to 0. Full ladder in `GAUNTLET-PROMPT.md`.
+**The portal stage moves by itself (portal 2.112.0).** The one call a build makes is
+`TECP_Client::build_started($client_id)` the moment you start building (stage 3 In development).
+Every other stage moves from a real event: opening the round, the client sending their list, our
+replies going out, approval, go-live. Never set `progress_stage` by hand and never write
+`waiting_on_client` (retired, ignored). Full ladder in `GAUNTLET-PROMPT.md`.
 
 Missing client inputs — a testimonial, a headshot, an address, an accreditation — are **not** a
 stop. They go in the content checklist (Phase 3) and are handed over at Stop 2.
@@ -462,6 +461,7 @@ base.css MUST load first, then components.css, then theme.css LAST so client-spe
 - Checkbox form groups: use `class="form__group form__group--checkbox"` for proper inline alignment
 - Hero h1 MUST have `class="hero__heading"` — without this class, hero-specific colour/size overrides won't apply
 - Background images on any banner/hero/page-header MUST use `background-size: cover` and `background-position: center center` — never leave these unset or images will clip/tile unpredictably
+- **Photos of people are never cropped by hand, and no one's head is ever cut off (Rick, 11-11-2026: "ensure no site cuts off anyones head").** The rule above is for banners, heroes and page headers only. A portrait or team photo (`.intro__image-wrap`, `.intro__image`, `.about-hero__image-wrap`, `.about-split-third__image-wrap`, `.team-member__image`, avatars) gets NO inline `background-position`, `background-size` or `object-position`: the library frames it as a 3:4 portrait cropped 20% from the top. If one photo still needs moving, set `--photo-focus` inline (e.g. `style="--photo-focus: center 10%"`). Before shipping, compare every person photo on the page with the original file: if the original shows the whole head, the page must too.
 - Testimonial quotes use `font-family: var(--font-body)` (serif), author names and details use `font-family: var(--font-heading)` (sans-serif) — this contrast separates the quote voice from attribution
 - Transparent nav has two variants: `nav--transparent nav--transparent-dark` for dark/image heroes, `nav--transparent nav--transparent-light` for light overlay heroes. Supports custom background via `--nav-transparent-bg` CSS variable. Only apply transparent nav on the homepage with image/dark heroes — inner pages always use solid nav.
 - Inner page headers: use `page-header--image` for sites with dark/image homepage heroes, use default `page-header` for light homepage heroes. Only use `page-header--image` if the client has page-specific imagery.
