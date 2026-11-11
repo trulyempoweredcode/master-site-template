@@ -669,7 +669,7 @@ These rules apply to every page on every build. They prevent common visual issue
 
 4. **Photography leads.** Surface the client's real photos prominently, and treat generated/stock images (duotone/tint) so they match the palette instead of fighting it. Never ship a page that is all text + icons when imagery is available.
 
-5. **Motion reads as quality.** Scroll-reveal cascades, hover lifts, image zoom, directional reveals — present and tasteful (transform/opacity, ease-out, honour `prefers-reduced-motion`).
+5. **Motion reads as quality.** Scroll-reveal cascades, hover lifts, image zoom, directional reveals: present and tasteful (transform/opacity, ease-out, honour `prefers-reduced-motion`). **1.7.29:** every master page carries `data-motion="auto"` on `<html>`, so sections, split photos and arch photos animate in without a class on each one; keep the attribute. The homepage hero takes `.hero--entrance`. At most one `.blockquote--scrub` per page, and a `.divider--motif` only where the client's own identity has a motif to draw, never an invented one. See COMPONENTS.md, "Motion set".
 
 6. **Kill sameness.** No two adjacent sections share a component OR a background; no two CTAs identical on a page; every page earns one bold "hero moment"; ≥4 distinct visual patterns per multi-section page.
 

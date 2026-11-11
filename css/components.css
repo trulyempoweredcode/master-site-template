@@ -12519,3 +12519,264 @@ html:has(.nav--sticky) {
 .card--portrait .card__image {
   object-position: var(--photo-focus, center 20%);
 }
+
+
+/* =============================================
+   v1.7.29 - MOTION SET
+   Seven additions, all opt-in, all off under
+   prefers-reduced-motion. Nothing here hides content
+   from first paint: main.js "arms" an element only
+   while it is still below the fold, so a script that
+   never runs leaves every element fully visible.
+
+   1. data-motion="auto" on <html>   every section below the fold fades up
+   2. .hero--entrance                 staged hero entrance
+   3. .img-reveal                     photo wipes open as it scrolls into view
+   4. .blockquote--scrub              quote words brighten with the scroll
+   5. .draw-in + .divider--motif      an SVG line draws itself
+   6. .heading-accent                 an accent phrase inside a heading
+   7. --grain-layer                   paper grain over the page (theme.css token)
+   ============================================= */
+
+:root {
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-wipe: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* --- 1. Auto reveal ---------------------------------------------------
+   main.js adds .reveal.reveal--auto to each main > section that starts
+   below the fold. It finishes with no transform at all, so a sticky or
+   fixed child, or a frosted panel, behaves normally once it has arrived. */
+.reveal--auto.reveal--visible {
+  transform: none;
+}
+/* Arming must be instant. Without this the section (and its cascade
+   children) would fade OUT over 0.7s as the class lands, and a fast scroll
+   or a deep link would catch it half gone. */
+.reveal--auto:not(.reveal--visible),
+.reveal--auto:not(.reveal--visible) * {
+  transition: none !important;
+}
+
+/* --- 2. Hero entrance -------------------------------------------------
+   <section class="hero hero--half hero--entrance">. The heading words rise
+   from behind a mask line by line (main.js splits them), the supporting
+   content follows, and the photo wipes up while it settles from a slight
+   zoom. fill-mode is "backwards", so nothing is left on the element when
+   the animation ends. Do not combine with .hero__heading--animate. */
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes hero-word-rise {
+  from { transform: translateY(130%); }
+  to   { transform: none; }
+}
+@keyframes hero-wipe-up {
+  from { clip-path: inset(100% 0 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+@keyframes hero-settle {
+  from { transform: scale(1.12); }
+  to   { transform: none; }
+}
+
+.hero--entrance .hero__content > *:not(.hero__heading) {
+  animation: hero-rise 0.8s var(--motion-ease) backwards;
+}
+.hero--entrance .hero__content > *:nth-child(1) { animation-delay: 0.05s; }
+.hero--entrance .hero__content > *:nth-child(2) { animation-delay: 0.45s; }
+.hero--entrance .hero__content > *:nth-child(3) { animation-delay: 0.55s; }
+.hero--entrance .hero__content > *:nth-child(4) { animation-delay: 0.67s; }
+.hero--entrance .hero__content > *:nth-child(5) { animation-delay: 0.79s; }
+.hero--entrance .hero__content > *:nth-child(n+6) { animation-delay: 0.91s; }
+
+.hero__heading .rise {
+  display: inline-block;
+  /* the negative insets keep ascenders, descenders and italic overhang */
+  clip-path: inset(-0.15em -0.12em -0.2em -0.12em);
+}
+.hero__heading .rise__in {
+  display: inline-block;
+  transform: translateY(130%);
+}
+.hero__heading.is-split .rise__in {
+  animation: hero-word-rise 0.95s var(--motion-ease) forwards;
+}
+
+.hero--entrance .hero__image-wrap:not(.hero--floats-cantilever) {
+  overflow: hidden;
+}
+.hero--entrance .hero__image-wrap:not(.hero--floats-cantilever) .hero__image {
+  animation:
+    hero-wipe-up 1.15s var(--motion-ease-wipe) 0.15s backwards,
+    hero-settle 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s backwards;
+}
+
+/* --- 3. Image wipe ----------------------------------------------------
+   Put .img-reveal on the frame that directly wraps an <img> (wipe plus a
+   settle from a slight zoom) or on the <img> itself (wipe only). With
+   data-motion="auto" every .split__image and .arch-media__img gets it. */
+.img-reveal--armed {
+  overflow: hidden;
+}
+/* The transition lives on the arrived state only, so arming is instant. */
+img.img-reveal--armed,
+.img-reveal--armed > img {
+  clip-path: inset(0 0 100% 0);
+}
+.img-reveal--armed > img {
+  transform: scale(1.12);
+}
+img.img-reveal--armed.is-inview,
+.img-reveal--armed.is-inview > img {
+  clip-path: inset(0 0 0 0);
+  transform: none;
+  transition:
+    clip-path 1.1s var(--motion-ease-wipe),
+    transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* Inside a .reveal band the split photo would also slide and fade. One
+   effect per photo: the wipe replaces the slide. */
+.reveal .split .split__image.img-reveal--armed,
+.reveal .split--reverse .split__image.img-reveal--armed {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+.reveal .split .split__image.img-reveal--armed.is-inview,
+.reveal .split--reverse .split__image.img-reveal--armed.is-inview {
+  transition: clip-path 1.1s var(--motion-ease-wipe);
+}
+
+/* --- 4. Scroll-linked quote -------------------------------------------
+   <blockquote class="blockquote blockquote--pull blockquote--scrub">.
+   main.js wraps each word of .blockquote__text and lights them in order
+   as the quote travels up the screen. Works on any band colour. */
+.blockquote--scrub .w {
+  opacity: 0.28;
+  transition: opacity 0.35s linear;
+}
+.blockquote--scrub .w.is-lit {
+  opacity: 1;
+}
+
+/* --- 5. Line drawing --------------------------------------------------
+   <svg class="draw-in">: every stroked shape draws itself when the SVG
+   scrolls into view, one after another. Give a filled shape (a petal, a
+   dot) class="draw-in__fill" and it fades in after the lines. */
+.draw-in--armed .draw-in__stroke {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.draw-in--armed.is-inview .draw-in__stroke {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1.2s var(--motion-ease-wipe);
+}
+.draw-in--armed.is-inview .draw-in__stroke:nth-of-type(2) { transition-delay: 0.15s; }
+.draw-in--armed.is-inview .draw-in__stroke:nth-of-type(3) { transition-delay: 0.3s; }
+.draw-in--armed.is-inview .draw-in__stroke:nth-of-type(4) { transition-delay: 0.45s; }
+.draw-in--armed.is-inview .draw-in__stroke:nth-of-type(n+5) { transition-delay: 0.6s; }
+.draw-in--armed .draw-in__fill {
+  opacity: 0;
+}
+.draw-in--armed.is-inview .draw-in__fill {
+  opacity: 1;
+  transition: opacity 0.5s ease 0.9s;
+}
+
+/* A small centred ornament above a heading or between two parts of a band:
+   <div class="divider divider--motif"><svg class="draw-in" ...></svg></div>.
+   The artwork is the client's own motif, drawn with stroke="currentColor". */
+.divider--motif {
+  display: flex;
+  justify-content: center;
+  overflow: visible;
+  margin: 0 auto var(--space-xl);
+  color: var(--motif-color, var(--color-secondary-dark));
+}
+.divider--motif svg {
+  width: var(--motif-width, clamp(96px, 14vw, 150px));
+  height: auto;
+  overflow: visible;
+}
+
+/* --- 6. Heading accent ------------------------------------------------
+   <h1 class="hero__heading">Space to heal the mind, <span class="heading-accent
+   heading-accent--underline">body and soul.</span></h1>
+   --italic only where the heading font ships a true italic. */
+.heading-accent {
+  color: var(--heading-accent-color, var(--color-secondary-dark));
+}
+.section--dark .heading-accent,
+.hero--image .heading-accent {
+  color: var(--heading-accent-color-inverse, var(--color-secondary-light));
+}
+.heading-accent--italic {
+  font-style: italic;
+}
+.heading-accent--underline {
+  padding-bottom: 0.06em;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 0.055em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+@keyframes heading-accent-draw {
+  from { background-size: 0 0.055em; }
+  to   { background-size: 100% 0.055em; }
+}
+.hero--entrance .heading-accent--underline {
+  animation: heading-accent-draw 0.9s var(--motion-ease-wipe) 1.25s backwards;
+}
+
+/* --- 7. Paper grain ---------------------------------------------------
+   Off unless theme.css sets  --grain-layer: '';  Strength: --grain-opacity
+   (0.04 to 0.08 reads as paper; above 0.1 reads as dirt). */
+body::after {
+  content: var(--grain-layer, none);
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: var(--grain-opacity, 0.06);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+@media print {
+  body::after { content: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Same selectors as the rules they switch off, so they win on order. */
+  .hero--entrance .hero__content > *:not(.hero__heading),
+  .hero--entrance .hero__image-wrap:not(.hero--floats-cantilever) .hero__image,
+  .hero--entrance .heading-accent--underline,
+  .hero__heading.is-split .rise__in {
+    animation: none;
+  }
+  .hero__heading .rise__in {
+    transform: none;
+  }
+  img.img-reveal--armed,
+  .img-reveal--armed > img {
+    clip-path: none;
+    transform: none;
+    transition: none;
+  }
+  .blockquote--scrub .w {
+    opacity: 1;
+    transition: none;
+  }
+  .draw-in--armed .draw-in__stroke {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+  .draw-in--armed .draw-in__fill {
+    opacity: 1;
+    transition: none;
+  }
+}

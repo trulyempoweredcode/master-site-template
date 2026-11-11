@@ -354,7 +354,11 @@
     // bottom edge of the first screen is not shown as an empty band
     // (woodlandscounselling.co.uk: her original shows it straight away).
     var rootCss = getComputedStyle(document.documentElement);
-    var revealMargin = rootCss.getPropertyValue('--reveal-root-margin').trim() || '0px 0px -10% 0px';
+    // v1.7.29: the default margin now reaches far ABOVE the viewport, so a block
+    // the page jumps past (a deep link, an in-page anchor, a restored scroll
+    // position) counts as seen and is revealed, instead of sitting blank until
+    // someone scrolls back up to it. The bottom edge (-10%) is unchanged.
+    var revealMargin = rootCss.getPropertyValue('--reveal-root-margin').trim() || '99999px 0px -10% 0px';
     var revealThreshold = parseFloat(rootCss.getPropertyValue('--reveal-threshold'));
     var revealObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -671,6 +675,175 @@
         ticking = true;
       }
     }, { passive: true });
+  }
+
+  /* -----------------------------------------
+     v1.7.29 MOTION SET
+     Hero entrance, auto reveal, image wipes, line drawing
+     and the scroll-linked quote (CSS: "v1.7.29 - MOTION SET").
+
+     One rule runs through all of it: an element is only
+     "armed" (put into its hidden start state) while it is
+     still BELOW the fold. Nothing on screen is ever hidden
+     and then shown, and if this script never runs every
+     element stays visible. All of it is skipped under
+     prefers-reduced-motion.
+     ----------------------------------------- */
+  var motionReduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  // Auto mode stays off on a services page: its sidebar deep-links into the
+  // layout, and that page must never start with anything hidden.
+  var motionAuto = document.documentElement.getAttribute('data-motion') === 'auto' &&
+    !document.querySelector('main .services-layout');
+  var motionOK = !motionReduced && 'IntersectionObserver' in window;
+
+  function motionEach(list, fn) { Array.prototype.forEach.call(list, fn); }
+  function motionBelowFold(el) { return el.getBoundingClientRect().top > window.innerHeight; }
+  function motionOff(el) { return !!el.closest('[data-motion="off"]'); }
+
+  // Wrap every word of an element's text in a span (or a span in a span).
+  // Returns the outer spans in reading order. Markup inside the element
+  // (a .heading-accent span, a <br>) is kept as it is.
+  function motionSplitWords(root, outerClass, innerClass) {
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+    var nodes = [];
+    var node; while ((node = walker.nextNode())) nodes.push(node);
+    var out = [];
+    nodes.forEach(function (tn) {
+      if (!tn.textContent.trim()) return;
+      var frag = document.createDocumentFragment();
+      tn.textContent.split(/(\s+)/).forEach(function (part) {
+        if (!part) return;
+        if (!part.trim()) { frag.appendChild(document.createTextNode(part)); return; }
+        var outer = document.createElement('span');
+        outer.className = outerClass;
+        if (innerClass) {
+          var inner = document.createElement('span');
+          inner.className = innerClass;
+          inner.textContent = part;
+          outer.appendChild(inner);
+        } else {
+          outer.textContent = part;
+        }
+        frag.appendChild(outer);
+        out.push(outer);
+      });
+      tn.parentNode.replaceChild(frag, tn);
+    });
+    return out;
+  }
+
+  /* Hero entrance: the heading's words rise line by line. The rest of the
+     entrance is CSS only (.hero--entrance). */
+  var riseHeading = document.querySelector('.hero--entrance .hero__heading');
+  if (riseHeading && !motionReduced && !riseHeading.classList.contains('hero__heading--animate')) {
+    var riseWords = motionSplitWords(riseHeading, 'rise', 'rise__in');
+    var riseLineTop = null;
+    var riseLine = -1;
+    var riseInLine = 0;
+    riseWords.forEach(function (word) {
+      var top = word.getBoundingClientRect().top;
+      if (riseLineTop === null || Math.abs(top - riseLineTop) > 4) {
+        riseLine++;
+        riseInLine = 0;
+        riseLineTop = top;
+      }
+      word.firstChild.style.animationDelay = (0.15 + riseLine * 0.12 + riseInLine * 0.03).toFixed(2) + 's';
+      riseInLine++;
+    });
+    riseHeading.classList.add('is-split');
+  }
+
+  /* Auto reveal, image wipes and line drawing share one observer. */
+  if (motionOK) {
+    var motionTargets = [];
+
+    if (motionAuto) {
+      motionEach(document.querySelectorAll('main > section'), function (el) {
+        var cl = el.classList;
+        if (cl.contains('reveal') || cl.contains('hero') || cl.contains('page-header') || cl.contains('service-section')) return;
+        if (motionOff(el)) return;
+        // A nested .reveal already animates itself; the services layout is
+        // deep-linked by its sidebar and must never start hidden.
+        if (el.querySelector('.reveal, .services-sidebar, .service-section')) return;
+        if (!motionBelowFold(el)) return;
+        cl.add('reveal', 'reveal--auto');
+        motionTargets.push(el);
+      });
+    }
+
+    var wipeSelector = '.img-reveal' + (motionAuto ? ', main img.split__image, main .arch-media__img' : '');
+    motionEach(document.querySelectorAll(wipeSelector), function (el) {
+      if (el.closest('.hero') || motionOff(el) || !motionBelowFold(el)) return;
+      el.classList.add('img-reveal--armed');
+      motionTargets.push(el);
+    });
+
+    motionEach(document.querySelectorAll('svg.draw-in'), function (svg) {
+      if (motionOff(svg) || !motionBelowFold(svg)) return;
+      motionEach(svg.querySelectorAll('path, line, polyline, polygon, circle, ellipse, rect'), function (shape) {
+        if (shape.classList.contains('draw-in__fill')) return;
+        shape.setAttribute('pathLength', '1');
+        shape.classList.add('draw-in__stroke');
+      });
+      svg.classList.add('draw-in--armed');
+      motionTargets.push(svg);
+    });
+
+    if (motionTargets.length) {
+      var motionObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var target = entry.target;
+          target.classList.add(target.classList.contains('reveal--auto') ? 'reveal--visible' : 'is-inview');
+          motionObserver.unobserve(target);
+        });
+        // The root reaches far above the viewport, so anything the page has
+        // jumped past (a deep link, a restored scroll position) counts as seen.
+      }, { threshold: 0, rootMargin: '99999px 0px -12% 0px' });
+      motionTargets.forEach(function (el) { motionObserver.observe(el); });
+    }
+  }
+
+  /* Scroll-linked quote: the words of a .blockquote--scrub light up in
+     order as the quote travels from the lower part of the screen to the
+     middle. The start and end points are pulled in when the page cannot
+     scroll that far, so a quote at the very top or bottom of a page still
+     runs from fully dim to fully lit. */
+  var scrubTexts = document.querySelectorAll('.blockquote--scrub .blockquote__text');
+  if (scrubTexts.length && !motionReduced) {
+    var scrubs = [];
+    motionEach(scrubTexts, function (el) {
+      scrubs.push({ el: el, words: motionSplitWords(el, 'w', null), lit: -1 });
+    });
+    var scrubTicking = false;
+    var scrubUpdate = function () {
+      scrubTicking = false;
+      var vh = window.innerHeight;
+      var scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+      var maxScroll = Math.max(0, document.documentElement.scrollHeight - vh);
+      scrubs.forEach(function (s) {
+        var r = s.el.getBoundingClientRect();
+        var startTop = Math.min(vh * 0.85, r.top + scrollY);
+        var endTop = Math.max(vh * 0.45 - r.height, r.top - (maxScroll - scrollY));
+        var progress = startTop > endTop ? (startTop - r.top) / (startTop - endTop) : 1;
+        var count = Math.max(0, Math.min(s.words.length, Math.ceil(progress * s.words.length)));
+        if (count === s.lit) return;
+        for (var i = 0; i < s.words.length; i++) {
+          if (i < count) s.words[i].classList.add('is-lit');
+          else s.words[i].classList.remove('is-lit');
+        }
+        s.lit = count;
+      });
+    };
+    var scrubRequest = function () {
+      if (scrubTicking) return;
+      scrubTicking = true;
+      window.requestAnimationFrame(scrubUpdate);
+    };
+    window.addEventListener('scroll', scrubRequest, { passive: true });
+    window.addEventListener('resize', scrubRequest);
+    window.addEventListener('load', scrubRequest);
+    scrubUpdate();
   }
 
 })();
