@@ -12780,3 +12780,47 @@ body::after {
     transition: none;
   }
 }
+
+/* =============================================
+   v1.7.30 - LOGO HERO (.hero--logo)
+   The first screen holds only the client's full logo, centred on the page
+   colour with plenty of space around it, for a site whose home screen is its
+   logo (allansalmon.com, 18-11-2026: "I prefer the perspective/sizing of
+   things relative to each other on my original site").
+   The logo is sized from the screen, about a third of its longer side, so a
+   phone shows it at roughly two thirds of the width and a desktop keeps the
+   same proportion. It never grows taller than the space under the header.
+   Markup: <section class="hero hero--logo"><div class="container hero__inner">
+   <h1 class="hero__logo"><img src="images/logo.png" alt="Business name"
+   width="" height=""></h1></div></section>
+   It sits on the page colour; add band band--N for a tinted ground.
+   Tokens: --hero-logo-width, --hero-logo-max-height.
+   ============================================= */
+.hero--logo {
+  display: flex;
+  align-items: center;
+  padding: var(--space-2xl) 0;
+  min-height: calc(100vh - var(--nav-height, 72px));
+  min-height: calc(100svh - var(--nav-height, 72px));
+}
+
+.hero--logo .hero__inner {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.hero--logo .hero__logo {
+  margin: 0;
+  line-height: 0;
+}
+
+.hero--logo .hero__logo img {
+  display: block;
+  width: max(34vw, 34vh);
+  width: var(--hero-logo-width, max(34vw, 34svh));
+  max-width: 100%;
+  height: auto;
+  max-height: var(--hero-logo-max-height, calc((100svh - var(--nav-height, 72px)) * 0.78));
+  object-fit: contain;
+}
