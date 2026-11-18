@@ -687,6 +687,8 @@ These rules apply to every page on every build. They prevent common visual issue
 
 These rules override all other instructions:
 
+0. **Copy the client SUPPLIED is published word for word (D267, elspethcampbell.com).** Their page documents are the text, not material to shape. No eyebrow, heading, button label, intro or linking sentence of ours is added to it, nothing is tightened or "improved", and nothing is cut. A band their copy gives no heading gets no heading: the layout bends to the copy, never the copy to the demo's band pattern. A genuine gap (no call to action, no heading where a component needs one) goes on the Stop 2 checklist as a question to them, never written for them. Lines that are notes to us ("Images: ...", "Quote:", "Insert diagram") are declared as notes, with the reason. `scripts/verify_client_copy.py <client>/build-scripts/client-copy.json` must exit 0 before Stop 1 and Stop 2: it reads their documents and the built pages and fails on anything cut, reworded or added. Elspeth Campbell sent six pages in August 2026; the build fitted them to the demo, gave every band a heading she never wrote, and every gate stayed green because none compared the site with what she sent. She spent three months asking for her own words back.
+
 1. **Never invent factual claims.** Every credential, qualification, trust signal, and testimonial must come directly from the client's source content. Zero exceptions.
 
 2. **Trust bars** may only contain credentials explicitly stated in the client's documents. Do not add credentials the client hasn't claimed, even if competitors display them.
@@ -697,13 +699,15 @@ These rules override all other instructions:
 
 5. **If competitor research reveals trust signals the client hasn't provided**, add them to the content checklist as recommendations with a "To Query" flag. Never put them on the site pages.
 
-6. **When rewriting copy** (if permitted), you may restructure and tighten the client's words, but you may not introduce new factual claims.
+6. **When rewriting copy** (only when the client asked us to write or rewrite it, in words, on the record), you may restructure and tighten the client's words, but you may not introduce new factual claims. Supplied copy with no such request falls under rule 0.
 
 7. **If in doubt** about whether something is in the client's content: leave it out and add it to the content checklist.
 
 ---
 
-## Copywriting Rules (apply to all content)
+## Copywriting Rules (apply to copy WE write)
+
+These rules shape copy we write: a site built without client copy, or a passage the client asked us to write. They never apply to copy the client supplied (Content Integrity rule 0): a "label-led" heading of theirs stays, and a band they gave no heading stays without one.
 
 **Headings:**
 - All H2/H3 headings must be benefit-led or emotion-led, not label-led
