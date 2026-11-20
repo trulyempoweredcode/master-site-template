@@ -12824,3 +12824,17 @@ body::after {
   max-height: var(--hero-logo-max-height, calc((100svh - var(--nav-height, 72px)) * 0.78));
   object-fit: contain;
 }
+
+/* =============================================
+   v1.7.31 - CONTACT GRID, FORM FIRST ON PHONES (.contact-grid--form-first)
+   For a client who wants the form to be the first thing a phone visitor
+   meets (allansalmon.com, 20-11-2026). Desktop is unchanged: contact info
+   left, form right, with the WhatsApp/Email button row aligned left over the
+   details. Author the DOM as usual (info first, form second).
+   ============================================= */
+@media (max-width: 767px) {
+  .contact-grid--form-first .contact-form-wrap { order: -1; }
+}
+@media (min-width: 768px) {
+  .contact-grid--form-first .contact-info .cta-banner__buttons { justify-content: flex-start; }
+}

@@ -162,6 +162,7 @@ Add `hero--reverse` when the brief says Hero reversed: yes (classic / half / slo
 - **`.form`** — form wrapper. `__group`, `__label`, `__select`, `__textarea`, `__row`, `__hint`, `__consent`, `__group--checkbox`. Variant: `--full-width`.
 - **`.contact-form-card`** — boxed form pattern.
 - **`.contact-grid`** — form + contact info side-by-side.
+  - **`.contact-grid--form-first`** (v1.7.31) - on phones (under 768px) the form comes first, above the contact details; desktop keeps info left and form right, with a `.cta-banner__buttons` row in `.contact-info` aligned left. Keep the usual DOM (info first, form second). Use when a client wants a phone visitor to meet the form before anything else (allansalmon.com).
 - **`.contact-info__*`** — heading, intro, item, icon, label, text slots.
 - **`.map-placeholder`** — map iframe slot.
 
